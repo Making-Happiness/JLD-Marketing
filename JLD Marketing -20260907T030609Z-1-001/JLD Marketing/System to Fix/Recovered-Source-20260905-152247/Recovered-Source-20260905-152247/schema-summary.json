@@ -1,0 +1,449 @@
+{
+  "sources": [
+    {
+      "name": "realtydb.sql",
+      "sha256": "1459EC488B4B1B01500285BA11B0CF69A845FCE19B4352D7C6ED4CF2F382B910"
+    },
+    {
+      "name": "employees.sql",
+      "sha256": "951089C5F000078144FEDA2A762C196DDDB23405F3585D14EC42C5360431A215"
+    }
+  ],
+  "tables": {
+    "clients": [
+      {
+        "name": "idclients",
+        "definition": "int(11) NOT NULL AUTO_INCREMENT"
+      },
+      {
+        "name": "firstname",
+        "definition": "varchar(64) DEFAULT NULL"
+      },
+      {
+        "name": "lastname",
+        "definition": "varchar(45) DEFAULT NULL"
+      },
+      {
+        "name": "middlename",
+        "definition": "varchar(45) DEFAULT NULL"
+      },
+      {
+        "name": "gender",
+        "definition": "varchar(7) DEFAULT NULL"
+      },
+      {
+        "name": "dateofbirth",
+        "definition": "datetime DEFAULT NULL"
+      },
+      {
+        "name": "placeofbirth",
+        "definition": "varchar(127) DEFAULT NULL"
+      },
+      {
+        "name": "spousename",
+        "definition": "varchar(64) DEFAULT NULL"
+      },
+      {
+        "name": "contactno",
+        "definition": "varchar(255) DEFAULT NULL"
+      }
+    ],
+    "dicers": [
+      {
+        "name": "id",
+        "definition": "int(11) NOT NULL AUTO_INCREMENT"
+      },
+      {
+        "name": "fullname",
+        "definition": "varchar(45) DEFAULT NULL"
+      },
+      {
+        "name": "contactno",
+        "definition": "varchar(45) DEFAULT NULL"
+      },
+      {
+        "name": "recordstatus",
+        "definition": "varchar(15) DEFAULT 'active'"
+      }
+    ],
+    "expenses": [
+      {
+        "name": "id",
+        "definition": "int(11) NOT NULL AUTO_INCREMENT"
+      },
+      {
+        "name": "receiveby",
+        "definition": "int(11) DEFAULT NULL"
+      },
+      {
+        "name": "description",
+        "definition": "varchar(127) DEFAULT NULL"
+      },
+      {
+        "name": "purpose",
+        "definition": "varchar(45) DEFAULT NULL"
+      },
+      {
+        "name": "amount",
+        "definition": "decimal(10,2) DEFAULT NULL"
+      },
+      {
+        "name": "releaseby",
+        "definition": "int(11) DEFAULT NULL"
+      },
+      {
+        "name": "daterelease",
+        "definition": "datetime DEFAULT NULL"
+      },
+      {
+        "name": "remarks",
+        "definition": "varchar(15) DEFAULT NULL"
+      }
+    ],
+    "info1": [
+      {
+        "name": "id",
+        "definition": "int(11) DEFAULT NULL"
+      },
+      {
+        "name": "datepaid",
+        "definition": "varchar(255) DEFAULT NULL"
+      },
+      {
+        "name": "name",
+        "definition": "varchar(255) DEFAULT NULL"
+      },
+      {
+        "name": "sqm",
+        "definition": "varchar(255) DEFAULT NULL"
+      },
+      {
+        "name": "percent",
+        "definition": "varchar(255) DEFAULT NULL"
+      },
+      {
+        "name": "dicer",
+        "definition": "varchar(255) DEFAULT NULL"
+      },
+      {
+        "name": "lot",
+        "definition": "varchar(255) DEFAULT NULL"
+      },
+      {
+        "name": "cpno",
+        "definition": "varchar(255) DEFAULT NULL"
+      },
+      {
+        "name": "lp",
+        "definition": "varchar(255) DEFAULT NULL"
+      },
+      {
+        "name": "dp",
+        "definition": "varchar(255) DEFAULT NULL"
+      },
+      {
+        "name": "bal",
+        "definition": "varchar(255) DEFAULT NULL"
+      },
+      {
+        "name": "mon",
+        "definition": "varchar(255) DEFAULT NULL"
+      },
+      {
+        "name": "terms",
+        "definition": "varchar(255) DEFAULT NULL"
+      },
+      {
+        "name": "location",
+        "definition": "varchar(255) DEFAULT NULL"
+      }
+    ],
+    "paymentdetails": [
+      {
+        "name": "id",
+        "definition": "int(11) NOT NULL AUTO_INCREMENT"
+      },
+      {
+        "name": "description",
+        "definition": "varchar(127) DEFAULT NULL"
+      },
+      {
+        "name": "idpurchasedetails",
+        "definition": "int(11) DEFAULT NULL"
+      },
+      {
+        "name": "amount",
+        "definition": "decimal(10,2) DEFAULT NULL"
+      },
+      {
+        "name": "paymentfor",
+        "definition": "varchar(15) DEFAULT NULL"
+      },
+      {
+        "name": "idpayment",
+        "definition": "int(11) DEFAULT NULL"
+      }
+    ],
+    "payments": [
+      {
+        "name": "id",
+        "definition": "int(11) NOT NULL AUTO_INCREMENT"
+      },
+      {
+        "name": "dateofpayment",
+        "definition": "datetime DEFAULT NULL"
+      },
+      {
+        "name": "orderreceipt",
+        "definition": "varchar(12) DEFAULT NULL"
+      },
+      {
+        "name": "totalamount",
+        "definition": "decimal(10,2) DEFAULT NULL"
+      },
+      {
+        "name": "paidby",
+        "definition": "int(11) DEFAULT NULL"
+      },
+      {
+        "name": "paymenttype",
+        "definition": "varchar(15) DEFAULT NULL"
+      },
+      {
+        "name": "referenceno",
+        "definition": "int(15) DEFAULT NULL"
+      },
+      {
+        "name": "paymentref",
+        "definition": "varchar(45) DEFAULT NULL"
+      },
+      {
+        "name": "inchargeby",
+        "definition": "int(11) DEFAULT NULL"
+      },
+      {
+        "name": "recordedby",
+        "definition": "int(11) DEFAULT NULL"
+      },
+      {
+        "name": "dateencoded",
+        "definition": "datetime DEFAULT NULL"
+      },
+      {
+        "name": "dateedited",
+        "definition": "datetime DEFAULT NULL"
+      },
+      {
+        "name": "recordstatus",
+        "definition": "varchar(15) DEFAULT NULL"
+      }
+    ],
+    "products": [
+      {
+        "name": "idproduct",
+        "definition": "int(11) NOT NULL AUTO_INCREMENT"
+      },
+      {
+        "name": "code",
+        "definition": "varchar(45) DEFAULT NULL"
+      },
+      {
+        "name": "location",
+        "definition": "varchar(255) DEFAULT NULL"
+      },
+      {
+        "name": "totalblockno",
+        "definition": "int(11) DEFAULT NULL"
+      },
+      {
+        "name": "totallotno",
+        "definition": "int(11) DEFAULT NULL"
+      },
+      {
+        "name": "totalarea",
+        "definition": "decimal(10,2) DEFAULT NULL"
+      },
+      {
+        "name": "cashprice",
+        "definition": "decimal(10,2) DEFAULT NULL"
+      }
+    ],
+    "purchasedetails": [
+      {
+        "name": "id",
+        "definition": "int(11) NOT NULL AUTO_INCREMENT"
+      },
+      {
+        "name": "blockno",
+        "definition": "int(11) DEFAULT NULL"
+      },
+      {
+        "name": "lotno",
+        "definition": "varchar(45) DEFAULT NULL"
+      },
+      {
+        "name": "area",
+        "definition": "varchar(45) DEFAULT NULL"
+      },
+      {
+        "name": "lotprice",
+        "definition": "decimal(10,2) DEFAULT NULL"
+      },
+      {
+        "name": "amortization",
+        "definition": "varchar(20) DEFAULT NULL"
+      },
+      {
+        "name": "terms",
+        "definition": "varchar(45) DEFAULT NULL"
+      },
+      {
+        "name": "idagent",
+        "definition": "int(11) DEFAULT NULL"
+      },
+      {
+        "name": "agentpercentage",
+        "definition": "decimal(10,2) DEFAULT NULL"
+      },
+      {
+        "name": "idclients",
+        "definition": "int(11) DEFAULT NULL"
+      },
+      {
+        "name": "idproducts",
+        "definition": "int(11) DEFAULT NULL"
+      },
+      {
+        "name": "remarks",
+        "definition": "varchar(15) DEFAULT NULL"
+      }
+    ],
+    "test": [
+      {
+        "name": "id",
+        "definition": "int(11) NOT NULL"
+      },
+      {
+        "name": "c1",
+        "definition": "varchar(45) DEFAULT NULL"
+      },
+      {
+        "name": "c2",
+        "definition": "tinyint(1) DEFAULT NULL"
+      },
+      {
+        "name": "c3",
+        "definition": "tinyint(1) DEFAULT NULL"
+      },
+      {
+        "name": "c4",
+        "definition": "tinyint(1) DEFAULT NULL"
+      },
+      {
+        "name": "c5",
+        "definition": "tinyint(1) DEFAULT NULL"
+      }
+    ],
+    "tmppayments": [
+      {
+        "name": "location",
+        "definition": "varchar(255) DEFAULT NULL"
+      },
+      {
+        "name": "name",
+        "definition": "varchar(255) DEFAULT NULL"
+      },
+      {
+        "name": "amount",
+        "definition": "varchar(255) DEFAULT NULL"
+      },
+      {
+        "name": "datepaid",
+        "definition": "varchar(255) DEFAULT NULL"
+      },
+      {
+        "name": "sqm",
+        "definition": "varchar(255) DEFAULT NULL"
+      },
+      {
+        "name": "remarks",
+        "definition": "varchar(255) DEFAULT NULL"
+      }
+    ],
+    "employees": [
+      {
+        "name": "idemployee",
+        "definition": "int(11) NOT NULL AUTO_INCREMENT"
+      },
+      {
+        "name": "firstname",
+        "definition": "varchar(45) NOT NULL"
+      },
+      {
+        "name": "lastname",
+        "definition": "varchar(45) NOT NULL"
+      },
+      {
+        "name": "middlename",
+        "definition": "varchar(45) DEFAULT NULL"
+      },
+      {
+        "name": "gender",
+        "definition": "varchar(45) DEFAULT NULL"
+      },
+      {
+        "name": "dateofbirth",
+        "definition": "datetime NOT NULL"
+      },
+      {
+        "name": "salary",
+        "definition": "decimal(10,2) DEFAULT NULL"
+      },
+      {
+        "name": "designation",
+        "definition": "varchar(255) DEFAULT ''"
+      },
+      {
+        "name": "civilstatus",
+        "definition": "varchar(45) DEFAULT ''"
+      },
+      {
+        "name": "contactno",
+        "definition": "varchar(15) DEFAULT ''"
+      },
+      {
+        "name": "jobcategory",
+        "definition": "varchar(45) DEFAULT NULL"
+      },
+      {
+        "name": "recordstatus",
+        "definition": "varchar(45) DEFAULT 'active'"
+      },
+      {
+        "name": "remarks",
+        "definition": "varchar(255) DEFAULT ''"
+      }
+    ],
+    "jobcategory": [
+      {
+        "name": "category",
+        "definition": "varchar(45) NOT NULL"
+      }
+    ],
+    "jobdesignation": [
+      {
+        "name": "designation",
+        "definition": "varchar(45) NOT NULL"
+      }
+    ]
+  },
+  "views": [
+    "clientswithfullname",
+    "expenses_view",
+    "view_agents",
+    "view_productdeatailswithproduct"
+  ],
+  "procedures": [
+    "proc_purchasedetails_full"
+  ]
+}

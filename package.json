@@ -1,0 +1,11 @@
+{
+  "name": "jld-subdivision-root",
+  "version": "1.0.0",
+  "description": "Root workspace proxy for JLD Subdivision React Dashboard",
+  "scripts": {
+    "dev": "npm --prefix jld-dashboard run dev",
+    "build": "npm --prefix jld-dashboard run build",
+    "preview": "npm --prefix jld-dashboard run preview"
+  }
+}
+

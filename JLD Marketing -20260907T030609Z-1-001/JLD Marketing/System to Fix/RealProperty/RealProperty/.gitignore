@@ -1,0 +1,5 @@
+# Local database credentials and runtime diagnostics
+app.config
+bin/
+obj/
+*.database.log

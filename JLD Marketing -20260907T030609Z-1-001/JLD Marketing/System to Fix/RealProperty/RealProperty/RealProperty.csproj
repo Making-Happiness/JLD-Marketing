@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4B1C5602-C75A-4A0F-879A-E763B19A4D12}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>RealProperty</RootNamespace>
+    <AssemblyName>RealProperty</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>12.0</LangVersion>
+    <OutputPath>bin\Debug\net48\</OutputPath>
+    <IntermediateOutputPath>obj\Debug\net48\</IntermediateOutputPath>
+    <ResolveNuGetPackages>false</ResolveNuGetPackages>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+    <NoWarn>0649;0169</NoWarn>
+    <AppConfig>app.config</AppConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MySql.Data">
+      <HintPath>bin\Debug\net48\MySql.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Protobuf">
+      <HintPath>bin\Debug\net48\Google.Protobuf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="BouncyCastle.Crypto">
+      <HintPath>bin\Debug\net48\BouncyCastle.Crypto.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="K4os.Compression.LZ4">
+      <HintPath>bin\Debug\net48\K4os.Compression.LZ4.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="K4os.Compression.LZ4.Streams">
+      <HintPath>bin\Debug\net48\K4os.Compression.LZ4.Streams.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="K4os.Hash.xxHash">
+      <HintPath>bin\Debug\net48\K4os.Hash.xxHash.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Buffers">
+      <HintPath>bin\Debug\net48\System.Buffers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Memory">
+      <HintPath>bin\Debug\net48\System.Memory.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Numerics.Vectors">
+      <HintPath>bin\Debug\net48\System.Numerics.Vectors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe">
+      <HintPath>bin\Debug\net48\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions">
+      <HintPath>bin\Debug\net48\System.Threading.Tasks.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms">
+      <HintPath>bin\Debug\net48\Microsoft.ReportViewer.WinForms.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common">
+      <HintPath>bin\Debug\net48\Microsoft.ReportViewer.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel">
+      <HintPath>bin\Debug\net48\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types">
+      <HintPath>bin\Debug\net48\Microsoft.SqlServer.Types.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="**\*.cs" Exclude="obj\**;bin\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="RealProperty.Report1.rdlc">
+      <LogicalName>RealProperty.Report1.rdlc</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RealProperty.Reports.rptAll_Payslips.rdlc">
+      <LogicalName>RealProperty.Reports.rptAll_Payslips.rdlc</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RealProperty.Reports.rptlistofexpenses.rdlc">
+      <LogicalName>RealProperty.Reports.rptlistofexpenses.rdlc</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RealProperty.Reports.rptpaymenthistory.rdlc">
+      <LogicalName>RealProperty.Reports.rptpaymenthistory.rdlc</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RealProperty.Reports.rptPayroll.rdlc">
+      <LogicalName>RealProperty.Reports.rptPayroll.rdlc</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RealProperty.Reports.rptSOA.rdlc">
+      <LogicalName>RealProperty.Reports.rptSOA.rdlc</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RealProperty.Reports.rptstatementofcashflow.rdlc">
+      <LogicalName>RealProperty.Reports.rptstatementofcashflow.rdlc</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RealProperty.frmMain.resx">
+      <LogicalName>RealProperty.frmMain.resources</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RealProperty.frmReportView.resx">
+      <LogicalName>RealProperty.frmReportView.resources</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

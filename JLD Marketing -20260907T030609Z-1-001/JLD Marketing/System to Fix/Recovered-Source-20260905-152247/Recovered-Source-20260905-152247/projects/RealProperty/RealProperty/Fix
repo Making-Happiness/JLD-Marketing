@@ -1,0 +1,2 @@
+While tryig to fix the RealProperty Software the following were the output 
+I found a broader limitation: there is no local MySQL service, MySQL command-line client, or container runtime on this PC, and the supplied SQL dumps omit many database objects required by the March executable. I’ll make the recovered client-search workflow fail safely now, then provide a database readiness check for the missing server/schema pieces.
