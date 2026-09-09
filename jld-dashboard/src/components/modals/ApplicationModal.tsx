@@ -1,3 +1,4 @@
+import { ModalFrame } from './ModalFrame';
 import React, { useState, useEffect } from 'react';
 import { PurchaseDetail, Client, Product, Agent } from '../../types';
 import { calculateAmortization, formatCurrency } from '../../utils/calculations';
@@ -6,7 +7,7 @@ import { X, CheckCircle2, Calculator } from 'lucide-react';
 interface ApplicationModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (application: PurchaseDetail) => void;
+  onSave: (application: PurchaseDetail) => string | void;
   clients: Client[];
   products: Product[];
   agents: Agent[];
@@ -41,6 +42,7 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
   const [dueDate, setDueDate] = useState<string>('2028-09-07');
   const [remarks, setRemarks] = useState<string>('Standard application pending verification');
   const [status, setStatus] = useState<any>('New');
+  const [error,setError]=useState('');
   const [successMsg, setSuccessMsg] = useState<string>('');
 
   // When initialData changes (editing mode)
@@ -61,7 +63,7 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
       setPenalty(initialData.penalty || 0);
       setDueDate(initialData.duedate || '');
       setRemarks(initialData.remarks || '');
-      setStatus(initialData.status);
+      setStatus(initialData.leadStatus || 'Active');
     } else {
       if (defaultClientId) {
         setClientId(defaultClientId);
@@ -131,12 +133,7 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
       dateApplied: initialData?.dateApplied || new Date().toISOString().split('T')[0]
     };
 
-    setSuccessMsg('Application successfully saved!');
-    setTimeout(() => {
-      onSave(application);
-      setSuccessMsg('');
-      onClose();
-    }, 400);
+    const result=onSave(application);if(result){setError(result);return;} setError('');onClose();
   };
 
   if (!isOpen) return null;
@@ -144,16 +141,16 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
   const currentProduct = products.find(p => p.idproduct === Number(productId)) || products[0];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-xs p-4 overflow-y-auto">
+    <ModalFrame onClose={onClose} title='Application form'>
       <div className="bg-white rounded-2xl max-w-3xl w-full border border-slate-200 shadow-xl overflow-hidden my-6 animate-in fade-in zoom-in-95 duration-150">
-        {/* Header */}
+        {error&&<p role="alert" className="form-error px-6 pt-4">{error}</p>}{/* Header */}
         <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
           <div>
             <h2 className="text-base font-bold text-slate-900">
               {initialData ? 'Edit Purchase Application' : 'New Subdivision Lot Application'}
             </h2>
             <p className="text-xs text-slate-500 mt-0.5">
-              Equivalent to JLD RealProperty <code className="text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded">frmApplicationForm.cs</code>
+                Linked workspace records
             </p>
           </div>
           <button
@@ -415,7 +412,11 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
           </div>
         </form>
       </div>
-    </div>
+    </ModalFrame>
   );
 };
+
+
+
+
 

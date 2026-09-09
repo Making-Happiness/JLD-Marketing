@@ -1,3 +1,4 @@
+import { ModalFrame } from './ModalFrame';
 import React, { useState, useEffect } from 'react';
 import { Client } from '../../types';
 import { X, User, Phone, Calendar, MapPin, Heart, CheckCircle2 } from 'lucide-react';
@@ -94,7 +95,7 @@ export const StakeholderModal: React.FC<StakeholderModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-xs p-4 animate-in fade-in duration-200">
+    <ModalFrame onClose={onClose} title='Stakeholder form'>
       <div className="bg-white rounded-2xl shadow-2xl border border-slate-100 w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
         <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
@@ -104,7 +105,7 @@ export const StakeholderModal: React.FC<StakeholderModalProps> = ({
             </div>
             <div>
               <h2 className="text-base font-bold text-slate-900">
-                {isEditing ? `Edit Information (ID: #${clientToEdit?.idclients})` : 'New Stakeholder Record'}
+                {isEditing ? `Edit buyer` : 'Add buyer'}
               </h2>
               <p className="text-xs text-slate-500">
                 {isEditing 
@@ -263,12 +264,15 @@ export const StakeholderModal: React.FC<StakeholderModalProps> = ({
               type="submit"
               className="px-5 py-2.5 bg-[#00593B] hover:bg-[#004a31] text-white text-xs font-semibold rounded-xl shadow-sm transition-all cursor-pointer"
             >
-              {isEditing ? 'Update Information' : 'Save Record'}
+              {isEditing ? 'Save changes' : 'Save buyer'}
             </button>
           </div>
         </form>
       </div>
-    </div>
+    </ModalFrame>
   );
 };
+
+
+
 
