@@ -1,3 +1,5 @@
+export type EntityStatus = 'active' | 'archived';
+
 export interface Client {
   idclients: number;
   firstname: string;
@@ -11,6 +13,8 @@ export interface Client {
   fullname: string;
   email?: string;
   avatarUrl?: string;
+  status: EntityStatus;
+  deleted_at?: string | null;
 }
 
 export interface Product {
@@ -22,7 +26,9 @@ export interface Product {
   totalarea: number;
   cashprice: number;
   availableLots?: number;
-  status?: 'Open' | 'Nearly Sold' | 'Completed';
+  projectPhase?: 'Open' | 'Nearly Sold' | 'Completed';
+  status: EntityStatus;
+  deleted_at?: string | null;
 }
 
 export type ApplicationStatus = 'New' | 'Demo Scheduled' | 'Negotiation' | 'Proposal Sent' | 'Contacted' | 'Qualified' | 'Active' | 'Overdue' | 'Fully Paid';
@@ -47,7 +53,11 @@ export interface PurchaseDetail {
   penalty: number;
   duedate: string;
   
-  // Extended fields for SaaS CRM view matching Optivox
+  // Soft delete fields
+  status: EntityStatus;
+  deleted_at?: string | null;
+
+  // Extended fields for SaaS CRM view
   clientName: string;
   clientRole?: string;
   clientAvatar?: string;
@@ -55,7 +65,7 @@ export interface PurchaseDetail {
   location: string;
   agentName: string;
   agentAvatar?: string;
-  status: ApplicationStatus;
+  leadStatus?: ApplicationStatus;
   score: number; // 0-100 CRM score
   intent: LeadIntent;
   source: string; // e.g. "Direct Client", "Google Ads", "Referral", "Site Visit", "Facebook"
@@ -90,6 +100,8 @@ export interface PaymentTransaction {
   recordedby: number;
   totalamount: number;
   recordstatus: string;
+  status: EntityStatus;
+  deleted_at?: string | null;
   items: PaymentDetailItem[];
 }
 
@@ -98,6 +110,8 @@ export interface Agent {
   fullname: string;
   contactno: string;
   recordstatus: string;
+  status: EntityStatus;
+  deleted_at?: string | null;
   role: 'Senior Broker' | 'Sales Director' | 'Area Dicer' | 'Area Dicer Manager' | 'Property Specialist' | string;
   avatarUrl?: string;
   totalSales: number;
@@ -118,6 +132,8 @@ export interface Expense {
   amount: number;
   daterelease: string;
   remarks: string;
+  status: EntityStatus;
+  deleted_at?: string | null;
 }
 
 export interface SOAStatement {
@@ -128,7 +144,9 @@ export interface SOAStatement {
   totalPaid: number;
   remainingBalance: number;
   nextDueDate: string;
-  status: 'Up to date' | 'Overdue' | 'Cleared';
+  accountStatus: 'Up to date' | 'Overdue' | 'Cleared';
+  status: EntityStatus;
+  deleted_at?: string | null;
 }
 
 export interface Employee {
@@ -143,6 +161,8 @@ export interface Employee {
   civilstatus: string;
   contactno: string;
   recordstatus: string;
+  status: EntityStatus;
+  deleted_at?: string | null;
   fullname: string;
 }
 
@@ -159,6 +179,8 @@ export interface LoanRecord {
   duedate?: string;
   remarks: string;
   recordstatus: string;
+  status: EntityStatus;
+  deleted_at?: string | null;
 }
 
 export interface PayslipRecord {
@@ -174,7 +196,9 @@ export interface PayslipRecord {
   otherDeductions: number;
   netPay: number;
   dateGenerated: string;
-  status: 'Draft' | 'Released' | 'Paid';
+  payoutStatus: 'Draft' | 'Released' | 'Paid';
+  status: EntityStatus;
+  deleted_at?: string | null;
 }
 
 export interface PayrollRecord {
@@ -195,6 +219,42 @@ export interface PayrollRecord {
   totalDeductions: number;
   netPay: number;
   period: string;
-  status: 'Pending' | 'Approved';
+  approvalStatus: 'Pending' | 'Approved';
+  status: EntityStatus;
+  deleted_at?: string | null;
+}
+
+export type AuditAction = 'CREATE' | 'EDIT' | 'ARCHIVE' | 'RESTORE' | 'PERMANENT_DELETE';
+
+export type EntityTypeName = 
+  | 'Product' 
+  | 'Stakeholder' 
+  | 'Purchase' 
+  | 'Payment' 
+  | 'Agent' 
+  | 'Employee' 
+  | 'Loan' 
+  | 'Benefit' 
+  | 'Payroll' 
+  | 'Payslip' 
+  | 'Expense' 
+  | 'SOA';
+
+export interface AuditLogEntry {
+  id: string;
+  action: AuditAction;
+  entityType: EntityTypeName;
+  recordId: string | number;
+  recordLabel: string;
+  timestamp: string;
+  performedBy: string;
+  reason?: string;
+  details?: string;
+}
+
+export interface GuardRailResult {
+  allowed: boolean;
+  reason?: string;
+  blockingCount?: number;
 }
 

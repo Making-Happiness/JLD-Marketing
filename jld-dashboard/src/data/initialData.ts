@@ -1,4 +1,4 @@
-import { Client, Product, PurchaseDetail, Agent, PaymentTransaction, Expense, Employee, LoanRecord, PayslipRecord, PayrollRecord } from '../types';
+import { Client, Product, PurchaseDetail, Agent, PaymentTransaction, Expense, Employee, LoanRecord, PayslipRecord, PayrollRecord, AuditLogEntry } from '../types';
 
 export const INITIAL_PRODUCTS: Product[] = [
   {
@@ -10,7 +10,9 @@ export const INITIAL_PRODUCTS: Product[] = [
     totalarea: 15000,
     cashprice: 108000,
     availableLots: 34,
-    status: 'Open'
+    projectPhase: 'Open',
+    status: 'active',
+    deleted_at: null
   },
   {
     idproduct: 2,
@@ -21,7 +23,9 @@ export const INITIAL_PRODUCTS: Product[] = [
     totalarea: 28000,
     cashprice: 94200,
     availableLots: 18,
-    status: 'Nearly Sold'
+    projectPhase: 'Nearly Sold',
+    status: 'active',
+    deleted_at: null
   },
   {
     idproduct: 3,
@@ -32,7 +36,9 @@ export const INITIAL_PRODUCTS: Product[] = [
     totalarea: 18500,
     cashprice: 150000,
     availableLots: 42,
-    status: 'Open'
+    projectPhase: 'Open',
+    status: 'active',
+    deleted_at: null
   },
   {
     idproduct: 4,
@@ -43,7 +49,22 @@ export const INITIAL_PRODUCTS: Product[] = [
     totalarea: 32000,
     cashprice: 220000,
     availableLots: 65,
-    status: 'Open'
+    projectPhase: 'Open',
+    status: 'active',
+    deleted_at: null
+  },
+  {
+    idproduct: 5,
+    code: 'JLD-SUR1',
+    location: 'Surallah (Commercial Phase 1)',
+    totalblockno: 6,
+    totallotno: 60,
+    totalarea: 12000,
+    cashprice: 180000,
+    availableLots: 0,
+    projectPhase: 'Completed',
+    status: 'archived',
+    deleted_at: '2026-08-10T14:30:00Z'
   }
 ];
 
@@ -53,6 +74,8 @@ export const INITIAL_AGENTS: Agent[] = [
     fullname: 'Michael Torres',
     contactno: '0917-882-9011',
     recordstatus: 'active',
+    status: 'active',
+    deleted_at: null,
     role: 'Senior Broker',
     avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80',
     totalSales: 4850000,
@@ -66,6 +89,8 @@ export const INITIAL_AGENTS: Agent[] = [
     fullname: 'Amanda Lee',
     contactno: '0922-551-4098',
     recordstatus: 'active',
+    status: 'active',
+    deleted_at: null,
     role: 'Property Specialist',
     avatarUrl: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80',
     totalSales: 3920000,
@@ -79,6 +104,8 @@ export const INITIAL_AGENTS: Agent[] = [
     fullname: 'Kevin Wu',
     contactno: '0945-312-7729',
     recordstatus: 'active',
+    status: 'active',
+    deleted_at: null,
     role: 'Area Dicer Manager',
     avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80',
     totalSales: 6150000,
@@ -92,6 +119,8 @@ export const INITIAL_AGENTS: Agent[] = [
     fullname: 'Janet Hanilap',
     contactno: '0961-091-7237',
     recordstatus: 'active',
+    status: 'active',
+    deleted_at: null,
     role: 'Sales Director',
     avatarUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&auto=format&fit=crop&q=80',
     totalSales: 8900000,
@@ -99,6 +128,21 @@ export const INITIAL_AGENTS: Agent[] = [
     totalEarned: 890000,
     totalClaimed: 620000,
     balance: 270000
+  },
+  {
+    id: 5,
+    fullname: 'Eduardo Ramirez',
+    contactno: '0918-334-1102',
+    recordstatus: 'archived',
+    status: 'archived',
+    deleted_at: '2026-08-12T10:00:00Z',
+    role: 'Property Specialist',
+    avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80',
+    totalSales: 0,
+    commissionRate: 7,
+    totalEarned: 0,
+    totalClaimed: 0,
+    balance: 0
   }
 ];
 
@@ -115,7 +159,9 @@ export const INITIAL_CLIENTS: Client[] = [
     dateofbirth: '1989-04-12',
     placeofbirth: 'Koronadal City',
     spousename: 'David Chen',
-    avatarUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80'
+    avatarUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80',
+    status: 'active',
+    deleted_at: null
   },
   {
     idclients: 2,
@@ -129,7 +175,9 @@ export const INITIAL_CLIENTS: Client[] = [
     dateofbirth: '1985-08-23',
     placeofbirth: 'General Santos City',
     spousename: 'Grace Kim',
-    avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80'
+    avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80',
+    status: 'active',
+    deleted_at: null
   },
   {
     idclients: 3,
@@ -143,7 +191,9 @@ export const INITIAL_CLIENTS: Client[] = [
     dateofbirth: '1979-11-04',
     placeofbirth: 'Norala, South Cotabato',
     spousename: 'Lea Morales',
-    avatarUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&auto=format&fit=crop&q=80'
+    avatarUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&auto=format&fit=crop&q=80',
+    status: 'active',
+    deleted_at: null
   },
   {
     idclients: 4,
@@ -157,7 +207,9 @@ export const INITIAL_CLIENTS: Client[] = [
     dateofbirth: '1992-06-18',
     placeofbirth: 'Surallah',
     spousename: 'Cesar Deita',
-    avatarUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&auto=format&fit=crop&q=80'
+    avatarUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&auto=format&fit=crop&q=80',
+    status: 'active',
+    deleted_at: null
   },
   {
     idclients: 5,
@@ -171,7 +223,9 @@ export const INITIAL_CLIENTS: Client[] = [
     dateofbirth: '1984-01-30',
     placeofbirth: 'Tacurong City',
     spousename: 'Marcus Adams',
-    avatarUrl: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&auto=format&fit=crop&q=80'
+    avatarUrl: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&auto=format&fit=crop&q=80',
+    status: 'active',
+    deleted_at: null
   },
   {
     idclients: 6,
@@ -185,7 +239,9 @@ export const INITIAL_CLIENTS: Client[] = [
     dateofbirth: '1990-09-14',
     placeofbirth: 'Banga',
     spousename: 'Jessica Walker',
-    avatarUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100&auto=format&fit=crop&q=80'
+    avatarUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100&auto=format&fit=crop&q=80',
+    status: 'active',
+    deleted_at: null
   },
   {
     idclients: 7,
@@ -199,7 +255,9 @@ export const INITIAL_CLIENTS: Client[] = [
     dateofbirth: '1988-03-27',
     placeofbirth: 'Sto. Niño',
     spousename: 'N/A',
-    avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'
+    avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80',
+    status: 'active',
+    deleted_at: null
   },
   {
     idclients: 8,
@@ -213,7 +271,9 @@ export const INITIAL_CLIENTS: Client[] = [
     dateofbirth: '1995-12-05',
     placeofbirth: 'Davao City',
     spousename: 'N/A',
-    avatarUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&auto=format&fit=crop&q=80'
+    avatarUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&auto=format&fit=crop&q=80',
+    status: 'active',
+    deleted_at: null
   },
   {
     idclients: 9,
@@ -227,7 +287,9 @@ export const INITIAL_CLIENTS: Client[] = [
     dateofbirth: '1982-07-19',
     placeofbirth: 'Norala',
     spousename: 'Anthony Carter',
-    avatarUrl: 'https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=100&auto=format&fit=crop&q=80'
+    avatarUrl: 'https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=100&auto=format&fit=crop&q=80',
+    status: 'active',
+    deleted_at: null
   },
   {
     idclients: 10,
@@ -241,7 +303,25 @@ export const INITIAL_CLIENTS: Client[] = [
     dateofbirth: '1987-10-11',
     placeofbirth: 'Marbel',
     spousename: 'Claire Rivera',
-    avatarUrl: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=100&auto=format&fit=crop&q=80'
+    avatarUrl: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=100&auto=format&fit=crop&q=80',
+    status: 'active',
+    deleted_at: null
+  },
+  {
+    idclients: 11,
+    firstname: 'Ricardo',
+    lastname: 'Alcantara',
+    middlename: 'P',
+    gender: 'Male',
+    contactno: '0928-112-9901',
+    fullname: 'Alcantara, Ricardo P.',
+    email: 'ricardo.a@legacymail.ph',
+    dateofbirth: '1975-03-22',
+    placeofbirth: 'Surallah',
+    spousename: 'Teresa Alcantara',
+    avatarUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&auto=format&fit=crop&q=80',
+    status: 'archived',
+    deleted_at: '2026-08-18T16:20:00Z'
   }
 ];
 
@@ -261,6 +341,8 @@ export const INITIAL_PURCHASE_DETAILS: PurchaseDetail[] = [
     idagent: 1,
     remarks: 'Approved - 1st Amortization Paid',
     recordstatus: 'active',
+    status: 'active',
+    deleted_at: null,
     otherfees: 1500,
     penalty: 0,
     duedate: '2026-10-15',
@@ -271,7 +353,7 @@ export const INITIAL_PURCHASE_DETAILS: PurchaseDetail[] = [
     location: 'Sto. Niño (Tupaz)',
     agentName: 'Michael Torres',
     agentAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80',
-    status: 'New',
+    leadStatus: 'New',
     score: 92,
     intent: 'High',
     source: 'LinkedIn Ads',
@@ -294,6 +376,8 @@ export const INITIAL_PURCHASE_DETAILS: PurchaseDetail[] = [
     idagent: 2,
     remarks: 'Site tour done, demo scheduled for lot plan',
     recordstatus: 'active',
+    status: 'active',
+    deleted_at: null,
     otherfees: 2000,
     penalty: 0,
     duedate: '2026-10-20',
@@ -304,7 +388,7 @@ export const INITIAL_PURCHASE_DETAILS: PurchaseDetail[] = [
     location: 'Norala (Frondozo-Famulag)',
     agentName: 'Amanda Lee',
     agentAvatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80',
-    status: 'Demo Scheduled',
+    leadStatus: 'Demo Scheduled',
     score: 85,
     intent: 'High',
     source: 'Google Ads',
@@ -327,6 +411,8 @@ export const INITIAL_PURCHASE_DETAILS: PurchaseDetail[] = [
     idagent: 3,
     remarks: 'Corner commercial lot discussion',
     recordstatus: 'active',
+    status: 'active',
+    deleted_at: null,
     otherfees: 3500,
     penalty: 0,
     duedate: '2026-10-18',
@@ -337,7 +423,7 @@ export const INITIAL_PURCHASE_DETAILS: PurchaseDetail[] = [
     location: 'Sto. Niño (Tupaz)',
     agentName: 'Kevin Wu',
     agentAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80',
-    status: 'Negotiation',
+    leadStatus: 'Negotiation',
     score: 77,
     intent: 'Medium',
     source: 'Referral',
@@ -360,6 +446,8 @@ export const INITIAL_PURCHASE_DETAILS: PurchaseDetail[] = [
     idagent: 2,
     remarks: 'Online inquiry, requested subdivision perimeter layout',
     recordstatus: 'active',
+    status: 'active',
+    deleted_at: null,
     otherfees: 1800,
     penalty: 0,
     duedate: '2026-10-25',
@@ -370,7 +458,7 @@ export const INITIAL_PURCHASE_DETAILS: PurchaseDetail[] = [
     location: 'Norala (Frondozo-Famulag)',
     agentName: 'Amanda Lee',
     agentAvatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80',
-    status: 'New',
+    leadStatus: 'New',
     score: 68,
     intent: 'Medium',
     source: 'TikTok Ads',
@@ -393,6 +481,8 @@ export const INITIAL_PURCHASE_DETAILS: PurchaseDetail[] = [
     idagent: 1,
     remarks: 'Double lot purchase proposal drafted',
     recordstatus: 'active',
+    status: 'active',
+    deleted_at: null,
     otherfees: 5000,
     penalty: 0,
     duedate: '2026-10-10',
@@ -403,7 +493,7 @@ export const INITIAL_PURCHASE_DETAILS: PurchaseDetail[] = [
     location: 'Norala (Suganob-Siauso)',
     agentName: 'Michael Torres',
     agentAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80',
-    status: 'Proposal Sent',
+    leadStatus: 'Proposal Sent',
     score: 89,
     intent: 'High',
     source: 'Organic Search',
@@ -426,6 +516,8 @@ export const INITIAL_PURCHASE_DETAILS: PurchaseDetail[] = [
     idagent: 3,
     remarks: 'Followed up twice, waiting for spouse confirmation',
     recordstatus: 'active',
+    status: 'active',
+    deleted_at: null,
     otherfees: 2500,
     penalty: 0,
     duedate: '2026-10-05',
@@ -436,7 +528,7 @@ export const INITIAL_PURCHASE_DETAILS: PurchaseDetail[] = [
     location: 'Norala (Frondozo-Famulag)',
     agentName: 'Kevin Wu',
     agentAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80',
-    status: 'Contacted',
+    leadStatus: 'Contacted',
     score: 58,
     intent: 'Low',
     source: 'Meta Ads',
@@ -459,6 +551,8 @@ export const INITIAL_PURCHASE_DETAILS: PurchaseDetail[] = [
     idagent: 3,
     remarks: 'Qualified buyer, submitted ITR and IDs',
     recordstatus: 'active',
+    status: 'active',
+    deleted_at: null,
     otherfees: 1500,
     penalty: 0,
     duedate: '2026-10-12',
@@ -469,7 +563,7 @@ export const INITIAL_PURCHASE_DETAILS: PurchaseDetail[] = [
     location: 'Sto. Niño (Tupaz)',
     agentName: 'Kevin Wu',
     agentAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80',
-    status: 'Qualified',
+    leadStatus: 'Qualified',
     score: 81,
     intent: 'High',
     source: 'Webinar',
@@ -492,6 +586,8 @@ export const INITIAL_PURCHASE_DETAILS: PurchaseDetail[] = [
     idagent: 2,
     remarks: 'Cash sale buyer prospect',
     recordstatus: 'active',
+    status: 'active',
+    deleted_at: null,
     otherfees: 3000,
     penalty: 0,
     duedate: '2026-11-01',
@@ -502,7 +598,7 @@ export const INITIAL_PURCHASE_DETAILS: PurchaseDetail[] = [
     location: 'Sto. Niño (Tupaz)',
     agentName: 'Amanda Lee',
     agentAvatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80',
-    status: 'New',
+    leadStatus: 'New',
     score: 64,
     intent: 'Medium',
     source: 'LinkedIn Organic',
@@ -525,6 +621,8 @@ export const INITIAL_PURCHASE_DETAILS: PurchaseDetail[] = [
     idagent: 1,
     remarks: 'Contract revision requested for customized terms',
     recordstatus: 'active',
+    status: 'active',
+    deleted_at: null,
     otherfees: 4000,
     penalty: 0,
     duedate: '2026-10-22',
@@ -535,7 +633,7 @@ export const INITIAL_PURCHASE_DETAILS: PurchaseDetail[] = [
     location: 'Norala (Suganob-Siauso)',
     agentName: 'Michael Torres',
     agentAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80',
-    status: 'Negotiation',
+    leadStatus: 'Negotiation',
     score: 91,
     intent: 'High',
     source: 'Referral Partner',
@@ -558,6 +656,8 @@ export const INITIAL_PURCHASE_DETAILS: PurchaseDetail[] = [
     idagent: 2,
     remarks: 'Sent 3-year computation via email, awaiting response',
     recordstatus: 'active',
+    status: 'active',
+    deleted_at: null,
     otherfees: 3200,
     penalty: 0,
     duedate: '2026-10-30',
@@ -568,13 +668,48 @@ export const INITIAL_PURCHASE_DETAILS: PurchaseDetail[] = [
     location: 'Norala (Suganob-Siauso)',
     agentName: 'Amanda Lee',
     agentAvatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80',
-    status: 'Proposal Sent',
+    leadStatus: 'Proposal Sent',
     score: 74,
     intent: 'Medium',
     source: 'Google Ads',
     nextAction: 'Follow-up Call',
     aiRecommendation: 'Decision maker inactive',
     dateApplied: '2026-08-22'
+  },
+  {
+    id: 11,
+    blockno: 6,
+    lotno: 8,
+    area: 250,
+    lotprice: 225000,
+    amortization: 6250,
+    terms: 3,
+    downpayment: 30000,
+    agentpercentage: 7,
+    idclients: 11,
+    idproducts: 5,
+    idagent: 5,
+    remarks: 'Archived contract - Surallah phase settlement completed',
+    recordstatus: 'archived',
+    otherfees: 1500,
+    penalty: 0,
+    duedate: '2026-06-15',
+    status: 'archived',
+    deleted_at: '2026-08-10T15:00:00Z',
+    clientName: 'Ricardo Alcantara',
+    clientRole: 'Retired Educator',
+    clientAvatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&auto=format&fit=crop&q=80',
+    productCode: 'JLD-SUR1',
+    location: 'Surallah (Commercial Phase 1)',
+    agentName: 'Eduardo Ramirez',
+    agentAvatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80',
+    leadStatus: 'Fully Paid',
+    score: 95,
+    intent: 'Low',
+    source: 'Direct Client',
+    nextAction: 'Archived in Registry',
+    aiRecommendation: 'Completed lifecycle',
+    dateApplied: '2025-06-10'
   }
 ];
 
@@ -593,6 +728,8 @@ export const INITIAL_PAYMENTS: PaymentTransaction[] = [
     recordedby: 1,
     totalamount: 26582,
     recordstatus: 'active',
+    status: 'active',
+    deleted_at: null,
     items: [
       {
         id: 1,
@@ -626,6 +763,8 @@ export const INITIAL_PAYMENTS: PaymentTransaction[] = [
     recordedby: 1,
     totalamount: 25000,
     recordstatus: 'active',
+    status: 'active',
+    deleted_at: null,
     items: [
       {
         id: 3,
@@ -650,7 +789,9 @@ export const INITIAL_EXPENSES: Expense[] = [
     purpose: 'Site Engineering',
     amount: 35000,
     daterelease: '2026-09-02',
-    remarks: 'Approved by Management'
+    remarks: 'Approved by Management',
+    status: 'active',
+    deleted_at: null
   },
   {
     id: 2,
@@ -662,7 +803,9 @@ export const INITIAL_EXPENSES: Expense[] = [
     purpose: 'Legal & Documentation',
     amount: 14500,
     daterelease: '2026-09-04',
-    remarks: 'Receipt attached'
+    remarks: 'Receipt attached',
+    status: 'active',
+    deleted_at: null
   },
   {
     id: 3,
@@ -674,7 +817,23 @@ export const INITIAL_EXPENSES: Expense[] = [
     purpose: 'Permits & Licenses',
     amount: 8750,
     daterelease: '2026-09-05',
-    remarks: 'Official Receipt #NOR-9921'
+    remarks: 'Official Receipt #NOR-9921',
+    status: 'active',
+    deleted_at: null
+  },
+  {
+    id: 4,
+    receiveby: 1,
+    receivebyName: 'Provincial Assessor Office',
+    releaseby: 1,
+    releasebyName: 'Kayeen Campana',
+    description: 'Historical Real Property Tax Assessment (2025)',
+    purpose: 'Taxes & Licenses',
+    amount: 12400,
+    daterelease: '2025-12-15',
+    remarks: 'Archived tax assessment receipt',
+    status: 'archived',
+    deleted_at: '2026-07-15T09:00:00Z'
   }
 ];
 
@@ -691,7 +850,9 @@ export const INITIAL_EMPLOYEES: Employee[] = [
     civilstatus: 'Married',
     contactno: '0917-554-9921',
     recordstatus: 'active',
-    fullname: 'Edwards, Ralph G.'
+    status: 'active',
+    deleted_at: null,
+    fullname: 'Edwards, Ralph G.',
   },
   {
     idemployee: 2,
@@ -705,7 +866,9 @@ export const INITIAL_EMPLOYEES: Employee[] = [
     civilstatus: 'Single',
     contactno: '0922-814-3310',
     recordstatus: 'active',
-    fullname: 'Santos, Maria Elena D.'
+    status: 'active',
+    deleted_at: null,
+    fullname: 'Santos, Maria Elena D.',
   },
   {
     idemployee: 3,
@@ -719,7 +882,25 @@ export const INITIAL_EMPLOYEES: Employee[] = [
     civilstatus: 'Married',
     contactno: '0945-667-1120',
     recordstatus: 'active',
-    fullname: 'Alvarez, Rodrigo T.'
+    status: 'active',
+    deleted_at: null,
+    fullname: 'Alvarez, Rodrigo T.',
+  },
+  {
+    idemployee: 4,
+    firstname: 'Rosalinda',
+    lastname: 'Gomez',
+    middlename: 'L',
+    gender: 'Female',
+    dateofbirth: '1980-02-15',
+    salary: 18000,
+    designation: 'Former Office Secretary',
+    civilstatus: 'Married',
+    contactno: '0919-887-3211',
+    recordstatus: 'archived',
+    fullname: 'Gomez, Rosalinda L.',
+    status: 'archived',
+    deleted_at: '2026-07-30T16:00:00Z'
   }
 ];
 
@@ -736,7 +917,9 @@ export const INITIAL_LOANS: LoanRecord[] = [
     amortization: 2000,
     duedate: '2026-12-15',
     remarks: 'Approved by Admin (5 installments)',
-    recordstatus: 'active'
+    recordstatus: 'active',
+    status: 'active',
+    deleted_at: null
   },
   {
     id: 2,
@@ -750,7 +933,9 @@ export const INITIAL_LOANS: LoanRecord[] = [
     amortization: 1000,
     duedate: '2026-11-28',
     remarks: 'Semi-monthly payroll deduction',
-    recordstatus: 'active'
+    recordstatus: 'active',
+    status: 'active',
+    deleted_at: null
   }
 ];
 
@@ -766,7 +951,9 @@ export const INITIAL_BENEFITS: LoanRecord[] = [
     amount: 5000,
     amortization: 5000,
     remarks: 'One-time bonus for Phase 1 titles completion',
-    recordstatus: 'active'
+    recordstatus: 'active',
+    status: 'active',
+    deleted_at: null
   },
   {
     id: 4,
@@ -779,7 +966,9 @@ export const INITIAL_BENEFITS: LoanRecord[] = [
     amount: 3500,
     amortization: 3500,
     remarks: 'Monthly recurring representation',
-    recordstatus: 'active'
+    recordstatus: 'active',
+    status: 'active',
+    deleted_at: null
   }
 ];
 
@@ -797,7 +986,9 @@ export const INITIAL_PAYSLIPS: PayslipRecord[] = [
     otherDeductions: 850,
     netPay: 31150,
     dateGenerated: '2026-08-31',
-    status: 'Released'
+    payoutStatus: 'Released',
+    status: 'active',
+    deleted_at: null
   },
   {
     id: 2,
@@ -812,7 +1003,9 @@ export const INITIAL_PAYSLIPS: PayslipRecord[] = [
     otherDeductions: 620,
     netPay: 24080,
     dateGenerated: '2026-08-31',
-    status: 'Released'
+    payoutStatus: 'Released',
+    status: 'active',
+    deleted_at: null
   },
   {
     id: 3,
@@ -827,7 +1020,9 @@ export const INITIAL_PAYSLIPS: PayslipRecord[] = [
     otherDeductions: 450,
     netPay: 20850,
     dateGenerated: '2026-08-31',
-    status: 'Released'
+    payoutStatus: 'Released',
+    status: 'active',
+    deleted_at: null
   }
 ];
 
@@ -850,7 +1045,9 @@ export const INITIAL_PAYROLL: PayrollRecord[] = [
     totalDeductions: 3940,
     netPay: 24060,
     period: 'Aug 16 - Aug 31, 2026',
-    status: 'Approved'
+    approvalStatus: 'Approved',
+    status: 'active',
+    deleted_at: null
   },
   {
     id: 2,
@@ -870,8 +1067,68 @@ export const INITIAL_PAYROLL: PayrollRecord[] = [
     totalDeductions: 1890,
     netPay: 20110,
     period: 'Aug 16 - Aug 31, 2026',
-    status: 'Approved'
+    approvalStatus: 'Approved',
+    status: 'active',
+    deleted_at: null
   }
 ];
 
 
+
+export const INITIAL_AUDIT_LOGS: AuditLogEntry[] = [
+  {
+    id: 'LOG-20260901-001',
+    action: 'CREATE',
+    entityType: 'Product',
+    recordId: 4,
+    recordLabel: 'JLD-TUP3 (Tupi Phase 3)',
+    timestamp: '2026-09-01T08:00:00Z',
+    performedBy: 'System Administrator',
+    reason: 'Initial subdivision inventory creation',
+    details: 'Created 150 lots in Tupi Commercial & Residential'
+  },
+  {
+    id: 'LOG-20260902-002',
+    action: 'CREATE',
+    entityType: 'Stakeholder',
+    recordId: 1,
+    recordLabel: 'Sarah Chen',
+    timestamp: '2026-09-02T09:15:00Z',
+    performedBy: 'Maria Elena Santos',
+    reason: 'New client registration',
+    details: 'Registered stakeholder for Sto. Niño project'
+  },
+  {
+    id: 'LOG-20260903-003',
+    action: 'ARCHIVE',
+    entityType: 'Product',
+    recordId: 5,
+    recordLabel: 'JLD-SUR1 (Surallah Phase 1)',
+    timestamp: '2026-08-10T14:30:00Z',
+    performedBy: 'System Administrator',
+    reason: 'Phase 1 fully sold out and closed',
+    details: 'Soft-archived from active subdivision inventory lists'
+  },
+  {
+    id: 'LOG-20260904-004',
+    action: 'ARCHIVE',
+    entityType: 'Stakeholder',
+    recordId: 11,
+    recordLabel: 'Ricardo Alcantara',
+    timestamp: '2026-08-18T16:20:00Z',
+    performedBy: 'Ralph Edwards',
+    reason: 'Inactivity - transferred to historical records',
+    details: 'Moved to archived stakeholder ledger'
+  },
+  {
+    id: 'LOG-20260905-005',
+    action: 'ARCHIVE',
+    entityType: 'Agent',
+    recordId: 5,
+    recordLabel: 'Eduardo Ramirez',
+    timestamp: '2026-08-12T10:00:00Z',
+    performedBy: 'System Administrator',
+    reason: 'Agent contract concluded',
+    details: 'Zero pending balance, archived successfully'
+  }
+];
