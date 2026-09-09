@@ -511,12 +511,12 @@ export function App() {
     if(!eligible.length){showToast('No new payroll records need payslips.');return;}
     setPayslips(prev=>[...eligible.map(payslipFromPayroll),...prev]);eligible.forEach(p=>logActivity('Payslip',p.id,p.employeeName,'CREATE',`Generated draft payslip for ${p.period}.`));showToast(`${eligible.length} draft payslips generated. No payment released.`);
   };  return (
-    <div className="flex min-h-screen bg-[#F8FAFC]">
+    <div className="app-shell-root flex min-h-screen bg-[#F8FAFC]">
       {/* Toast Notification */}
       {toastMessage && (
-        <div role="status" aria-live="polite" className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-4 py-2.5 rounded-xl shadow-lg border border-slate-700 flex items-center gap-2 text-xs font-semibold animate-in fade-in slide-in-from-bottom-3 duration-150">
-          <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-          <span>{toastMessage}</span>
+        <div role="status" aria-live="polite" className="app-toast-alert fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-4 py-2.5 rounded-xl shadow-lg border border-slate-700 flex items-center gap-2 text-xs font-semibold animate-in fade-in slide-in-from-bottom-3 duration-150">
+          <CheckCircle2 className="app-toast-icon w-4 h-4 text-emerald-400" />
+          <span className="app-toast-message">{toastMessage}</span>
         </div>
       )}
 
@@ -529,7 +529,7 @@ export function App() {
       />
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="app-main-viewport flex-1 flex flex-col min-w-0">
         {/* Top Header */}
         <TopHeader
           currentTab={currentTab}
@@ -537,9 +537,9 @@ export function App() {
         />
 
         {/* Dynamic View strictly mapping the 4 business modules / 9 navigation tabs */}
-        <div className="flex-1 pb-10 erp-content">
+        <div className="app-content-viewport flex-1 pb-10 erp-content">
           {(currentTab === 'overview' || currentTab === 'reports') && <AccountantWorkspace key={currentTab} db={dbState} report={currentTab === 'reports'} onNavigate={setCurrentTab} onPayment={() => {setPaymentLead(null);setIsPaymentModalOpen(true);}} onContract={() => {setEditingLead(null);setApplyClientId(null);setIsAppModalOpen(true);}} onSOA={handleOpenSOA}/>}
-          {currentTab !== 'overview' && currentTab !== 'reports' && <div className="module-context"><h1>{NAV_MODULES.flatMap(m=>m.items).find(i=>i.id===currentTab)?.label}</h1><p>{['employees','loans-benefits','payroll'].includes(currentTab) ? 'Employee records → adjustments → payroll → payslips → expense vouchers' : 'Properties → buyers → contracts → collections → commissions → cash flow'}</p><details className="related-work"><summary>Related tables</summary><div className="context-links">{( ['employees','loans-benefits','payroll'].includes(currentTab) ? NAV_MODULES.filter(m=>m.id==='people'||m.id==='finance') : NAV_MODULES.filter(m=>m.id==='sales'||m.id==='agents'||m.id==='finance')).flatMap(m=>m.items).map(i=><button key={i.id} aria-current={currentTab===i.id?'page':undefined} onClick={()=>setCurrentTab(i.id as NavigationTab)}>{i.label}</button>)}</div></details></div>}
+          {currentTab !== 'overview' && currentTab !== 'reports' && <div className="module-context"><h1 className="module-context-title">{NAV_MODULES.flatMap(m=>m.items).find(i=>i.id===currentTab)?.label}</h1><p className="module-context-description">{['employees','loans-benefits','payroll'].includes(currentTab) ? 'Employee records → adjustments → payroll → payslips → expense vouchers' : 'Properties → buyers → contracts → collections → commissions → cash flow'}</p><details className="related-work"><summary className="related-work-summary">Related tables</summary><div className="context-links">{( ['employees','loans-benefits','payroll'].includes(currentTab) ? NAV_MODULES.filter(m=>m.id==='people'||m.id==='finance') : NAV_MODULES.filter(m=>m.id==='sales'||m.id==='agents'||m.id==='finance')).flatMap(m=>m.items).map(i=><button key={i.id} className="related-nav-link" aria-current={currentTab===i.id?'page':undefined} onClick={()=>setCurrentTab(i.id as NavigationTab)}>{i.label}</button>)}</div></details></div>}
           {currentTab === 'contracts' && <PurchaseDetailsTable purchases={leads} onNewPurchase={() => {setEditingLead(null);setApplyClientId(null);setIsAppModalOpen(true);}} onEditPurchase={handleEditPurchase} onViewDetails={handleOpenSOA} onViewHistory={handleOpenSOA} onArchivePurchase={p=>handleArchive('Purchase',p.id,p.clientName)} onRestorePurchase={p=>handleRestore('Purchase',p.id,p.clientName)} onPermanentDeletePurchase={p=>handleRequestPermanentDelete('Purchase',p.id,p.clientName)}/>}
           {/* Module 1: Sales & Properties */}
           {currentTab === 'products' && (

@@ -2,4 +2,28 @@ import type { Product } from '../../types';
 import { formatCurrency } from '../../utils/calculations';
 import { RecordTable } from './RecordTable';
 interface InventoryTableProps{products:Product[];onAddProduct:()=>void;onEditProduct:(r:Product)=>void;onArchiveProduct:(r:Product)=>void;onRestoreProduct?:(r:Product)=>void;onPermanentDeleteProduct?:(r:Product)=>void;onViewHistory?:(r:Product)=>void;}
-export function InventoryTable(p:InventoryTableProps){return <RecordTable rows={p.products} rowKey={r=>r.idproduct} searchText={r=>`${r.code} ${r.location}`} addLabel="Add property" onAdd={p.onAddProduct} actions={{onArchive:p.onArchiveProduct,onRestore:p.onRestoreProduct,onDelete:p.onPermanentDeleteProduct,onHistory:p.onViewHistory}} primaryAction={r=><button className="table-action" onClick={()=>p.onEditProduct(r)}>Edit property</button>} columns={[{label:'Property code',render:r=><strong>{r.code}</strong>},{label:'Location / project',render:r=>r.location},{label:'Blocks',numeric:true,render:r=>r.totalblockno},{label:'Lots',numeric:true,render:r=>r.totallotno},{label:'Land area (m²)',numeric:true,render:r=>r.totalarea.toLocaleString()},{label:'Cash price / 100 m²',numeric:true,render:r=>formatCurrency(r.cashprice)},{label:'Phase',render:r=><span className="source-pill neutral">{r.projectPhase||'Open'}</span>}]} summary={rows=><>{rows.reduce((s,r)=>s+r.totallotno,0)} total lots</>}/>}
+export function InventoryTable(p:InventoryTableProps){
+  return (
+    <div className="inventory-table-view">
+      <RecordTable
+        rows={p.products}
+        rowKey={r=>r.idproduct}
+        searchText={r=>`${r.code} ${r.location}`}
+        addLabel="Add property"
+        onAdd={p.onAddProduct}
+        actions={{onArchive:p.onArchiveProduct,onRestore:p.onRestoreProduct,onDelete:p.onPermanentDeleteProduct,onHistory:p.onViewHistory}}
+        primaryAction={r=><button className="inventory-edit-action-btn table-action" onClick={()=>p.onEditProduct(r)}>Edit property</button>}
+        columns={[
+          {label:'Property code',render:r=><strong className="inventory-code-cell">{r.code}</strong>},
+          {label:'Location / project',render:r=><span className="inventory-location-cell">{r.location}</span>},
+          {label:'Blocks',numeric:true,render:r=><span className="inventory-blocks-cell">{r.totalblockno}</span>},
+          {label:'Lots',numeric:true,render:r=><span className="inventory-lots-cell">{r.totallotno}</span>},
+          {label:'Land area (m²)',numeric:true,render:r=><span className="inventory-area-cell">{r.totalarea.toLocaleString()}</span>},
+          {label:'Cash price / 100 m²',numeric:true,render:r=><span className="inventory-price-cell">{formatCurrency(r.cashprice)}</span>},
+          {label:'Phase',render:r=><span className="inventory-phase-tag source-pill neutral">{r.projectPhase||'Open'}</span>}
+        ]}
+        summary={rows=><span className="inventory-summary-text">{rows.reduce((s,r)=>s+r.totallotno,0)} total lots</span>}
+      />
+    </div>
+  );
+}

@@ -110,25 +110,25 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
 
   return (
     <ModalFrame onClose={onClose} title='Payment form'>
-      <div className="bg-white rounded-2xl max-w-2xl w-full border border-slate-200 shadow-xl overflow-hidden my-6 animate-in fade-in zoom-in-95 duration-150">
+      <div className="payment-modal-card bg-white rounded-2xl max-w-2xl w-full border border-slate-200 shadow-xl overflow-hidden my-6 animate-in fade-in zoom-in-95 duration-150">
         {/* Modal Header */}
-        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center">
+        <div className="payment-modal-header px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
+          <div className="payment-modal-header-brand flex items-center gap-2">
+            <div className="payment-modal-icon-badge w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center">
               <Receipt className="w-4 h-4" />
             </div>
-            <div>
-              <h2 className="text-base font-bold text-slate-900">
+            <div className="payment-modal-title-group">
+              <h2 className="payment-modal-title text-base font-bold text-slate-900">
                 {showReceipt ? 'Official Payment Receipt' : 'Record payment'}
               </h2>
-              <p className="text-xs text-slate-500">
+              <p className="payment-modal-subtitle text-xs text-slate-500">
                 Record collections against a buyer contract
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
+            className="payment-modal-close-button p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -136,22 +136,22 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
 
         {!showReceipt ? (
           /* Payment Processing Form */
-          <div className="p-6 space-y-4 text-xs">{error && <p role="alert" className="form-error">{error}</p>}
+          <div className="payment-modal-body p-6 space-y-4 text-xs">{error && <p role="alert" className="payment-modal-error form-error">{error}</p>}
             {/* Payment Ref Bar */}
-            <div className="bg-emerald-50/60 border border-emerald-200/80 rounded-xl px-4 py-2.5 flex items-center justify-between">
-              <div>
-                <span className="text-[10px] uppercase font-semibold text-emerald-800 block">Payment Reference Code</span>
-                <span className="text-sm font-mono font-bold text-emerald-950">{paymentRef}</span>
+            <div className="payment-ref-banner bg-emerald-50/60 border border-emerald-200/80 rounded-xl px-4 py-2.5 flex items-center justify-between">
+              <div className="payment-ref-code-group">
+                <span className="payment-ref-label text-[10px] uppercase font-semibold text-emerald-800 block">Payment Reference Code</span>
+                <span className="payment-ref-value text-sm font-mono font-bold text-emerald-950">{paymentRef}</span>
               </div>
-              <div className="text-right">
-                <span className="text-[10px] uppercase font-semibold text-slate-500 block">In-Charge / Cashier</span>
-                <span className="text-xs font-semibold text-slate-800">{inchargeByName}</span>
+              <div className="payment-incharge-group text-right">
+                <span className="payment-incharge-label text-[10px] uppercase font-semibold text-slate-500 block">In-Charge / Cashier</span>
+                <span className="payment-incharge-value text-xs font-semibold text-slate-800">{inchargeByName}</span>
               </div>
             </div>
 
             {/* Target Account / Property Selection */}
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
+            <div className="payment-account-select-group">
+              <label className="payment-field-label block text-xs font-semibold text-slate-700 mb-1">
                 Select Client & Subdivision Lot *
               </label>
               <select
@@ -165,7 +165,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
                     setItemDesc(`Amortization for ${selected.location} Blk ${selected.blockno} Lot ${selected.lotno}`);
                   }
                 }}
-                className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:border-emerald-600 outline-none"
+                className="payment-select-input w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:border-emerald-600 outline-none"
               >
                 {applications.map(a => (
                   <option key={a.id} value={a.id}>
@@ -176,39 +176,39 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
             </div>
 
             {/* Payment Details: OR, Date, Method */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div>
-                <label className="block text-[11px] font-semibold text-slate-600 mb-1">
+            <div className="payment-details-grid grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="payment-or-group">
+                <label className="payment-field-label block text-[11px] font-semibold text-slate-600 mb-1">
                   Official Receipt (OR No.) *
                 </label>
                 <input
                   type="text"
                   value={orNumber}
                   onChange={(e) => setOrNumber(e.target.value)}
-                  className="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 font-medium focus:border-emerald-600 outline-none"
+                  className="payment-text-input w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 font-medium focus:border-emerald-600 outline-none"
                 />
               </div>
 
-              <div>
-                <label className="block text-[11px] font-semibold text-slate-600 mb-1">
+              <div className="payment-date-group">
+                <label className="payment-field-label block text-[11px] font-semibold text-slate-600 mb-1">
                   Date of Payment
                 </label>
                 <input
                   type="date"
                   value={dateOfPayment}
                   onChange={(e) => setDateOfPayment(e.target.value)}
-                  className="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs text-slate-800 focus:border-emerald-600 outline-none"
+                  className="payment-date-input w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs text-slate-800 focus:border-emerald-600 outline-none"
                 />
               </div>
 
-              <div>
-                <label className="block text-[11px] font-semibold text-slate-600 mb-1">
+              <div className="payment-method-group">
+                <label className="payment-field-label block text-[11px] font-semibold text-slate-600 mb-1">
                   Payment Method
                 </label>
                 <select
                   value={paymentType}
                   onChange={(e) => setPaymentType(e.target.value as PaymentMethodType)}
-                  className="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs text-slate-800 focus:border-emerald-600 outline-none"
+                  className="payment-method-select w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs text-slate-800 focus:border-emerald-600 outline-none"
                 >
                   <option value="CASH">CASH</option>
                   <option value="BANK TRANSFER">BANK TRANSFER</option>
@@ -220,8 +220,8 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
             </div>
 
             {paymentType !== 'CASH' && (
-              <div>
-                <label className="block text-[11px] font-semibold text-slate-600 mb-1">
+              <div className="payment-refno-group">
+                <label className="payment-field-label block text-[11px] font-semibold text-slate-600 mb-1">
                   Bank / Transaction Reference Number *
                 </label>
                 <input
@@ -229,20 +229,20 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
                   value={referenceNo}
                   onChange={(e) => setReferenceNo(e.target.value)}
                   placeholder="e.g. BDO-TRX-10294 or GCash Ref 8820"
-                  className="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs text-slate-800 focus:border-emerald-600 outline-none"
+                  className="payment-refno-input w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs text-slate-800 focus:border-emerald-600 outline-none"
                 />
               </div>
             )}
 
             {/* Add Payment Item Line Bar */}
-            <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/80 space-y-2">
-              <span className="text-[11px] font-bold text-slate-700 block">Add Payment Item</span>
-              <div className="grid grid-cols-1 sm:grid-cols-4 gap-2">
-                <div>
+            <div className="payment-add-item-card p-3 bg-slate-50 rounded-xl border border-slate-200/80 space-y-2">
+              <span className="payment-add-item-title text-[11px] font-bold text-slate-700 block">Add Payment Item</span>
+              <div className="payment-add-item-grid grid grid-cols-1 sm:grid-cols-4 gap-2">
+                <div className="payment-for-group">
                   <select
                     value={paymentFor}
                     onChange={(e) => setPaymentFor(e.target.value as PaymentForType)}
-                    className="w-full bg-white border border-slate-200 rounded-lg px-2 py-1.5 text-xs text-slate-800 outline-none"
+                    className="payment-for-select w-full bg-white border border-slate-200 rounded-lg px-2 py-1.5 text-xs text-slate-800 outline-none"
                   >
                     <option value="RESERVED">RESERVED</option>
                     <option value="DOWN PAYMENT">DOWN PAYMENT</option>
@@ -250,30 +250,30 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
                     <option value="FULL PAYMENT">FULL PAYMENT</option>
                   </select>
                 </div>
-                <div>
+                <div className="payment-amount-group">
                   <input
                     type="number"
                     step="100"
                     placeholder="Amount"
                     value={itemAmount}
                     onChange={(e) => setItemAmount(Number(e.target.value))}
-                    className="w-full bg-white border border-slate-200 rounded-lg px-2 py-1.5 text-xs font-semibold text-slate-900 outline-none"
+                    className="payment-amount-input w-full bg-white border border-slate-200 rounded-lg px-2 py-1.5 text-xs font-semibold text-slate-900 outline-none"
                   />
                 </div>
-                <div>
+                <div className="payment-desc-group">
                   <input
                     type="text"
                     placeholder="Description notes"
                     value={itemDesc}
                     onChange={(e) => setItemDesc(e.target.value)}
-                    className="w-full bg-white border border-slate-200 rounded-lg px-2 py-1.5 text-xs text-slate-800 outline-none"
+                    className="payment-desc-input w-full bg-white border border-slate-200 rounded-lg px-2 py-1.5 text-xs text-slate-800 outline-none"
                   />
                 </div>
-                <div>
+                <div className="payment-add-button-group">
                   <button
                     type="button"
                     onClick={handleAddItem}
-                    className="w-full py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white font-semibold rounded-lg flex items-center justify-center gap-1 shadow-2xs transition-colors cursor-pointer"
+                    className="payment-add-item-button w-full py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white font-semibold rounded-lg flex items-center justify-center gap-1 shadow-2xs transition-colors cursor-pointer"
                   >
                     <Plus className="w-3.5 h-3.5" />
                     <span>Add Item</span>
@@ -283,39 +283,39 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
             </div>
 
             {/* Payment Items Cart / DGV */}
-            <div className="border border-slate-200 rounded-xl overflow-hidden">
-              <table className="w-full text-left text-xs">
-                <thead className="bg-slate-100/80 text-[11px] text-slate-500 font-semibold border-b border-slate-200">
+            <div className="payment-cart-table-container border border-slate-200 rounded-xl overflow-hidden">
+              <table className="payment-cart-table w-full text-left text-xs">
+                <thead className="payment-cart-header bg-slate-100/80 text-[11px] text-slate-500 font-semibold border-b border-slate-200">
                   <tr>
-                    <th className="py-2 px-3">Payment For</th>
-                    <th className="py-2 px-3">Description</th>
-                    <th className="py-2 px-3 text-right">Amount</th>
-                    <th className="py-2 px-3 text-center w-12">Action</th>
+                    <th className="payment-cart-th py-2 px-3">Payment For</th>
+                    <th className="payment-cart-th py-2 px-3">Description</th>
+                    <th className="payment-cart-th py-2 px-3 text-right">Amount</th>
+                    <th className="payment-cart-th py-2 px-3 text-center w-12">Action</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100">
+                <tbody className="payment-cart-body divide-y divide-slate-100">
                   {items.length === 0 ? (
-                    <tr>
-                      <td colSpan={4} className="py-4 text-center text-slate-400">
+                    <tr className="payment-cart-empty-row">
+                      <td colSpan={4} className="payment-cart-empty-cell py-4 text-center text-slate-400">
                         No items added yet. Click "Add Item" above.
                       </td>
                     </tr>
                   ) : (
                     items.map((item) => (
-                      <tr key={item.id} className="hover:bg-slate-50">
-                        <td className="py-2.5 px-3 font-semibold text-slate-800">
+                      <tr key={item.id} className="payment-cart-row hover:bg-slate-50">
+                        <td className="payment-cart-cell py-2.5 px-3 font-semibold text-slate-800">
                           {item.paymentfor}
                         </td>
-                        <td className="py-2.5 px-3 text-slate-600">
+                        <td className="payment-cart-cell py-2.5 px-3 text-slate-600">
                           {item.description}
                         </td>
-                        <td className="py-2.5 px-3 text-right font-bold text-slate-900">
+                        <td className="payment-cart-cell py-2.5 px-3 text-right font-bold text-slate-900">
                           {formatCurrency(item.amount)}
                         </td>
-                        <td className="py-2.5 px-3 text-center">
+                        <td className="payment-cart-cell py-2.5 px-3 text-center">
                           <button
                             onClick={() => handleRemoveItem(item.id)}
-                            className="p-1 text-slate-400 hover:text-rose-600 rounded transition-colors"
+                            className="payment-cart-remove-button p-1 text-slate-400 hover:text-rose-600 rounded transition-colors"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
                           </button>
@@ -327,20 +327,20 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
               </table>
 
               {/* Total Row */}
-              <div className="p-3 bg-slate-50/80 border-t border-slate-200 flex items-center justify-between">
-                <span className="font-semibold text-slate-700">Total Payment Due:</span>
-                <span className="text-base font-bold text-emerald-800">
+              <div className="payment-total-banner p-3 bg-slate-50/80 border-t border-slate-200 flex items-center justify-between">
+                <span className="payment-total-label font-semibold text-slate-700">Total Payment Due:</span>
+                <span className="payment-total-value text-base font-bold text-emerald-800">
                   {formatCurrency(totalAmount)}
                 </span>
               </div>
             </div>
 
             {/* Buttons */}
-            <div className="pt-2 flex items-center justify-end gap-2.5">
+            <div className="payment-actions-bar pt-2 flex items-center justify-end gap-2.5">
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 bg-slate-100 hover:bg-slate-200/80 text-slate-700 font-semibold rounded-xl transition-colors cursor-pointer"
+                className="payment-cancel-button px-4 py-2 bg-slate-100 hover:bg-slate-200/80 text-slate-700 font-semibold rounded-xl transition-colors cursor-pointer"
               >
                 Cancel
               </button>
@@ -348,7 +348,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
                 type="button"
                 onClick={handleSubmitPayment}
                 disabled={items.length === 0}
-                className="px-5 py-2 bg-[#00593B] hover:bg-[#004a31] disabled:opacity-50 text-white font-semibold rounded-xl shadow-sm transition-all cursor-pointer"
+                className="payment-submit-button px-5 py-2 bg-[#00593B] hover:bg-[#004a31] disabled:opacity-50 text-white font-semibold rounded-xl shadow-sm transition-all cursor-pointer"
               >
                 Accept Payment & Print Receipt
               </button>
@@ -356,46 +356,46 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
           </div>
         ) : (
           /* Printable Receipt View */
-          <div className="p-6 space-y-5">
-            <div className="p-6 border-2 border-dashed border-slate-300 rounded-2xl bg-white text-xs space-y-4">
-              <div className="text-center pb-3 border-b border-slate-200">
-                <h3 className="text-base font-bold text-slate-900 tracking-tight">JLD SUBDIVISION & REAL PROPERTY</h3>
-                <p className="text-[11px] text-slate-500">Official Payment Acknowledgement Receipt</p>
-                <div className="inline-block mt-2 bg-emerald-50 text-emerald-800 border border-emerald-200 px-2.5 py-0.5 rounded-full text-[11px] font-bold">
+          <div className="payment-receipt-view p-6 space-y-5">
+            <div className="payment-receipt-sheet p-6 border-2 border-dashed border-slate-300 rounded-2xl bg-white text-xs space-y-4">
+              <div className="payment-receipt-header text-center pb-3 border-b border-slate-200">
+                <h3 className="payment-receipt-company-title text-base font-bold text-slate-900 tracking-tight">JLD SUBDIVISION & REAL PROPERTY</h3>
+                <p className="payment-receipt-doc-title text-[11px] text-slate-500">Official Payment Acknowledgement Receipt</p>
+                <div className="payment-receipt-or-badge inline-block mt-2 bg-emerald-50 text-emerald-800 border border-emerald-200 px-2.5 py-0.5 rounded-full text-[11px] font-bold">
                   OR: {savedPayment?.orderreceipt}
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-2 text-slate-600 text-xs">
-                <div><span className="font-semibold text-slate-800">Paid By:</span> {savedPayment?.paidbyName}</div>
-                <div><span className="font-semibold text-slate-800">Date:</span> {formatDate(savedPayment?.dateofpayment)}</div>
-                <div><span className="font-semibold text-slate-800">Payment Ref:</span> {savedPayment?.paymentref}</div>
-                <div><span className="font-semibold text-slate-800">Payment Mode:</span> {savedPayment?.paymenttype} {savedPayment?.referenceno ? `(${savedPayment.referenceno})` : ''}</div>
-                <div><span className="font-semibold text-slate-800">Cashier:</span> {savedPayment?.inchargebyName}</div>
+              <div className="payment-receipt-metadata-grid grid grid-cols-2 gap-2 text-slate-600 text-xs">
+                <div className="payment-receipt-meta-item"><span className="payment-receipt-meta-label font-semibold text-slate-800">Paid By:</span> {savedPayment?.paidbyName}</div>
+                <div className="payment-receipt-meta-item"><span className="payment-receipt-meta-label font-semibold text-slate-800">Date:</span> {formatDate(savedPayment?.dateofpayment)}</div>
+                <div className="payment-receipt-meta-item"><span className="payment-receipt-meta-label font-semibold text-slate-800">Payment Ref:</span> {savedPayment?.paymentref}</div>
+                <div className="payment-receipt-meta-item"><span className="payment-receipt-meta-label font-semibold text-slate-800">Payment Mode:</span> {savedPayment?.paymenttype} {savedPayment?.referenceno ? `(${savedPayment.referenceno})` : ''}</div>
+                <div className="payment-receipt-meta-item"><span className="payment-receipt-meta-label font-semibold text-slate-800">Cashier:</span> {savedPayment?.inchargebyName}</div>
               </div>
 
-              <div className="border-t border-b border-slate-200 py-3 space-y-2">
+              <div className="payment-receipt-items-list border-t border-b border-slate-200 py-3 space-y-2">
                 {savedPayment?.items.map(item => (
-                  <div key={item.id} className="flex justify-between">
-                    <div>
-                      <span className="font-semibold text-slate-800">{item.paymentfor}</span>
-                      <span className="text-slate-500 block text-[11px]">{item.description}</span>
+                  <div key={item.id} className="payment-receipt-item-row flex justify-between">
+                    <div className="payment-receipt-item-info">
+                      <span className="payment-receipt-item-for font-semibold text-slate-800">{item.paymentfor}</span>
+                      <span className="payment-receipt-item-desc text-slate-500 block text-[11px]">{item.description}</span>
                     </div>
-                    <span className="font-bold text-slate-900">{formatCurrency(item.amount)}</span>
+                    <span className="payment-receipt-item-amount font-bold text-slate-900">{formatCurrency(item.amount)}</span>
                   </div>
                 ))}
               </div>
 
-              <div className="flex justify-between items-center pt-1 text-sm font-bold text-slate-900">
-                <span>TOTAL PAID:</span>
-                <span className="text-emerald-800 text-base">{formatCurrency(savedPayment?.totalamount)}</span>
+              <div className="payment-receipt-total-row flex justify-between items-center pt-1 text-sm font-bold text-slate-900">
+                <span className="payment-receipt-total-label">TOTAL PAID:</span>
+                <span className="payment-receipt-total-value text-emerald-800 text-base">{formatCurrency(savedPayment?.totalamount)}</span>
               </div>
             </div>
 
-            <div className="flex items-center justify-end gap-2.5">
+            <div className="payment-receipt-actions-bar flex items-center justify-end gap-2.5">
               <button
                 onClick={() => window.print()}
-                className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer"
+                className="payment-receipt-print-button px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer"
               >
                 <Printer className="w-3.5 h-3.5" />
                 <span>Print OR</span>
@@ -406,7 +406,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
                   setItems([]);
                   onClose();
                 }}
-                className="px-5 py-2 bg-[#00593B] hover:bg-[#004a31] text-white font-semibold rounded-xl shadow-sm transition-all cursor-pointer"
+                className="payment-receipt-done-button px-5 py-2 bg-[#00593B] hover:bg-[#004a31] text-white font-semibold rounded-xl shadow-sm transition-all cursor-pointer"
               >
                 Done
               </button>

@@ -1,4 +1,4 @@
-﻿# Dependencies
+# Dependencies
 node_modules/
 */node_modules/
 **/node_modules/
@@ -12,6 +12,8 @@ dist-ssr/
 # Visual Studio / MSBuild
 .vs/
 */.vs/
+.vscode/
+*/.vscode/
 **/obj/
 *.suo
 *.user
