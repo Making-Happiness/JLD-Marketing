@@ -1,7 +1,7 @@
 import { ModalFrame } from './ModalFrame';
 import React, { useState, useEffect } from 'react';
 import { calculateAmortization, formatCurrency } from '../../utils/calculations';
-import { X, Calculator, ArrowRight, ShieldCheck, Check } from 'lucide-react';
+import { X, Calculator, ArrowRight } from 'lucide-react';
 
 interface CalculatorModalProps {
   isOpen: boolean;

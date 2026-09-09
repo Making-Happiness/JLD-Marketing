@@ -11,7 +11,7 @@ export function PayrollTable(p:PayrollTableProps){
   const [selectedSlip,setSelectedSlip]=useState<PayslipRecord|null>(null);
   const slips=p.payslips||[];
   const tabs=(
-    <div className="payroll-mode-tabs module-tabs">
+    <div className="payroll-mode-tabs workspace-tabs">
       <button className="payroll-tab-button" aria-pressed={mode==='payroll'} onClick={()=>setMode('payroll')}>Payroll records</button>
       <button className="payroll-tab-button" aria-pressed={mode==='payslips'} onClick={()=>setMode('payslips')}>Employee payslips</button>
     </div>

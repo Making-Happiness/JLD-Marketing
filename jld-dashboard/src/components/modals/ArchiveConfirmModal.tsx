@@ -1,6 +1,6 @@
 import { ModalFrame } from './ModalFrame';
 import React, { useState, useEffect } from 'react';
-import { Archive, AlertCircle, X, ShieldAlert } from 'lucide-react';
+import { Archive, X, ShieldAlert, AlertCircle } from 'lucide-react';
 import { GuardRailResult } from '../../types';
 
 interface ArchiveConfirmModalProps {

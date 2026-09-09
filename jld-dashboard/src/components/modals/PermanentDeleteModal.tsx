@@ -1,6 +1,6 @@
 import { ModalFrame } from './ModalFrame';
 import React, { useState, useEffect } from 'react';
-import { Trash2, AlertTriangle, ShieldCheck, ShieldAlert, X } from 'lucide-react';
+import { Trash2, ShieldAlert, X, AlertTriangle, ShieldCheck } from 'lucide-react';
 import { GuardRailResult } from '../../types';
 
 interface PermanentDeleteModalProps {

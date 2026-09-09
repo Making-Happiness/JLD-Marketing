@@ -1,7 +1,7 @@
 import { ModalFrame } from './ModalFrame';
 import React, { useState, useEffect } from 'react';
 import { Product } from '../../types';
-import { X, Building2, MapPin, Hash, Layers, Maximize2, Tag, CheckCircle2 } from 'lucide-react';
+import { X, Building2 } from 'lucide-react';
 
 interface ProductModalProps {
   isOpen: boolean;

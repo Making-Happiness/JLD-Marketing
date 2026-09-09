@@ -8,13 +8,11 @@ import {
   Plus, 
   Edit3, 
   Search, 
-  X, 
-  Calendar, 
-  User, 
-  Filter 
+  X,
+  User,
+  Calendar
 } from 'lucide-react';
 import { AuditLogEntry, AuditAction, EntityTypeName } from '../../types';
-import { formatDate } from '../../utils/calculations';
 
 interface ActivityHistoryModalProps {
   isOpen: boolean;

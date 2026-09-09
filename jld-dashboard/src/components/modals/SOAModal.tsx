@@ -2,7 +2,7 @@ import { ModalFrame } from './ModalFrame';
 import React from 'react';
 import { PurchaseDetail, PaymentTransaction } from '../../types';
 import { formatCurrency, formatDate } from '../../utils/calculations';
-import { X, Printer, FileText, CheckCircle, AlertTriangle } from 'lucide-react';
+import { X, Printer, FileText } from 'lucide-react';
 
 interface SOAModalProps {
   isOpen: boolean;

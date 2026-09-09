@@ -3,8 +3,7 @@ import { EntryDialog, EntryKind, EntryValues } from './components/EntryDialog';
 import { preparePayroll, payslipFromPayroll } from './utils/workflows';
 import { AccountantWorkspace } from './components/AccountantWorkspace';
 import { PurchaseDetailsTable } from './components/tables/PurchaseDetailsTable';
-import { NAV_MODULES } from './components/layout/Sidebar';
-import { Sidebar, NavigationTab } from './components/layout/Sidebar';
+import { Sidebar, NavigationTab, NAV_SECTIONS } from './components/layout/Sidebar';
 import { TopHeader } from './components/layout/TopHeader';
 import { InventoryTable } from './components/tables/InventoryTable';
 import { StakeholdersTable } from './components/tables/StakeholdersTable';
@@ -65,10 +64,10 @@ import {
   FullDatabaseState
 } from './utils/guardRails';
 import { formatCurrency } from './utils/calculations';
-import { CheckCircle2, History } from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
 
 export function App() {
-  // 4 Business Modules navigation (9 consolidated sub-navigation tabs)
+  // Current active workspace navigation tab
   const [currentTab, setCurrentTab] = useState<NavigationTab>('overview');
 
   const [entryKind,setEntryKind]=useState<EntryKind|null>(null);
@@ -536,12 +535,12 @@ export function App() {
           onOpenNotifications={handleOpenSystemHistory}
         />
 
-        {/* Dynamic View strictly mapping the 4 business modules / 9 navigation tabs */}
+        {/* Dynamic Workspace Ledger Views */}
         <div className="app-content-viewport flex-1 pb-10 erp-content">
           {(currentTab === 'overview' || currentTab === 'reports') && <AccountantWorkspace key={currentTab} db={dbState} report={currentTab === 'reports'} onNavigate={setCurrentTab} onPayment={() => {setPaymentLead(null);setIsPaymentModalOpen(true);}} onContract={() => {setEditingLead(null);setApplyClientId(null);setIsAppModalOpen(true);}} onSOA={handleOpenSOA}/>}
-          {currentTab !== 'overview' && currentTab !== 'reports' && <div className="module-context"><h1 className="module-context-title">{NAV_MODULES.flatMap(m=>m.items).find(i=>i.id===currentTab)?.label}</h1><p className="module-context-description">{['employees','loans-benefits','payroll'].includes(currentTab) ? 'Employee records → adjustments → payroll → payslips → expense vouchers' : 'Properties → buyers → contracts → collections → commissions → cash flow'}</p><details className="related-work"><summary className="related-work-summary">Related tables</summary><div className="context-links">{( ['employees','loans-benefits','payroll'].includes(currentTab) ? NAV_MODULES.filter(m=>m.id==='people'||m.id==='finance') : NAV_MODULES.filter(m=>m.id==='sales'||m.id==='agents'||m.id==='finance')).flatMap(m=>m.items).map(i=><button key={i.id} className="related-nav-link" aria-current={currentTab===i.id?'page':undefined} onClick={()=>setCurrentTab(i.id as NavigationTab)}>{i.label}</button>)}</div></details></div>}
+          {currentTab !== 'overview' && currentTab !== 'reports' && <div className="workspace-view-context module-context"><h1 className="workspace-view-title module-context-title">{NAV_SECTIONS.flatMap(s=>s.items).find(i=>i.id===currentTab)?.label}</h1><p className="workspace-view-description module-context-description">{['employees','loans-benefits','payroll'].includes(currentTab) ? 'Employee records → adjustments → payroll → payslips → expense vouchers' : 'Properties → buyers → contracts → collections → commissions → cash flow'}</p><details className="related-work"><summary className="related-work-summary">Related tables</summary><div className="context-links">{( ['employees','loans-benefits','payroll'].includes(currentTab) ? NAV_SECTIONS.filter(s=>s.id==='people'||s.id==='finance') : NAV_SECTIONS.filter(s=>s.id==='sales'||s.id==='agents'||s.id==='finance')).flatMap(s=>s.items).map(i=><button key={i.id} className="related-nav-link" aria-current={currentTab===i.id?'page':undefined} onClick={()=>setCurrentTab(i.id as NavigationTab)}>{i.label}</button>)}</div></details></div>}
           {currentTab === 'contracts' && <PurchaseDetailsTable purchases={leads} onNewPurchase={() => {setEditingLead(null);setApplyClientId(null);setIsAppModalOpen(true);}} onEditPurchase={handleEditPurchase} onViewDetails={handleOpenSOA} onViewHistory={handleOpenSOA} onArchivePurchase={p=>handleArchive('Purchase',p.id,p.clientName)} onRestorePurchase={p=>handleRestore('Purchase',p.id,p.clientName)} onPermanentDeletePurchase={p=>handleRequestPermanentDelete('Purchase',p.id,p.clientName)}/>}
-          {/* Module 1: Sales & Properties */}
+          {/* Properties & Lots */}
           {currentTab === 'products' && (
             <InventoryTable
               products={products}
@@ -597,7 +596,7 @@ export function App() {
             />
           )}
 
-          {/* Module 2: Agents & Commissions */}
+          {/* Sales Partners: Agents & Commissions */}
           {currentTab === 'agents-commissions' && (
             <AgentsTable
               agents={agents}
@@ -610,7 +609,7 @@ export function App() {
             />
           )}
 
-          {/* Module 3: HR & Payroll */}
+          {/* People & Payroll */}
           {currentTab === 'employees' && (
             <EmployeesTable
               employees={employees}
@@ -651,7 +650,7 @@ export function App() {
             />
           )}
 
-          {/* Module 4: Finance & Reports */}
+          {/* Finance & Ledgers */}
           {currentTab === 'expenses' && (
             <ExpensesTable
               expenses={expenses}
