@@ -1,3 +1,4 @@
+import { ModalFrame } from './ModalFrame';
 import React from 'react';
 import { PurchaseDetail, PaymentTransaction } from '../../types';
 import { formatCurrency, formatDate } from '../../utils/calculations';
@@ -43,7 +44,7 @@ export const SOAModal: React.FC<SOAModalProps> = ({
   const progressPercent = Math.min(100, Math.round((totalPaid / (application.lotprice || 1)) * 100));
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-xs p-4 overflow-y-auto">
+    <ModalFrame onClose={onClose} title='SOA'>
       <div className="bg-white rounded-2xl max-w-3xl w-full border border-slate-200 shadow-2xl overflow-hidden my-6 animate-in fade-in zoom-in-95 duration-150">
         {/* Header */}
         <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/80">
@@ -54,7 +55,7 @@ export const SOAModal: React.FC<SOAModalProps> = ({
             <div>
               <h2 className="text-base font-bold text-slate-900">Statement of Account (SOA)</h2>
               <p className="text-[11px] text-slate-500">
-                JLD RealProperty <code className="text-emerald-700 bg-emerald-50 px-1 rounded">rpt_SOA.cs</code> &amp; <code className="text-emerald-700 bg-emerald-50 px-1 rounded">frmpaymenthistory.cs</code>
+                Linked workspace records
               </p>
             </div>
           </div>
@@ -232,7 +233,9 @@ export const SOAModal: React.FC<SOAModalProps> = ({
           </button>
         </div>
       </div>
-    </div>
+    </ModalFrame>
   );
 };
+
+
 

@@ -1,3 +1,4 @@
+import { ModalFrame } from './ModalFrame';
 import React, { useState, useEffect } from 'react';
 import { PurchaseDetail, PaymentTransaction, PaymentDetailItem, PaymentForType, PaymentMethodType } from '../../types';
 import { generatePaymentRef, formatCurrency, formatDate } from '../../utils/calculations';
@@ -6,7 +7,7 @@ import { X, Plus, Trash2, CheckCircle2, Receipt, Printer } from 'lucide-react';
 interface PaymentModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSavePayment: (payment: PaymentTransaction) => void;
+  onSavePayment: (payment: PaymentTransaction) => string | void;
   applications: PurchaseDetail[];
   selectedApplication?: PurchaseDetail | null;
 }
@@ -20,10 +21,10 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
 }) => {
   const [appId, setAppId] = useState<number>(selectedApplication?.id || applications[0]?.id || 1);
   const [dateOfPayment, setDateOfPayment] = useState<string>(new Date().toISOString().split('T')[0]);
-  const [orNumber, setOrNumber] = useState<string>('OR-2026-8825');
+  const [orNumber, setOrNumber] = useState<string>('');
   const [paymentType, setPaymentType] = useState<PaymentMethodType>('CASH');
   const [referenceNo, setReferenceNo] = useState<string>('');
-  const [paymentRef] = useState<string>(() => generatePaymentRef());
+  const [paymentRef, setPaymentRef] = useState<string>(() => generatePaymentRef());
   const [inchargeByName, setInchargeByName] = useState<string>('Ralph Edwards (Cashier)');
 
   // New item line
@@ -44,10 +45,12 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
     }
   }, [selectedApplication]);
 
+  const [error,setError]=useState('');
+  useEffect(()=>{if(isOpen){setItems([]);setShowReceipt(false);setSavedPayment(null);setOrNumber('');setPaymentRef(generatePaymentRef());setError('');setReferenceNo('');setAppId(selectedApplication?.id||applications[0]?.id||0);}},[isOpen]);
   const currentApp = applications.find(a => a.id === Number(appId)) || applications[0];
 
   const handleAddItem = () => {
-    if (itemAmount <= 0) return;
+    if (!currentApp || !Number.isFinite(itemAmount) || itemAmount <= 0) {setError('Select a contract and enter a valid amount.');return;}
 
     const newItem: PaymentDetailItem = {
       id: Date.now(),
@@ -70,8 +73,11 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
   const totalAmount = items.reduce((acc, curr) => acc + curr.amount, 0);
 
   const handleSubmitPayment = () => {
+    if (!currentApp || !orNumber.trim() || !dateOfPayment) {setError('Select a contract, enter its receipt number and payment date.');return;}
+    if(paymentType!=='CASH'&&!referenceNo.trim()){setError('Enter the bank, cheque or wallet reference.');return;}
+    if(items.some(i=>applications.find(a=>a.id===i.idpurchasedetails)?.idclients!==currentApp.idclients)){setError('All items on a receipt must belong to the selected buyer.');return;}
     if (items.length === 0) {
-      alert('Please add at least one payment item.');
+      setError('Please add at least one payment item.');
       return;
     }
 
@@ -89,10 +95,13 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
       recordedby: 1,
       totalamount: totalAmount,
       recordstatus: 'active',
+      status: 'active',
+      deleted_at: null,
       items: items
     };
 
-    onSavePayment(transaction);
+    transaction.items=transaction.items.map(i=>({...i,idpayment:transaction.id}));
+    const saveError=onSavePayment(transaction);if(saveError){setError(saveError);return;}
     setSavedPayment(transaction);
     setShowReceipt(true);
   };
@@ -100,7 +109,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-xs p-4 overflow-y-auto">
+    <ModalFrame onClose={onClose} title='Payment form'>
       <div className="bg-white rounded-2xl max-w-2xl w-full border border-slate-200 shadow-xl overflow-hidden my-6 animate-in fade-in zoom-in-95 duration-150">
         {/* Modal Header */}
         <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
@@ -110,10 +119,10 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
             </div>
             <div>
               <h2 className="text-base font-bold text-slate-900">
-                {showReceipt ? 'Official Payment Receipt' : 'Cashier Payment Collection'}
+                {showReceipt ? 'Official Payment Receipt' : 'Record payment'}
               </h2>
               <p className="text-xs text-slate-500">
-                JLD RealProperty <code className="text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded">frmpayments.cs</code>
+                Record collections against a buyer contract
               </p>
             </div>
           </div>
@@ -127,7 +136,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
 
         {!showReceipt ? (
           /* Payment Processing Form */
-          <div className="p-6 space-y-4 text-xs">
+          <div className="p-6 space-y-4 text-xs">{error && <p role="alert" className="form-error">{error}</p>}
             {/* Payment Ref Bar */}
             <div className="bg-emerald-50/60 border border-emerald-200/80 rounded-xl px-4 py-2.5 flex items-center justify-between">
               <div>
@@ -149,7 +158,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
                 value={appId}
                 onChange={(e) => {
                   const id = Number(e.target.value);
-                  setAppId(id);
+                  setAppId(id); setItems([]); setError('');
                   const selected = applications.find(a => a.id === id);
                   if (selected) {
                     setItemAmount(selected.amortization || 5000);
@@ -405,6 +414,10 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
           </div>
         )}
       </div>
-    </div>
+    </ModalFrame>
   );
 };
+
+
+
+

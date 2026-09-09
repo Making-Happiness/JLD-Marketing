@@ -1,3 +1,4 @@
+import { ModalFrame } from './ModalFrame';
 import React, { useState, useEffect } from 'react';
 import { calculateAmortization, formatCurrency } from '../../utils/calculations';
 import { X, Calculator, ArrowRight, ShieldCheck, Check } from 'lucide-react';
@@ -42,7 +43,7 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
   const totalContractPayable = downpayment + principal + interestTotal;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-xs p-4 overflow-y-auto">
+    <ModalFrame onClose={onClose} title='Calculator'>
       <div className="bg-white rounded-2xl max-w-lg w-full border border-slate-200 shadow-xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
         {/* Header */}
         <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
@@ -53,7 +54,7 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
             <div>
               <h2 className="text-base font-bold text-slate-900">Amortization Calculator</h2>
               <p className="text-[11px] text-slate-500">
-                JLD RealProperty <code className="text-emerald-700 bg-emerald-50 px-1 rounded">frmamortizationcalculator.cs</code>
+                Linked workspace records
               </p>
             </div>
           </div>
@@ -195,7 +196,9 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
           </div>
         </div>
       </div>
-    </div>
+    </ModalFrame>
   );
 };
+
+
 
