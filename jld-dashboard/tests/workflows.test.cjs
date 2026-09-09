@@ -1,0 +1,13 @@
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const ts = require('typescript');
+const vm = require('node:vm');
+const compiled = ts.transpileModule(fs.readFileSync('src/utils/workflows.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
+const context={exports:{},Date,Math,Number,Error};vm.runInNewContext(compiled,context);
+const {preparePayroll,payslipFromPayroll}=context.exports;
+const db={employees:[{idemployee:1,fullname:'Test employee',designation:'Accountant',salary:500,status:'active'}],loans:[{idemployee:1,dateapplied:'2026-09-01',amount:1000,amortization:200,status:'active'}],benefits:[{idemployee:1,dateapplied:'2026-09-03',amount:100,status:'active'}],payrollRecords:[]};
+test('payroll includes period benefits and caps loan deduction at remaining balance',()=>{const [p]=preparePayroll(db,'2026-09-01','2026-09-15',13);assert.equal(p.grossPay,6600);assert.equal(p.netPay,6400);assert.equal(p.approvalStatus,'Pending');const [last]=preparePayroll({...db,loans:[{...db.loans[0],amount:50}]},'2026-09-01','2026-09-15',13);assert.equal(last.cashAdvance,50);});
+test('excludes archived employees and future / prior-period benefits',()=>{const [p]=preparePayroll({...db,employees:[...db.employees,{...db.employees[0],idemployee:2,status:'archived'}],benefits:[{...db.benefits[0],dateapplied:'2026-08-01'},{...db.benefits[0],dateapplied:'2026-10-01'}]},'2026-09-01','2026-09-15',13);assert.equal(p.grossPay,6500);});
+test('blocks duplicate payroll, impossible working days and excessive deductions',()=>{assert.throws(()=>preparePayroll({...db,payrollRecords:[{period:'2026-09-01 – 2026-09-15'}]},'2026-09-01','2026-09-15',13),/already exists/);assert.throws(()=>preparePayroll(db,'2026-09-01','2026-09-02',13),/cannot exceed/);assert.throws(()=>preparePayroll({...db,loans:[{...db.loans[0],amount:99999,amortization:99999}]},'2026-09-01','2026-09-15',13),/exceed gross/);});
+test('payslip retains exact cutoff and does not equate approval with cash paid',()=>{const [p]=preparePayroll(db,'2026-09-01','2026-09-15',13);const slip=payslipFromPayroll({...p,approvalStatus:'Approved'});assert.equal(slip.month,p.period);assert.equal(slip.payoutStatus,'Draft');assert.equal(slip.basicSalary+slip.benefits-slip.cashAdvanceDeduction-slip.otherDeductions,slip.netPay);});
