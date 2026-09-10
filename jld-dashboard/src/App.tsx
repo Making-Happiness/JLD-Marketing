@@ -1,4 +1,7 @@
-import { useState } from 'react';
+import type { SavedWorkspace } from './ConnectedWorkspace';
+import { useSession } from './utils/session';
+import { calculateStatement, validateReceipt } from './utils/statement';
+import { useState, useEffect } from 'react';
 import { EntryDialog, EntryKind, EntryValues } from './components/EntryDialog';
 import { preparePayroll, payslipFromPayroll } from './utils/workflows';
 import { AccountantWorkspace } from './components/AccountantWorkspace';
@@ -13,7 +16,6 @@ import { ExpensesTable } from './components/tables/ExpensesTable';
 import { EmployeesTable } from './components/tables/EmployeesTable';
 import { LoansTable } from './components/tables/LoansTable';
 import { PayrollTable } from './components/tables/PayrollTable';
-import { PrintableAccountsPage } from './components/PrintableAccountsPage';
 
 import { ApplicationModal } from './components/modals/ApplicationModal';
 import { PaymentModal } from './components/modals/PaymentModal';
@@ -67,27 +69,30 @@ import {
 import { formatCurrency } from './utils/calculations';
 import { CheckCircle2 } from 'lucide-react';
 
-export function App() {
+export function App({ initialState, onStateChange }: { initialState: SavedWorkspace | null; onStateChange: (state: SavedWorkspace) => void }) {
+  const user=useSession();
   // Current active workspace navigation tab
   const [currentTab, setCurrentTab] = useState<NavigationTab>('overview');
 
   const [entryKind,setEntryKind]=useState<EntryKind|null>(null);
   const [claimAgent,setClaimAgent]=useState<Agent|null>(null);
   // Data state
-  const [leads, setLeads] = useState<PurchaseDetail[]>(INITIAL_PURCHASE_DETAILS);
-  const [products, setProducts] = useState<Product[]>(INITIAL_PRODUCTS);
-  const [agents, setAgents] = useState<Agent[]>(INITIAL_AGENTS);
-  const [clients, setClients] = useState<Client[]>(INITIAL_CLIENTS);
-  const [payments, setPayments] = useState<PaymentTransaction[]>(INITIAL_PAYMENTS);
-  const [expenses, setExpenses] = useState<Expense[]>(INITIAL_EXPENSES);
-  const [employees, setEmployees] = useState<Employee[]>(INITIAL_EMPLOYEES);
-  const [loans, setLoans] = useState<LoanRecord[]>(INITIAL_LOANS);
-  const [benefits, setBenefits] = useState<LoanRecord[]>(INITIAL_BENEFITS);
-  const [payslips, setPayslips] = useState<PayslipRecord[]>(INITIAL_PAYSLIPS);
-  const [payrollRecords, setPayrollRecords] = useState<PayrollRecord[]>(INITIAL_PAYROLL);
+  const [leads, setLeads] = useState<PurchaseDetail[]>(initialState?.leads ?? INITIAL_PURCHASE_DETAILS);
+  const [products, setProducts] = useState<Product[]>(initialState?.products ?? INITIAL_PRODUCTS);
+  const [agents, setAgents] = useState<Agent[]>(initialState?.agents ?? INITIAL_AGENTS);
+  const [clients, setClients] = useState<Client[]>(initialState?.clients ?? INITIAL_CLIENTS);
+  const [payments, setPayments] = useState<PaymentTransaction[]>(initialState?.payments ?? INITIAL_PAYMENTS);
+  const [expenses, setExpenses] = useState<Expense[]>(initialState?.expenses ?? INITIAL_EXPENSES);
+  const [employees, setEmployees] = useState<Employee[]>(initialState?.employees ?? INITIAL_EMPLOYEES);
+  const [loans, setLoans] = useState<LoanRecord[]>(initialState?.loans ?? INITIAL_LOANS);
+  const [benefits, setBenefits] = useState<LoanRecord[]>(initialState?.benefits ?? INITIAL_BENEFITS);
+  const [payslips, setPayslips] = useState<PayslipRecord[]>(initialState?.payslips ?? INITIAL_PAYSLIPS);
+  const [payrollRecords, setPayrollRecords] = useState<PayrollRecord[]>(initialState?.payrollRecords ?? INITIAL_PAYROLL);
 
   // Audit Logs State
-  const [auditLogs, setAuditLogs] = useState<AuditLogEntry[]>(INITIAL_AUDIT_LOGS);
+  const [auditLogs, setAuditLogs] = useState<AuditLogEntry[]>(initialState?.auditLogs ?? INITIAL_AUDIT_LOGS);
+
+  useEffect(()=>{onStateChange({leads,products,agents,clients,payments,expenses,employees,loans,benefits,payslips,payrollRecords,auditLogs});},[leads,products,agents,clients,payments,expenses,employees,loans,benefits,payslips,payrollRecords,auditLogs,onStateChange]);
 
   // Enterprise Modals State
   const [archiveTarget, setArchiveTarget] = useState<{
@@ -177,7 +182,7 @@ export function App() {
       entityType,
       recordId,
       recordLabel: recordCode,
-      performedBy: 'Demo accountant',
+      performedBy: user?.email || 'Accounting',
       details,
       reason: details
     };
@@ -441,6 +446,8 @@ export function App() {
     if(newApp.lotprice<=0||newApp.area<=0||newApp.downpayment<0||newApp.downpayment>newApp.lotprice||newApp.agentpercentage<0||newApp.agentpercentage>100)return 'Review the price, area, downpayment and commission rate.';
     if(editingLead&&payments.some(p=>p.items.some(i=>i.idpurchasedetails===newApp.id))&&(editingLead.idclients!==newApp.idclients||editingLead.idproducts!==newApp.idproducts||editingLead.idagent!==newApp.idagent||editingLead.agentpercentage!==newApp.agentpercentage||editingLead.blockno!==newApp.blockno||editingLead.lotno!==newApp.lotno))return 'A contract with receipts cannot change buyer, property, lot or commission assignment.';
     if (editingLead) {
+      const statement=calculateStatement(newApp,payments);
+      if(statement.balance<0||statement.downPaymentOutstanding<0)return 'The revised price or down payment conflicts with existing receipts.';
       setLeads(leads.map(l => l.id === newApp.id ? newApp : l));
       logActivity('Purchase', newApp.id, `${newApp.clientName} (Blk ${newApp.blockno} Lot ${newApp.lotno})`, 'EDIT', `Updated purchase terms for ${newApp.clientName}`);
       showToast(`Purchase details for ${newApp.clientName} successfully updated!`);
@@ -460,6 +467,7 @@ export function App() {
     if(payments.some(p=>p.orderreceipt.trim().toLowerCase()===newPay.orderreceipt.trim().toLowerCase()))return 'This receipt number already exists, including archived receipts.';
     if(!newPay.items.length||newPay.items.some(i=>!Number.isFinite(i.amount)||i.amount<=0)||Math.abs(newPay.items.reduce((n,i)=>n+i.amount,0)-newPay.totalamount)>0.01)return 'Payment items do not match the receipt total.';
     if(newPay.items.some(i=>!leads.some(l=>l.id===i.idpurchasedetails&&l.status==='active'&&l.idclients===newPay.paidby)))return 'Payment must reference active contracts for the same buyer.';
+    for (const id of new Set(newPay.items.map(i=>i.idpurchasedetails))) { const issue=validateReceipt(leads.find(l=>l.id===id)!,payments,newPay); if(issue)return issue; }
     const earned=new Map<number,number>();
     newPay.items.forEach(i=>{const contract=leads.find(l=>l.id===i.idpurchasedetails)!;earned.set(contract.idagent,(earned.get(contract.idagent)||0)+Math.round(i.amount*contract.agentpercentage)/100);});
     setAgents(prev=>prev.map(a=>{const amount=earned.get(a.id)||0;return {...a,totalEarned:Math.round((a.totalEarned+amount)*100)/100,balance:Math.round((a.balance+amount)*100)/100};}));
@@ -539,13 +547,28 @@ export function App() {
         {/* Dynamic Workspace Ledger Views */}
         <div className="app-content-viewport flex-1 pb-10 erp-content">
           {(currentTab === 'overview' || currentTab === 'reports') && <AccountantWorkspace key={currentTab} db={dbState} report={currentTab === 'reports'} onNavigate={setCurrentTab} onPayment={() => {setPaymentLead(null);setIsPaymentModalOpen(true);}} onContract={() => {setEditingLead(null);setApplyClientId(null);setIsAppModalOpen(true);}} onSOA={handleOpenSOA}/>}
-          {currentTab === 'printable-accounts' && <PrintableAccountsPage />}
-          {currentTab !== 'overview' && currentTab !== 'reports' && currentTab !== 'printable-accounts' && <div className="workspace-view-context"><h1 className="workspace-view-title">{NAV_SECTIONS.flatMap(s=>s.items).find(i=>i.id===currentTab)?.label}</h1><p className="workspace-view-description">{['employees','loans-benefits','payroll'].includes(currentTab) ? 'Employee records → adjustments → payroll → payslips → expense vouchers' : 'Properties → buyers → contracts → collections → commissions → cash flow'}</p><details className="related-work"><summary className="related-work-summary">Related tables</summary><div className="context-links">{( ['employees','loans-benefits','payroll'].includes(currentTab) ? NAV_SECTIONS.filter(s=>s.id==='people'||s.id==='finance') : NAV_SECTIONS.filter(s=>s.id==='sales'||s.id==='agents'||s.id==='finance')).flatMap(s=>s.items).map(i=><button key={i.id} className="related-nav-link" aria-current={currentTab===i.id?'page':undefined} onClick={()=>setCurrentTab(i.id as NavigationTab)}>{i.label}</button>)}</div></details></div>}
-          {currentTab === 'contracts' && <PurchaseDetailsTable purchases={leads} onNewPurchase={() => {setEditingLead(null);setApplyClientId(null);setIsAppModalOpen(true);}} onEditPurchase={handleEditPurchase} onViewDetails={handleOpenSOA} onViewHistory={handleOpenSOA} onArchivePurchase={p=>handleArchive('Purchase',p.id,p.clientName)} onRestorePurchase={p=>handleRestore('Purchase',p.id,p.clientName)} onPermanentDeletePurchase={p=>handleRequestPermanentDelete('Purchase',p.id,p.clientName)}/>}
+          {currentTab !== 'overview' && currentTab !== 'reports' && <div className="workspace-view-context"><h1 className="workspace-view-title">{NAV_SECTIONS.flatMap(s=>s.items).find(i=>i.id===currentTab)?.label}</h1><p className="workspace-view-description">{['employees','loans-benefits','payroll'].includes(currentTab) ? 'Employee records → adjustments → payroll → payslips → expense vouchers' : 'Properties → buyers → contracts → collections → commissions → cash flow'}</p><details className="related-work"><summary className="related-work-summary">Related tables</summary><div className="context-links">{( ['employees','loans-benefits','payroll'].includes(currentTab) ? NAV_SECTIONS.filter(s=>s.id==='people'||s.id==='finance') : NAV_SECTIONS.filter(s=>s.id==='sales'||s.id==='agents'||s.id==='finance')).flatMap(s=>s.items).map(i=><button key={i.id} className="related-nav-link" aria-current={currentTab===i.id?'page':undefined} onClick={()=>setCurrentTab(i.id as NavigationTab)}>{i.label}</button>)}</div></details></div>}
+          {currentTab === 'contracts' && <PurchaseDetailsTable payments={payments} purchases={leads} onNewPurchase={() => {setEditingLead(null);setApplyClientId(null);setIsAppModalOpen(true);}} onEditPurchase={handleEditPurchase} onViewDetails={handleOpenSOA} onViewHistory={handleOpenSOA} onArchivePurchase={p=>handleArchive('Purchase',p.id,p.clientName)} onRestorePurchase={p=>handleRestore('Purchase',p.id,p.clientName)} onPermanentDeletePurchase={p=>handleRequestPermanentDelete('Purchase',p.id,p.clientName)}/>}
           {/* Properties & Lots */}
           {currentTab === 'products' && (
             <InventoryTable
-              products={products}
+              products={products.map(p => {
+                const soldLots = leads.filter(l => l.idproducts === p.idproduct && l.status === 'active').length;
+                const availableLots = Math.max(0, p.totallotno - soldLots);
+                let computedPhase: 'Open' | 'Nearly Sold' | 'Completed' = 'Open';
+                if (p.status === 'archived') {
+                  computedPhase = 'Completed';
+                } else if (soldLots === 0) {
+                  computedPhase = 'Open';
+                } else if (availableLots === 0) {
+                  computedPhase = 'Completed';
+                } else if (p.totallotno > 0 && availableLots <= Math.ceil(p.totallotno * 0.15)) {
+                  computedPhase = 'Nearly Sold';
+                } else {
+                  computedPhase = 'Open';
+                }
+                return { ...p, availableLots, projectPhase: computedPhase };
+              })}
               onAddProduct={() => {
                 setEditingProduct(null);
                 setIsProductModalOpen(true);
@@ -601,7 +624,7 @@ export function App() {
           {/* Sales Partners: Agents & Commissions */}
           {currentTab === 'agents-commissions' && (
             <AgentsTable
-              agents={agents}
+              agents={agents.map(a=>({...a,totalSales:leads.filter(l=>l.idagent===a.id&&l.status==='active').reduce((sum,l)=>sum+l.lotprice,0)}))}
               onReleaseClaim={(agent) => {setClaimAgent(agent);setEntryKind('commission');}}
               onAddAgent={() => setEntryKind('agent')}
               onArchiveAgent={(agent) => handleArchive('Agent', agent.id, agent.fullname)}
@@ -741,7 +764,7 @@ export function App() {
       />
 
       {/* Stakeholder Purchase Details Popup Modal (Fill-Up Form Layout) */}
-      <PurchaseDetailsModal
+      <PurchaseDetailsModal payments={payments}
         isOpen={isPurchaseModalOpen}
         onClose={() => {
           setIsPurchaseModalOpen(false);
@@ -754,6 +777,7 @@ export function App() {
           handleEditPurchase(purchase);
         }}
         onViewHistory={(purchase) => {
+          setIsPurchaseModalOpen(false);
           handleOpenSOA(purchase);
         }}
         onAddNewPurchase={(client) => {

@@ -24,6 +24,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
   const [totalLot, setTotalLot] = useState<number | ''>(10);
   const [totalArea, setTotalArea] = useState<number | ''>(1000);
   const [cashPrice, setCashPrice] = useState<number | ''>(100000);
+  const [projectPhase, setProjectPhase] = useState<'Open' | 'Nearly Sold' | 'Completed'>('Open');
   const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
@@ -35,6 +36,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
         setTotalLot(productToEdit.totallotno);
         setTotalArea(productToEdit.totalarea);
         setCashPrice(productToEdit.cashprice);
+        setProjectPhase(productToEdit.projectPhase || 'Open');
       } else {
         setCode('');
         setLocation('');
@@ -42,6 +44,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
         setTotalLot(10);
         setTotalArea(1000);
         setCashPrice(100000);
+        setProjectPhase('Open');
       }
       setErrorMsg('');
     }
@@ -84,7 +87,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
       totallotno: Number(totalLot),
       totalarea: Number(totalArea),
       cashprice: Number(cashPrice),
-      projectPhase: productToEdit?.projectPhase ?? 'Open',
+      projectPhase: projectPhase,
       status: productToEdit?.status ?? 'active',
       deleted_at: productToEdit?.deleted_at ?? null
     };
@@ -139,6 +142,19 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                     onChange={e => setLocation(e.target.value)}
                     placeholder="e.g. Sto. Niño, Tupaz Subdivision"
                   />
+                </label>
+
+                <label className="form-field-label">
+                  <span>Development phase</span>
+                  <select
+                    className="product-form-input"
+                    value={projectPhase}
+                    onChange={e => setProjectPhase(e.target.value as any)}
+                  >
+                    <option value="Open">Open (Available)</option>
+                    <option value="Nearly Sold">Nearly Sold</option>
+                    <option value="Completed">Completed (Sold Out)</option>
+                  </select>
                 </label>
               </div>
             </fieldset>

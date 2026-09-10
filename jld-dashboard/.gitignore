@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Private employee accounts and workspace database
+server/private/
+*.sqlite-wal
+*.sqlite-shm

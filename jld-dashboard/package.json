@@ -4,12 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "node server/index.mjs --dev",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
-    "sync:data": "powershell -ExecutionPolicy Bypass -File .\\scripts\\sync-normalized-data.ps1",
-    "refresh:data": "powershell -ExecutionPolicy Bypass -File .\\scripts\\rebuild-dashboard-data.ps1",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "node server/index.mjs",
+    "account:add": "node server/create-account.mjs",
+    "test": "node --test tests/*.test.cjs tests/*.test.mjs"
   },
   "dependencies": {
     "@types/papaparse": "^5.5.2",

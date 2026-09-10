@@ -12,8 +12,7 @@ import {
   LayoutDashboard, 
   FileText, 
   PanelLeftClose, 
-  PanelLeftOpen,
-  Files
+  PanelLeftOpen
 } from 'lucide-react';
 
 export type NavigationTab = 
@@ -27,8 +26,7 @@ export type NavigationTab =
   | 'loans-benefits' 
   | 'payroll' 
   | 'expenses' 
-  | 'reports'
-  | 'printable-accounts';
+  | 'reports';
 
 export const NAV_SECTIONS = [
   {
@@ -63,13 +61,6 @@ export const NAV_SECTIONS = [
     items: [
       { id: 'expenses', label: 'Expenses', icon: Wallet },
       { id: 'reports', label: 'Cash flow & reports', icon: FileSpreadsheet },
-    ],
-  },
-  {
-    id: 'printables',
-    title: 'DATA & PRINTABLES',
-    items: [
-      { id: 'printable-accounts', label: 'Printable accounts', icon: Files },
     ],
   },
 ];

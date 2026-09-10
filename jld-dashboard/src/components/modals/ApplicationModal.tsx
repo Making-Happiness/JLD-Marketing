@@ -34,13 +34,13 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
   const [area, setArea] = useState<number>(150);
   const [lotPrice, setLotPrice] = useState<number>(108000);
   const [terms, setTerms] = useState<number>(2);
-  const [downpayment, setDownpayment] = useState<number>(20000);
+  const [downpayment, setDownpayment] = useState<number>(0);
   const [monthlyAmortization, setMonthlyAmortization] = useState<number>(0);
   const [agentPercentage, setAgentPercentage] = useState<number>(7);
-  const [otherFees, setOtherFees] = useState<number>(1500);
+  const [otherFees, setOtherFees] = useState<number>(0);
   const [penalty, setPenalty] = useState<number>(0);
-  const [dueDate, setDueDate] = useState<string>('2028-09-07');
-  const [remarks, setRemarks] = useState<string>('Standard application pending verification');
+  const [dueDate, setDueDate] = useState<string>('');
+  const [remarks, setRemarks] = useState<string>('');
   const [status, setStatus] = useState<any>('New');
   const [error,setError]=useState('');
 
@@ -97,6 +97,7 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
     const selectedProduct = products.find(p => p.idproduct === Number(productId)) || products[0];
     const selectedAgent = agents.find(a => a.id === Number(agentId)) || agents[0];
 
+    if (!selectedClient || !selectedProduct || !selectedAgent) { setError('Add a buyer and sales agent first, then select an active property.'); return; }
     const application: PurchaseDetail = {
       id: initialData?.id || Date.now(),
       blockno: Number(blockNo),
@@ -107,9 +108,9 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
       terms: Number(terms),
       downpayment: Number(downpayment),
       agentpercentage: Number(agentPercentage),
-      idclients: Number(clientId),
-      idproducts: Number(productId),
-      idagent: Number(agentId),
+      idclients: selectedClient.idclients,
+      idproducts: selectedProduct.idproduct,
+      idagent: selectedAgent.id,
       remarks,
       recordstatus: 'active',
       otherfees: Number(otherFees),
@@ -123,7 +124,8 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
       location: selectedProduct.location,
       agentName: selectedAgent.fullname,
       agentAvatar: selectedAgent.avatarUrl,
-      status: status,
+      status: initialData?.status || 'active',
+      leadStatus: status,
       score: initialData?.score || 88,
       intent: initialData?.intent || 'High',
       source: initialData?.source || 'Direct Inquiry',
@@ -273,7 +275,7 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
                 </label>
 
                 <label className="form-field-label">
-                  <span>Estimated Downpayment (₱)</span>
+                  <span>Contract Down Payment (₱)</span>
                   <input
                     type="number"
                     step="5000"
@@ -286,7 +288,7 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
                 <div className="application-amortization-card p-3 rounded-lg border border-[#cbe1d5] bg-[#f1f7f3] flex flex-col justify-center">
                   <span className="text-[10px] uppercase font-bold text-[#1e583c] tracking-wider flex items-center gap-1.5">
                     <Calculator size={13} className="text-[#1a5e3f]"/>
-                    Monthly Amortization (15% APR)
+                    Monthly Amortization (15% annual flat interest)
                   </span>
                   <span className="text-base font-bold text-[#14472f] mt-1">
                     {formatCurrency(monthlyAmortization)} <span className="text-xs font-normal text-[#4d725f]">/ mo</span>

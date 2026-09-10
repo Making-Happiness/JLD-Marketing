@@ -1,3 +1,4 @@
+import { useSession } from '../../utils/session';
 import { History, ChevronRight, LogOut } from 'lucide-react';
 import { NAV_SECTIONS, NavigationTab } from './Sidebar';
 
@@ -8,10 +9,12 @@ export function TopHeader({
   currentTab: NavigationTab;
   onOpenNotifications?: () => void;
 }) {
+  const user = useSession();
   const section = NAV_SECTIONS.find((s) => s.items.some((i) => i.id === currentTab));
   const title = section?.items.find((i) => i.id === currentTab)?.label || 'Overview';
 
-  const handleSignOut = () => {
+  const handleSignOut = async () => {
+    await fetch('/api/auth/logout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' }).catch(() => null);
     sessionStorage.removeItem('jld_auth_user');
     window.location.assign('/');
   };
@@ -24,7 +27,7 @@ export function TopHeader({
         <strong className="breadcrumb-current">{title}</strong>
       </div>
       <div className="header-utility-tools header-tools">
-        <span className="header-session-tag session-label">Demo · session data</span>
+        <span className="header-session-tag session-label">Employee workspace</span>
         <button
           className="header-history-trigger"
           onClick={onOpenNotifications}
@@ -43,9 +46,9 @@ export function TopHeader({
           <LogOut size={15} />
           <span>Sign out</span>
         </button>
-        <div className="header-user-avatar workspace-avatar" title="kayeencampana@gmail.com">KC</div>
+        <div className="header-user-avatar workspace-avatar" title={user?.email}>JLD</div>
         <span className="header-account-profile account-label">
-          Kayeen Campana
+          {user?.email}
           <small className="account-company">JLD Subdivision</small>
         </span>
       </div>

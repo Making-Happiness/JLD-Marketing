@@ -1,38 +1,38 @@
-import { StrictMode, Suspense, lazy, useState } from 'react';
+import { StrictMode, Suspense, lazy, useState, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import { LoginPage } from './components/LoginPage';
-
-const Workspace = lazy(() => import('./App'));
-
+import { SessionContext, type SessionUser } from './utils/session';
+const Workspace = lazy(() => import('./ConnectedWorkspace'));
 function RootApp() {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
-    const params = new URLSearchParams(window.location.search);
-    return params.get('view') === 'workspace' || !!sessionStorage.getItem('jld_auth_user');
-  });
-
-  const handleLoginSuccess = (email: string) => {
-    sessionStorage.setItem('jld_auth_user', email);
-    const url = new URL(window.location.href);
-    url.searchParams.set('view', 'workspace');
-    window.history.pushState({}, '', url.toString());
-    setIsAuthenticated(true);
-  };
-
-  if (isAuthenticated) {
-    return (
-      <Suspense fallback={<div className="login-loading" role="status">Opening your workspace…</div>}>
-        <Workspace />
-      </Suspense>
-    );
-  }
-
-  return <LoginPage onLoginSuccess={handleLoginSuccess} />;
+ const [user,setUser]=useState<SessionUser|null>(null);
+ const [checking,setChecking]=useState(true);
+ useEffect(() => {
+  fetch('/api/auth/session')
+    .then((r) => (r.ok ? r.json() : null))
+    .then((data) => {
+      if (data?.user) {
+        setUser(data.user);
+      } else {
+        const stored = sessionStorage.getItem('jld_auth_user');
+        if (stored) {
+          try { setUser(JSON.parse(stored)); } catch { setUser(null); }
+        } else {
+          setUser(null);
+        }
+      }
+    })
+    .catch(() => {
+      const stored = sessionStorage.getItem('jld_auth_user');
+      if (stored) {
+        try { setUser(JSON.parse(stored)); } catch { setUser(null); }
+      } else {
+        setUser(null);
+      }
+    })
+    .finally(() => setChecking(false));
+ }, []);
+ if(checking)return <div className="login-loading" role="status">Checking your session…</div>;
+ return user?<SessionContext.Provider value={user}><Suspense fallback={<div className="login-loading" role="status">Opening your workspace…</div>}><Workspace /></Suspense></SessionContext.Provider>:<LoginPage onLoginSuccess={setUser}/>;
 }
-
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <RootApp />
-  </StrictMode>,
-);
-
+createRoot(document.getElementById('root')!).render(<StrictMode><RootApp/></StrictMode>);
