@@ -7,7 +7,7 @@ import { X, Calculator, FileSpreadsheet } from 'lucide-react';
 interface ApplicationModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (application: PurchaseDetail) => string | void;
+  onSave: (application: any) => Promise<string | void> | string | void;
   clients: Client[];
   products: Product[];
   agents: Agent[];
@@ -34,6 +34,7 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
   const [area, setArea] = useState<number>(150);
   const [lotPrice, setLotPrice] = useState<number>(108000);
   const [terms, setTerms] = useState<number>(2);
+  const [isOtherTerm, setIsOtherTerm] = useState(false);
   const [downpayment, setDownpayment] = useState<number>(0);
   const [monthlyAmortization, setMonthlyAmortization] = useState<number>(0);
   const [agentPercentage, setAgentPercentage] = useState<number>(7);
@@ -55,6 +56,7 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
       setArea(initialData.area);
       setLotPrice(initialData.lotprice);
       setTerms(initialData.terms);
+        setIsOtherTerm(![1,2,3,4,5].includes(initialData.terms));
       setDownpayment(initialData.downpayment || 0);
       setMonthlyAmortization(initialData.amortization);
       setAgentPercentage(initialData.agentpercentage);
@@ -90,7 +92,7 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const selectedClient = clients.find(c => c.idclients === Number(clientId)) || clients[0];
@@ -134,7 +136,7 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
       dateApplied: initialData?.dateApplied || new Date().toISOString().split('T')[0]
     };
 
-    const result=onSave(application);if(result){setError(result);return;} setError('');onClose();
+    const result=await onSave(application);if(result){setError(result);return;} setError('');onClose();
   };
 
   if (!isOpen) return null;

@@ -35,10 +35,10 @@ export const NAV_SECTIONS = [
     id: 'sales',
     title: 'PROPERTY & SALES',
     items: [
-      { id: 'products', label: 'Properties & lots', icon: Building2 },
-      { id: 'stakeholder', label: 'Buyers', icon: Users },
+      { id: 'products', label: 'Properties', icon: Building2 },
+      { id: 'stakeholder', label: 'Stakeholders', icon: Users },
       { id: 'contracts', label: 'Sales contracts', icon: FileText },
-      { id: 'payment', label: 'Collections', icon: Receipt },
+      { id: 'payment', label: 'Payments', icon: Receipt },
     ],
   },
   {

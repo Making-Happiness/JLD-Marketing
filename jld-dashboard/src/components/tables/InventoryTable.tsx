@@ -14,8 +14,8 @@ export function InventoryTable(p:InventoryTableProps){
         actions={{onArchive:p.onArchiveProduct,onRestore:p.onRestoreProduct,onDelete:p.onPermanentDeleteProduct,onHistory:p.onViewHistory}}
         primaryAction={r=><button className="inventory-edit-action-btn table-action" onClick={()=>p.onEditProduct(r)}>Edit property</button>}
         columns={[
-          {label:'Property code',render:r=><strong className="inventory-code-cell">{r.code}</strong>},
-          {label:'Location / project',render:r=><span className="inventory-location-cell">{r.location}</span>},
+          
+          {label:'Location',render:r=><span className="inventory-location-cell">{r.location}</span>},
           {label:'Blocks',numeric:true,render:r=><span className="inventory-blocks-cell">{r.totalblockno}</span>},
           {label:'Lots',numeric:true,render:r=>{
             const avail = r.availableLots ?? r.totallotno;

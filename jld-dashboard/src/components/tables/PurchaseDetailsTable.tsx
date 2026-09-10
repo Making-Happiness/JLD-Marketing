@@ -16,7 +16,7 @@ export function PurchaseDetailsTable(p:PurchaseDetailsTableProps){
         actions={{onEdit:p.onEditPurchase,onArchive:p.onArchivePurchase,onRestore:p.onRestorePurchase,onDelete:p.onPermanentDeletePurchase,onHistory:p.onViewHistory}}
         primaryAction={r=><button className="contract-soa-btn table-action" onClick={()=>p.onViewDetails(r)}>Statement</button>}
         columns={[
-          {label:'Buyer',render:r=><strong className="contract-buyer-name">{r.clientName}</strong>},
+          {label:'Stakeholder',render:r=><strong className="contract-buyer-name">{r.clientName}</strong>},
           {label:'Property / lot',render:r=><span className="contract-lot-wrapper">{r.productCode}<small className="contract-lot-spec cell-secondary">Block {r.blockno} · Lot {r.lotno}</small></span>},
           {label:'Agent',render:r=><span className="contract-agent-name">{r.agentName}</span>},
           {label:'Contract price',numeric:true,render:r=><span className="contract-price-value">{formatCurrency(r.lotprice)}</span>},
