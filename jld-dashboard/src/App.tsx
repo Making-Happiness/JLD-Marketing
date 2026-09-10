@@ -222,11 +222,16 @@ export function App({ initialState }: { initialState: any }) {
   };
 
   // Perform soft-delete archive
-  const confirmArchive = (reason: string) => {
-    if (!archiveTarget) return;
-    const { entityType, id, recordTitle } = archiveTarget;
-    const now = new Date().toISOString();
-    const idNum = Number(id);
+  const confirmArchive = async (reason: string) => {
+      if (!archiveTarget) return;
+      const { entityType, id, recordTitle } = archiveTarget;
+      const now = new Date().toISOString();
+      const idNum = Number(id);
+      const tableMap: Record<string, string> = { Product: 'products', Stakeholder: 'clients', Purchase: 'purchase_details', Payment: 'payment_transactions', Agent: 'agents', Employee: 'employees', Loan: 'employee_loans', Benefit: 'employee_loans', Payroll: 'payroll_records', Payslip: 'payslips', Expense: 'expenses' };
+      const idColMap: Record<string, string> = { Product: 'idproduct', Stakeholder: 'idclients', Employee: 'idemployee' };
+      const tableName = tableMap[entityType];
+      const idColName = idColMap[entityType] || 'id';
+      if (tableName) { await API.supabase.from(tableName).update({status: 'archived', deleted_at: now}).eq(idColName, idNum); }
 
     switch (entityType) {
       case 'Product':
@@ -505,22 +510,22 @@ export function App({ initialState }: { initialState: any }) {
     if(['loan','benefit','expense'].includes(entryKind!)&&(!employee||employee.status!=='active'))return 'Select an active employee.';
     if(entryKind==='agent'){
       const fullname=`${v.firstname.trim()} ${v.lastname.trim()}`;
-      setAgents(prev=>[...prev,{id,fullname,contactno:v.contact,role:v.role,commissionRate:Number(v.rate),totalSales:0,totalEarned:0,totalClaimed:0,balance:0,recordstatus:'active',status:'active'}]);
+      const newAgent = {fullname,contactno:v.contact,role:v.role,commissionRate:Number(v.rate),totalSales:0,totalEarned:0,totalClaimed:0,balance:0,recordstatus:'active' as any,status:'active' as any}; API.saveAgent(newAgent).then(res => res.data && setAgents(prev => [res.data, ...prev]));
       logActivity('Agent',id,fullname,'CREATE','Registered agent profile.');
     } else if(entryKind==='employee'){
       const fullname=`${v.firstname.trim()} ${v.lastname.trim()}`;
-      setEmployees(prev=>[...prev,{idemployee:id,firstname:v.firstname,lastname:v.lastname,middlename:'',gender:'',dateofbirth:'',salary:Number(v.rate),designation:v.role,civilstatus:'',contactno:v.contact,recordstatus:'active',status:'active',fullname}]);
+      const newEmp = {firstname:v.firstname,lastname:v.lastname,middlename:'',gender:'',dateofbirth:'',salary:Number(v.rate),designation:v.role,civilstatus:'',contactno:v.contact,recordstatus:'active' as any,status:'active' as any,fullname}; API.saveEmployee(newEmp).then(res => res.data && setEmployees(prev => [res.data, ...prev]));
       logActivity('Employee',id,fullname,'CREATE','Registered employee with daily rate.');
     } else if(entryKind==='loan'||entryKind==='benefit'){
       if(entryKind==='loan'&&(!Number.isFinite(Number(v.amortization))||Number(v.amortization)<=0||Number(v.amortization)>amount))return 'Deduction must be greater than zero and cannot exceed the loan.';
-      const record:LoanRecord={id,idemployee:employee!.idemployee,employeeName:employee!.fullname,dateapplied:v.date,description:v.description,category:v.category as LoanRecord['category'],type:entryKind==='loan'?'DEDUCTION':'EARNING',amount,amortization:entryKind==='loan'?Number(v.amortization):0,remarks:'',recordstatus:'active',status:'active'};
-      (entryKind==='loan'?setLoans:setBenefits)(prev=>[record,...prev]);logActivity(entryKind==='loan'?'Loan':'Benefit',id,record.description,'CREATE','Recorded employee adjustment.');
+      const record:LoanRecord={id,idemployee:employee!.idemployee,employeeName:employee!.fullname,dateapplied:v.date,description:v.description,category:v.category as LoanRecord['category'],type:entryKind==='loan'?'DEDUCTION':'EARNING',amount,amortization:entryKind==='loan'?Number(v.amortization):0,remarks:'',recordstatus:'active' as any,status:'active' as any};
+      const newRec = {...record, id: undefined}; API.saveEmployeeLoan(newRec).then(res => { if (res.data) (entryKind === 'loan' ? setLoans : setBenefits)(prev => [res.data, ...prev]); });logActivity(entryKind==='loan'?'Loan':'Benefit',id,record.description,'CREATE','Recorded employee adjustment.');
     } else if(entryKind==='expense'){
-      setExpenses(prev=>[{id,receiveby:employee!.idemployee,receivebyName:employee!.fullname,releaseby:0,releasebyName:'Accounting workspace',description:v.description,purpose:v.purpose,amount,daterelease:v.date,remarks:'',status:'active'},...prev]);logActivity('Expense',id,v.description,'CREATE',`Recorded ${formatCurrency(amount)} expense voucher.`);
+      const newExp = {receiveby:employee!.idemployee,receivebyName:employee!.fullname,releaseby:0,releasebyName:'Accounting workspace',description:v.description,purpose:v.purpose,amount,daterelease:v.date,remarks:'',status:'active' as any}; API.saveExpense(newExp).then(res => res.data && setExpenses(prev => [res.data, ...prev]));logActivity('Expense',id,v.description,'CREATE',`Recorded ${formatCurrency(amount)} expense voucher.`);
     } else if(entryKind==='commission'){
       const agent=agents.find(a=>a.id===claimAgent?.id);if(!agent||agent.status!=='active'||amount>agent.balance)return 'The release exceeds the current available balance.';
       setAgents(prev=>prev.map(a=>a.id===agent.id?{...a,totalClaimed:Math.round((a.totalClaimed+amount)*100)/100,balance:Math.round((a.balance-amount)*100)/100}:a));
-      setExpenses(prev=>[{id,receiveby:0,receivebyName:agent.fullname,releaseby:0,releasebyName:'Accounting workspace',description:`Commission release · ${agent.fullname}`,purpose:'Agent commission',amount,daterelease:v.date,remarks:`Agent ID ${agent.id}`,status:'active'},...prev]);
+      setExpenses(prev=>[{id,receiveby:0,receivebyName:agent.fullname,releaseby:0,releasebyName:'Accounting workspace',description:`Commission release · ${agent.fullname}`,purpose:'Agent commission',amount,daterelease:v.date,remarks:`Agent ID ${agent.id}`,status:'active' as any},...prev]);
       logActivity('Agent',agent.id,agent.fullname,'EDIT',`Released commission ${formatCurrency(amount)} via EXP-${id}.`);logActivity('Expense',id,`Commission ${agent.fullname}`,'CREATE','Recorded commission cash disbursement.');
     } else if(entryKind==='payroll'){
       try {const records=preparePayroll(dbState,v.start,v.end,Number(v.days));setPayrollRecords(prev=>[...records,...prev]);records.forEach(p=>logActivity('Payroll',p.id,p.employeeName,'CREATE',`Prepared draft for ${p.period}.`));} catch(error){return (error as Error).message;}
