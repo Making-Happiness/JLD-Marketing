@@ -20,6 +20,7 @@ Welcome to the **JLD Subdivision Management System**. This guide provides an end
    - [4.8 Payroll & Payslips (`payroll`)](#48-payroll--payslips)
    - [4.9 Expenses (`expenses`)](#49-expenses)
    - [4.10 Cash Flow & Reports (`reports`)](#410-cash-flow--reports)
+   - [4.11 Printable Accounts & Workbook SOA (`printable-accounts`)](#411-printable-accounts--workbook-soa)
 5. [Auditing, Guard Rails & Soft-Delete Architecture](#5-auditing-guard-rails--soft-delete-architecture)
 6. [Accountant’s Daily, Bi-Weekly & Monthly Checklist](#6-accountants-daily-bi-weekly--monthly-checklist)
 
@@ -315,6 +316,29 @@ This is your primary financial control center.
    - The file is encoded with UTF-8 BOM, formulas are sanitized against injection, and columns (Reference, Date, Description, Category, Cash Inflow, Cash Outflow) are ready for Excel, Google Sheets, or external ERP import.
 6. **Buyer Statement Directory**:
    - A convenient list of all active buyers, project codes, block numbers, and lot numbers with a one-click **`View statement`** shortcut.
+
+---
+
+### 4.11 Printable Accounts & Workbook SOA
+**Location**: Sidebar → *DATA & PRINTABLES* → **Printable accounts (SOA)** (`printable-accounts`)
+
+This specialized module provides direct, high-speed access to all 377 customer accounts and 1,759 payment ledgers extracted from the master `Sample.xlsx` real-estate workbook (Buenaflor Phases 1 through 6).
+
+#### What You Can Do as an Accountant:
+1. **Universal Vendee Search**:
+   - Type either `Firstname Lastname` or `Lastname, Firstname` (e.g. `Alido, Jessica`, `Are, Rosalie`, `Dar, Hannah`) or filter by block/lot/location.
+   - Suggestions update dynamically as you type.
+2. **Instant Statement of Account (SOA) Inspection**:
+   - Selecting any account displays the complete financial statement:
+     - **Vendee Name & Location**: Subdivision phase, block, and lot.
+     - **Area Size & Lot Price**: Contract area in sq. m. and total lot price.
+     - **Payment Terms & Monthly Amortization**: Contractual amortization schedule.
+     - **Due Date**: Explicit calculated or contractual due date.
+     - **Reconciled Balances**: Shows Calculated Balance, Stated Balance, and Total Payment Releases.
+3. **Comprehensive Payment History Ledger**:
+   - Displays every historical installment payment date, official receipt/AR number, payment release amount, and note/remarks.
+4. **One-Click PDF Export**:
+   - Click the green **`Convert to PDF`** button to generate and download an official, beautifully formatted `statement-[account_id].pdf` suitable for printing and client issuance.
 
 ---
 
