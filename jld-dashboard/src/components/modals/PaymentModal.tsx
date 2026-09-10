@@ -2,7 +2,7 @@ import { ModalFrame } from './ModalFrame';
 import React, { useState, useEffect } from 'react';
 import { PurchaseDetail, PaymentTransaction, PaymentDetailItem, PaymentForType, PaymentMethodType } from '../../types';
 import { generatePaymentRef, formatCurrency, formatDate } from '../../utils/calculations';
-import { X, Plus, Trash2, CheckCircle2, Receipt, Printer } from 'lucide-react';
+import { X, Plus, Trash2, Receipt, Printer } from 'lucide-react';
 
 interface PaymentModalProps {
   isOpen: boolean;
@@ -25,7 +25,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
   const [paymentType, setPaymentType] = useState<PaymentMethodType>('CASH');
   const [referenceNo, setReferenceNo] = useState<string>('');
   const [paymentRef, setPaymentRef] = useState<string>(() => generatePaymentRef());
-  const [inchargeByName, setInchargeByName] = useState<string>('Ralph Edwards (Cashier)');
+  const inchargeByName = 'Ralph Edwards (Cashier)';
 
   // New item line
   const [paymentFor, setPaymentFor] = useState<PaymentForType>('INSTALLMENT');
@@ -109,238 +109,257 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <ModalFrame onClose={onClose} title='Payment form'>
-      <div className="payment-modal-card bg-white rounded-2xl max-w-2xl w-full border border-slate-200 shadow-xl overflow-hidden my-6 animate-in fade-in zoom-in-95 duration-150">
-        {/* Modal Header */}
-        <div className="payment-modal-header px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
-          <div className="payment-modal-header-brand flex items-center gap-2">
-            <div className="payment-modal-icon-badge w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center">
-              <Receipt className="w-4 h-4" />
-            </div>
-            <div className="payment-modal-title-group">
-              <h2 className="payment-modal-title text-base font-bold text-slate-900">
-                {showReceipt ? 'Official Payment Receipt' : 'Record payment'}
-              </h2>
-              <p className="payment-modal-subtitle text-xs text-slate-500">
-                Record collections against a buyer contract
-              </p>
-            </div>
+    <ModalFrame onClose={onClose} title={showReceipt ? 'Official Payment Receipt' : 'Record Payment'}>
+      <div className="payment-modal-shell form-shell form-shell-wide">
+        {/* Header */}
+        <header className="payment-modal-header form-header">
+          <div className="payment-modal-icon-wrapper form-heading-icon">
+            <Receipt size={22}/>
+          </div>
+          <div className="payment-modal-title-group">
+            <span className="payment-modal-eyebrow form-eyebrow">COLLECTIONS &amp; REVENUE</span>
+            <h2 className="payment-modal-title">
+              {showReceipt ? 'Official Payment Receipt' : 'Record Payment Voucher'}
+            </h2>
+            <p className="payment-modal-subtitle">
+              {showReceipt
+                ? 'Official payment acknowledgement receipt for client records.'
+                : 'Process installment collections and generate official payment receipt.'}
+            </p>
           </div>
           <button
             onClick={onClose}
-            className="payment-modal-close-button p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
+            className="payment-modal-close-button form-close"
+            aria-label="Close modal"
           >
-            <X className="w-5 h-5" />
+            <X size={18}/>
           </button>
-        </div>
+        </header>
 
         {!showReceipt ? (
           /* Payment Processing Form */
-          <div className="payment-modal-body p-6 space-y-4 text-xs">{error && <p role="alert" className="payment-modal-error form-error">{error}</p>}
+          <div className="payment-modal-body form-body">
+            {error && <p role="alert" className="payment-modal-error form-error">{error}</p>}
+
             {/* Payment Ref Bar */}
-            <div className="payment-ref-banner bg-emerald-50/60 border border-emerald-200/80 rounded-xl px-4 py-2.5 flex items-center justify-between">
-              <div className="payment-ref-code-group">
-                <span className="payment-ref-label text-[10px] uppercase font-semibold text-emerald-800 block">Payment Reference Code</span>
-                <span className="payment-ref-value text-sm font-mono font-bold text-emerald-950">{paymentRef}</span>
+            <div className="payment-ref-banner form-note" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px' }}>
+              <div>
+                <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.6px', fontWeight: 700, color: '#1a5e3f', display: 'block' }}>
+                  Payment Reference Code
+                </span>
+                <span style={{ fontSize: '15px', fontFamily: 'monospace', fontWeight: 700, color: '#123927' }}>
+                  {paymentRef}
+                </span>
               </div>
-              <div className="payment-incharge-group text-right">
-                <span className="payment-incharge-label text-[10px] uppercase font-semibold text-slate-500 block">In-Charge / Cashier</span>
-                <span className="payment-incharge-value text-xs font-semibold text-slate-800">{inchargeByName}</span>
-              </div>
-            </div>
-
-            {/* Target Account / Property Selection */}
-            <div className="payment-account-select-group">
-              <label className="payment-field-label block text-xs font-semibold text-slate-700 mb-1">
-                Select Client & Subdivision Lot *
-              </label>
-              <select
-                value={appId}
-                onChange={(e) => {
-                  const id = Number(e.target.value);
-                  setAppId(id); setItems([]); setError('');
-                  const selected = applications.find(a => a.id === id);
-                  if (selected) {
-                    setItemAmount(selected.amortization || 5000);
-                    setItemDesc(`Amortization for ${selected.location} Blk ${selected.blockno} Lot ${selected.lotno}`);
-                  }
-                }}
-                className="payment-select-input w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:border-emerald-600 outline-none"
-              >
-                {applications.map(a => (
-                  <option key={a.id} value={a.id}>
-                    {a.clientName} — {a.location} (Blk {a.blockno}, Lot {a.lotno}) — Amort: {formatCurrency(a.amortization)}/mo
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Payment Details: OR, Date, Method */}
-            <div className="payment-details-grid grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div className="payment-or-group">
-                <label className="payment-field-label block text-[11px] font-semibold text-slate-600 mb-1">
-                  Official Receipt (OR No.) *
-                </label>
-                <input
-                  type="text"
-                  value={orNumber}
-                  onChange={(e) => setOrNumber(e.target.value)}
-                  className="payment-text-input w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 font-medium focus:border-emerald-600 outline-none"
-                />
-              </div>
-
-              <div className="payment-date-group">
-                <label className="payment-field-label block text-[11px] font-semibold text-slate-600 mb-1">
-                  Date of Payment
-                </label>
-                <input
-                  type="date"
-                  value={dateOfPayment}
-                  onChange={(e) => setDateOfPayment(e.target.value)}
-                  className="payment-date-input w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs text-slate-800 focus:border-emerald-600 outline-none"
-                />
-              </div>
-
-              <div className="payment-method-group">
-                <label className="payment-field-label block text-[11px] font-semibold text-slate-600 mb-1">
-                  Payment Method
-                </label>
-                <select
-                  value={paymentType}
-                  onChange={(e) => setPaymentType(e.target.value as PaymentMethodType)}
-                  className="payment-method-select w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs text-slate-800 focus:border-emerald-600 outline-none"
-                >
-                  <option value="CASH">CASH</option>
-                  <option value="BANK TRANSFER">BANK TRANSFER</option>
-                  <option value="GCASH">GCASH</option>
-                  <option value="MAYA">MAYA</option>
-                  <option value="CHEQUE">CHEQUE</option>
-                </select>
-              </div>
-            </div>
-
-            {paymentType !== 'CASH' && (
-              <div className="payment-refno-group">
-                <label className="payment-field-label block text-[11px] font-semibold text-slate-600 mb-1">
-                  Bank / Transaction Reference Number *
-                </label>
-                <input
-                  type="text"
-                  value={referenceNo}
-                  onChange={(e) => setReferenceNo(e.target.value)}
-                  placeholder="e.g. BDO-TRX-10294 or GCash Ref 8820"
-                  className="payment-refno-input w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs text-slate-800 focus:border-emerald-600 outline-none"
-                />
-              </div>
-            )}
-
-            {/* Add Payment Item Line Bar */}
-            <div className="payment-add-item-card p-3 bg-slate-50 rounded-xl border border-slate-200/80 space-y-2">
-              <span className="payment-add-item-title text-[11px] font-bold text-slate-700 block">Add Payment Item</span>
-              <div className="payment-add-item-grid grid grid-cols-1 sm:grid-cols-4 gap-2">
-                <div className="payment-for-group">
-                  <select
-                    value={paymentFor}
-                    onChange={(e) => setPaymentFor(e.target.value as PaymentForType)}
-                    className="payment-for-select w-full bg-white border border-slate-200 rounded-lg px-2 py-1.5 text-xs text-slate-800 outline-none"
-                  >
-                    <option value="RESERVED">RESERVED</option>
-                    <option value="DOWN PAYMENT">DOWN PAYMENT</option>
-                    <option value="INSTALLMENT">INSTALLMENT</option>
-                    <option value="FULL PAYMENT">FULL PAYMENT</option>
-                  </select>
-                </div>
-                <div className="payment-amount-group">
-                  <input
-                    type="number"
-                    step="100"
-                    placeholder="Amount"
-                    value={itemAmount}
-                    onChange={(e) => setItemAmount(Number(e.target.value))}
-                    className="payment-amount-input w-full bg-white border border-slate-200 rounded-lg px-2 py-1.5 text-xs font-semibold text-slate-900 outline-none"
-                  />
-                </div>
-                <div className="payment-desc-group">
-                  <input
-                    type="text"
-                    placeholder="Description notes"
-                    value={itemDesc}
-                    onChange={(e) => setItemDesc(e.target.value)}
-                    className="payment-desc-input w-full bg-white border border-slate-200 rounded-lg px-2 py-1.5 text-xs text-slate-800 outline-none"
-                  />
-                </div>
-                <div className="payment-add-button-group">
-                  <button
-                    type="button"
-                    onClick={handleAddItem}
-                    className="payment-add-item-button w-full py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white font-semibold rounded-lg flex items-center justify-center gap-1 shadow-2xs transition-colors cursor-pointer"
-                  >
-                    <Plus className="w-3.5 h-3.5" />
-                    <span>Add Item</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Payment Items Cart / DGV */}
-            <div className="payment-cart-table-container border border-slate-200 rounded-xl overflow-hidden">
-              <table className="payment-cart-table w-full text-left text-xs">
-                <thead className="payment-cart-header bg-slate-100/80 text-[11px] text-slate-500 font-semibold border-b border-slate-200">
-                  <tr>
-                    <th className="payment-cart-th py-2 px-3">Payment For</th>
-                    <th className="payment-cart-th py-2 px-3">Description</th>
-                    <th className="payment-cart-th py-2 px-3 text-right">Amount</th>
-                    <th className="payment-cart-th py-2 px-3 text-center w-12">Action</th>
-                  </tr>
-                </thead>
-                <tbody className="payment-cart-body divide-y divide-slate-100">
-                  {items.length === 0 ? (
-                    <tr className="payment-cart-empty-row">
-                      <td colSpan={4} className="payment-cart-empty-cell py-4 text-center text-slate-400">
-                        No items added yet. Click "Add Item" above.
-                      </td>
-                    </tr>
-                  ) : (
-                    items.map((item) => (
-                      <tr key={item.id} className="payment-cart-row hover:bg-slate-50">
-                        <td className="payment-cart-cell py-2.5 px-3 font-semibold text-slate-800">
-                          {item.paymentfor}
-                        </td>
-                        <td className="payment-cart-cell py-2.5 px-3 text-slate-600">
-                          {item.description}
-                        </td>
-                        <td className="payment-cart-cell py-2.5 px-3 text-right font-bold text-slate-900">
-                          {formatCurrency(item.amount)}
-                        </td>
-                        <td className="payment-cart-cell py-2.5 px-3 text-center">
-                          <button
-                            onClick={() => handleRemoveItem(item.id)}
-                            className="payment-cart-remove-button p-1 text-slate-400 hover:text-rose-600 rounded transition-colors"
-                          >
-                            <Trash2 className="w-3.5 h-3.5" />
-                          </button>
-                        </td>
-                      </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
-
-              {/* Total Row */}
-              <div className="payment-total-banner p-3 bg-slate-50/80 border-t border-slate-200 flex items-center justify-between">
-                <span className="payment-total-label font-semibold text-slate-700">Total Payment Due:</span>
-                <span className="payment-total-value text-base font-bold text-emerald-800">
-                  {formatCurrency(totalAmount)}
+              <div style={{ textAlign: 'right' }}>
+                <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.6px', fontWeight: 600, color: '#688272', display: 'block' }}>
+                  Cashier In-Charge
+                </span>
+                <span style={{ fontSize: '13px', fontWeight: 600, color: '#1f3c2d' }}>
+                  {inchargeByName}
                 </span>
               </div>
             </div>
 
+            {/* Target Account / Property Selection */}
+            <fieldset className="payment-fieldset">
+              <legend className="payment-legend">Contract &amp; Account Selection</legend>
+              <label className="form-field-label full">
+                <span>Select Client &amp; Subdivision Lot <span className="req">*</span></span>
+                <select
+                  value={appId}
+                  onChange={(e) => {
+                    const id = Number(e.target.value);
+                    setAppId(id); setItems([]); setError('');
+                    const selected = applications.find(a => a.id === id);
+                    if (selected) {
+                      setItemAmount(selected.amortization || 5000);
+                      setItemDesc(`Amortization for ${selected.location} Blk ${selected.blockno} Lot ${selected.lotno}`);
+                    }
+                  }}
+                  className="payment-select-input"
+                >
+                  {applications.map(a => (
+                    <option key={a.id} value={a.id}>
+                      {a.clientName} — {a.location} (Blk {a.blockno}, Lot {a.lotno}) — Amort: {formatCurrency(a.amortization)}/mo
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </fieldset>
+
+            {/* Payment Details: OR, Date, Method */}
+            <fieldset className="payment-fieldset">
+              <legend className="payment-legend">Voucher &amp; Payment Details</legend>
+              <div className="form-grid-3">
+                <label className="form-field-label">
+                  <span>Official Receipt (OR No.) <span className="req">*</span></span>
+                  <input
+                    type="text"
+                    value={orNumber}
+                    onChange={(e) => setOrNumber(e.target.value)}
+                    placeholder="e.g. OR-9921"
+                    className="payment-text-input"
+                    style={{ fontWeight: 600 }}
+                  />
+                </label>
+
+                <label className="form-field-label">
+                  <span>Date of Payment <span className="req">*</span></span>
+                  <input
+                    type="date"
+                    value={dateOfPayment}
+                    onChange={(e) => setDateOfPayment(e.target.value)}
+                    className="payment-date-input"
+                  />
+                </label>
+
+                <label className="form-field-label">
+                  <span>Payment Method <span className="req">*</span></span>
+                  <select
+                    value={paymentType}
+                    onChange={(e) => setPaymentType(e.target.value as PaymentMethodType)}
+                    className="payment-method-select"
+                  >
+                    <option value="CASH">CASH</option>
+                    <option value="BANK TRANSFER">BANK TRANSFER</option>
+                    <option value="GCASH">GCASH</option>
+                    <option value="MAYA">MAYA</option>
+                    <option value="CHEQUE">CHEQUE</option>
+                  </select>
+                </label>
+              </div>
+
+              {paymentType !== 'CASH' && (
+                <div style={{ marginTop: '12px' }}>
+                  <label className="form-field-label">
+                    <span>Bank / Transaction Reference Number <span className="req">*</span></span>
+                    <input
+                      type="text"
+                      value={referenceNo}
+                      onChange={(e) => setReferenceNo(e.target.value)}
+                      placeholder="e.g. BDO-TRX-10294 or GCash Ref 8820"
+                      className="payment-refno-input"
+                    />
+                  </label>
+                </div>
+              )}
+            </fieldset>
+
+            {/* Add Payment Item Line Bar */}
+            <fieldset className="payment-fieldset">
+              <legend className="payment-legend">Payment Line Items</legend>
+              <div className="p-3.5 bg-[#f8faf8] rounded-lg border border-[#d8e4dc] mb-3">
+                <span style={{ fontSize: '11px', fontWeight: 700, color: '#274e38', textTransform: 'uppercase', letterSpacing: '0.5px', display: 'block', marginBottom: '8px' }}>
+                  Add Line Item to Receipt
+                </span>
+                <div className="grid grid-cols-1 sm:grid-cols-4 gap-2.5">
+                  <div>
+                    <select
+                      value={paymentFor}
+                      onChange={(e) => setPaymentFor(e.target.value as PaymentForType)}
+                      className="payment-for-select"
+                    >
+                      <option value="RESERVED">RESERVED</option>
+                      <option value="DOWN PAYMENT">DOWN PAYMENT</option>
+                      <option value="INSTALLMENT">INSTALLMENT</option>
+                      <option value="FULL PAYMENT">FULL PAYMENT</option>
+                    </select>
+                  </div>
+                  <div>
+                    <input
+                      type="number"
+                      step="100"
+                      placeholder="Amount (PHP)"
+                      value={itemAmount}
+                      onChange={(e) => setItemAmount(Number(e.target.value))}
+                      className="payment-amount-input"
+                      style={{ fontWeight: 600 }}
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      placeholder="Description notes"
+                      value={itemDesc}
+                      onChange={(e) => setItemDesc(e.target.value)}
+                      className="payment-desc-input"
+                    />
+                  </div>
+                  <div>
+                    <button
+                      type="button"
+                      onClick={handleAddItem}
+                      className="primary-button w-full justify-center"
+                    >
+                      <Plus size={15}/>
+                      <span>Add Item</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Payment Items Cart / DGV */}
+              <div className="border border-[#d5e0d8] rounded-lg overflow-hidden">
+                <table className="w-full text-left" style={{ borderCollapse: 'collapse', fontSize: '13px' }}>
+                  <thead className="bg-[#f6f9f7] text-[#637d6e] border-b border-[#e2eae5]">
+                    <tr>
+                      <th className="py-2.5 px-3.5 font-semibold text-xs">Payment For</th>
+                      <th className="py-2.5 px-3.5 font-semibold text-xs">Description</th>
+                      <th className="py-2.5 px-3.5 font-semibold text-xs text-right">Amount</th>
+                      <th className="py-2.5 px-3.5 font-semibold text-xs text-center w-12">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-[#edf1ee]">
+                    {items.length === 0 ? (
+                      <tr>
+                        <td colSpan={4} className="py-4 text-center text-[#869b8f] text-xs">
+                          No items added yet. Specify the details above and click "Add Item".
+                        </td>
+                      </tr>
+                    ) : (
+                      items.map((item) => (
+                        <tr key={item.id} className="hover:bg-[#f8fbf9]">
+                          <td className="py-2.5 px-3.5 font-semibold text-[#1e3b2b]">
+                            {item.paymentfor}
+                          </td>
+                          <td className="py-2.5 px-3.5 text-[#516b5c]">
+                            {item.description}
+                          </td>
+                          <td className="py-2.5 px-3.5 text-right font-bold text-[#14472f]">
+                            {formatCurrency(item.amount)}
+                          </td>
+                          <td className="py-2.5 px-3.5 text-center">
+                            <button
+                              onClick={() => handleRemoveItem(item.id)}
+                              className="p-1 text-[#8fa296] hover:text-rose-600 rounded transition-colors"
+                              title="Remove item"
+                            >
+                              <Trash2 size={14}/>
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+
+                {/* Total Row */}
+                <div className="p-3 bg-[#f3f7f4] border-t border-[#d8e4dc] flex items-center justify-between">
+                  <span className="font-semibold text-[#294c39] text-xs">Total Payment Due:</span>
+                  <span className="text-base font-bold text-[#145f49]">
+                    {formatCurrency(totalAmount)}
+                  </span>
+                </div>
+              </div>
+            </fieldset>
+
             {/* Buttons */}
-            <div className="payment-actions-bar pt-2 flex items-center justify-end gap-2.5">
+            <div className="payment-actions-bar form-actions">
               <button
                 type="button"
                 onClick={onClose}
-                className="payment-cancel-button px-4 py-2 bg-slate-100 hover:bg-slate-200/80 text-slate-700 font-semibold rounded-xl transition-colors cursor-pointer"
+                className="payment-cancel-button secondary-button"
               >
                 Cancel
               </button>
@@ -348,56 +367,56 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
                 type="button"
                 onClick={handleSubmitPayment}
                 disabled={items.length === 0}
-                className="payment-submit-button px-5 py-2 bg-[#00593B] hover:bg-[#004a31] disabled:opacity-50 text-white font-semibold rounded-xl shadow-sm transition-all cursor-pointer"
+                className="payment-submit-button primary-button"
               >
-                Accept Payment & Print Receipt
+                Accept Payment &amp; Print Receipt
               </button>
             </div>
           </div>
         ) : (
           /* Printable Receipt View */
-          <div className="payment-receipt-view p-6 space-y-5">
-            <div className="payment-receipt-sheet p-6 border-2 border-dashed border-slate-300 rounded-2xl bg-white text-xs space-y-4">
-              <div className="payment-receipt-header text-center pb-3 border-b border-slate-200">
-                <h3 className="payment-receipt-company-title text-base font-bold text-slate-900 tracking-tight">JLD SUBDIVISION & REAL PROPERTY</h3>
-                <p className="payment-receipt-doc-title text-[11px] text-slate-500">Official Payment Acknowledgement Receipt</p>
-                <div className="payment-receipt-or-badge inline-block mt-2 bg-emerald-50 text-emerald-800 border border-emerald-200 px-2.5 py-0.5 rounded-full text-[11px] font-bold">
+          <div className="payment-receipt-view form-body" style={{ paddingBottom: '0' }}>
+            <div className="payment-receipt-sheet p-6 border-2 border-dashed border-[#b8ccbf] rounded-xl bg-white text-xs space-y-4">
+              <div className="payment-receipt-header text-center pb-3 border-b border-[#e2eae5]">
+                <h3 className="text-base font-bold text-[#143d29] tracking-tight">JLD SUBDIVISION &amp; REAL PROPERTY</h3>
+                <p className="text-[#647c6e] text-[11px]">Official Payment Acknowledgement Receipt</p>
+                <div className="inline-block mt-2 bg-[#e8f3ed] text-[#145f49] border border-[#c3dfce] px-3 py-0.5 rounded-full text-[11px] font-bold">
                   OR: {savedPayment?.orderreceipt}
                 </div>
               </div>
 
-              <div className="payment-receipt-metadata-grid grid grid-cols-2 gap-2 text-slate-600 text-xs">
-                <div className="payment-receipt-meta-item"><span className="payment-receipt-meta-label font-semibold text-slate-800">Paid By:</span> {savedPayment?.paidbyName}</div>
-                <div className="payment-receipt-meta-item"><span className="payment-receipt-meta-label font-semibold text-slate-800">Date:</span> {formatDate(savedPayment?.dateofpayment)}</div>
-                <div className="payment-receipt-meta-item"><span className="payment-receipt-meta-label font-semibold text-slate-800">Payment Ref:</span> {savedPayment?.paymentref}</div>
-                <div className="payment-receipt-meta-item"><span className="payment-receipt-meta-label font-semibold text-slate-800">Payment Mode:</span> {savedPayment?.paymenttype} {savedPayment?.referenceno ? `(${savedPayment.referenceno})` : ''}</div>
-                <div className="payment-receipt-meta-item"><span className="payment-receipt-meta-label font-semibold text-slate-800">Cashier:</span> {savedPayment?.inchargebyName}</div>
+              <div className="grid grid-cols-2 gap-2.5 text-[#4e6859] text-xs">
+                <div><span className="font-semibold text-[#234231]">Paid By:</span> {savedPayment?.paidbyName}</div>
+                <div><span className="font-semibold text-[#234231]">Date:</span> {formatDate(savedPayment?.dateofpayment)}</div>
+                <div><span className="font-semibold text-[#234231]">Payment Ref:</span> {savedPayment?.paymentref}</div>
+                <div><span className="font-semibold text-[#234231]">Payment Mode:</span> {savedPayment?.paymenttype} {savedPayment?.referenceno ? `(${savedPayment.referenceno})` : ''}</div>
+                <div><span className="font-semibold text-[#234231]">Cashier:</span> {savedPayment?.inchargebyName}</div>
               </div>
 
-              <div className="payment-receipt-items-list border-t border-b border-slate-200 py-3 space-y-2">
+              <div className="border-t border-b border-[#e2eae5] py-3 space-y-2">
                 {savedPayment?.items.map(item => (
-                  <div key={item.id} className="payment-receipt-item-row flex justify-between">
-                    <div className="payment-receipt-item-info">
-                      <span className="payment-receipt-item-for font-semibold text-slate-800">{item.paymentfor}</span>
-                      <span className="payment-receipt-item-desc text-slate-500 block text-[11px]">{item.description}</span>
+                  <div key={item.id} className="flex justify-between">
+                    <div>
+                      <span className="font-semibold text-[#1e3b2b]">{item.paymentfor}</span>
+                      <span className="text-[#758b7e] block text-[11px]">{item.description}</span>
                     </div>
-                    <span className="payment-receipt-item-amount font-bold text-slate-900">{formatCurrency(item.amount)}</span>
+                    <span className="font-bold text-[#123927]">{formatCurrency(item.amount)}</span>
                   </div>
                 ))}
               </div>
 
-              <div className="payment-receipt-total-row flex justify-between items-center pt-1 text-sm font-bold text-slate-900">
-                <span className="payment-receipt-total-label">TOTAL PAID:</span>
-                <span className="payment-receipt-total-value text-emerald-800 text-base">{formatCurrency(savedPayment?.totalamount)}</span>
+              <div className="flex justify-between items-center pt-1 text-sm font-bold text-[#143d29]">
+                <span>TOTAL PAID:</span>
+                <span className="text-[#145f49] text-base">{formatCurrency(savedPayment?.totalamount)}</span>
               </div>
             </div>
 
-            <div className="payment-receipt-actions-bar flex items-center justify-end gap-2.5">
+            <div className="payment-receipt-actions-bar form-actions">
               <button
                 onClick={() => window.print()}
-                className="payment-receipt-print-button px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer"
+                className="secondary-button"
               >
-                <Printer className="w-3.5 h-3.5" />
+                <Printer size={15}/>
                 <span>Print OR</span>
               </button>
               <button
@@ -406,7 +425,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
                   setItems([]);
                   onClose();
                 }}
-                className="payment-receipt-done-button px-5 py-2 bg-[#00593B] hover:bg-[#004a31] text-white font-semibold rounded-xl shadow-sm transition-all cursor-pointer"
+                className="primary-button"
               >
                 Done
               </button>

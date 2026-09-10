@@ -112,17 +112,14 @@ export function Sidebar({
       </nav>
 
       <div className="sidebar-footer-panel sidebar-footer">
-        <div className="sidebar-user-avatar workspace-avatar">JL</div>
-        <div className="sidebar-user-details">
-          <strong className="sidebar-user-name">JLD Subdivision</strong>
-          <small className="sidebar-user-role">Accounting workspace</small>
-        </div>
         <button
           className="sidebar-toggle-button"
           aria-label={collapsed ? 'Expand navigation' : 'Collapse navigation'}
+          title={collapsed ? 'Expand navigation' : 'Collapse navigation'}
           onClick={() => setCollapsed(!collapsed)}
         >
           {collapsed ? <PanelLeftOpen size={18} /> : <PanelLeftClose size={18} />}
+          {!collapsed && <span className="sidebar-toggle-text">Collapse navigation</span>}
         </button>
       </div>
     </aside>

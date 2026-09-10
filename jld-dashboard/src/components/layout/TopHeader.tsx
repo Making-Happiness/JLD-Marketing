@@ -1,4 +1,4 @@
-import { History, ChevronRight } from 'lucide-react';
+import { History, ChevronRight, LogOut } from 'lucide-react';
 import { NAV_SECTIONS, NavigationTab } from './Sidebar';
 
 export function TopHeader({
@@ -10,6 +10,11 @@ export function TopHeader({
 }) {
   const section = NAV_SECTIONS.find((s) => s.items.some((i) => i.id === currentTab));
   const title = section?.items.find((i) => i.id === currentTab)?.label || 'Overview';
+
+  const handleSignOut = () => {
+    sessionStorage.removeItem('jld_auth_user');
+    window.location.assign('/');
+  };
 
   return (
     <header className="top-header-bar erp-header">
@@ -28,13 +33,24 @@ export function TopHeader({
         >
           <History size={19} />
         </button>
-        <div className="header-user-avatar workspace-avatar">AC</div>
+        <button
+          type="button"
+          className="header-signout"
+          onClick={handleSignOut}
+          aria-label="Sign out"
+          title="Sign out"
+        >
+          <LogOut size={15} />
+          <span>Sign out</span>
+        </button>
+        <div className="header-user-avatar workspace-avatar" title="kayeencampana@gmail.com">KC</div>
         <span className="header-account-profile account-label">
-          Accountant
+          Kayeen Campana
           <small className="account-company">JLD Subdivision</small>
         </span>
       </div>
     </header>
   );
 }
+
 

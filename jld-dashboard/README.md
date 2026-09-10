@@ -24,3 +24,11 @@ Statements retain the existing price-plus-fees balance model; financed interest 
 ## Verification
 
 Production build and four payroll workflow tests pass. Lint has no blocking errors; existing unused-variable and React-effect warnings remain. Browser interaction and visual regression tests were not performed.
+
+## Employee sign-in
+
+The React entry page provides a branded employee sign-in screen for JLD Subdivision personnel:
+- Standard corporate Email and Password authentication form.
+- Direct session persistence with remember-me capability.
+- Clean header sign-out control that clears session and returns to the sign-in screen.
+- Client-ready presentation without third-party AI branding or extraneous labels.
