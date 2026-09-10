@@ -1,7 +1,8 @@
-import type { SavedWorkspace } from './ConnectedWorkspace';
+
 import { useSession } from './utils/session';
 import { calculateStatement, validateReceipt } from './utils/statement';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import * as API from './utils/supabase';
 import { EntryDialog, EntryKind, EntryValues } from './components/EntryDialog';
 import { preparePayroll, payslipFromPayroll } from './utils/workflows';
 import { AccountantWorkspace } from './components/AccountantWorkspace';
@@ -16,6 +17,7 @@ import { ExpensesTable } from './components/tables/ExpensesTable';
 import { EmployeesTable } from './components/tables/EmployeesTable';
 import { LoansTable } from './components/tables/LoansTable';
 import { PayrollTable } from './components/tables/PayrollTable';
+import { PrintableAccountsPage } from './components/PrintableAccountsPage';
 
 import { ApplicationModal } from './components/modals/ApplicationModal';
 import { PaymentModal } from './components/modals/PaymentModal';
@@ -69,7 +71,7 @@ import {
 import { formatCurrency } from './utils/calculations';
 import { CheckCircle2 } from 'lucide-react';
 
-export function App({ initialState, onStateChange }: { initialState: SavedWorkspace | null; onStateChange: (state: SavedWorkspace) => void }) {
+export function App({ initialState }: { initialState: any }) {
   const user=useSession();
   // Current active workspace navigation tab
   const [currentTab, setCurrentTab] = useState<NavigationTab>('overview');
@@ -92,7 +94,7 @@ export function App({ initialState, onStateChange }: { initialState: SavedWorksp
   // Audit Logs State
   const [auditLogs, setAuditLogs] = useState<AuditLogEntry[]>(initialState?.auditLogs ?? INITIAL_AUDIT_LOGS);
 
-  useEffect(()=>{onStateChange({leads,products,agents,clients,payments,expenses,employees,loans,benefits,payslips,payrollRecords,auditLogs});},[leads,products,agents,clients,payments,expenses,employees,loans,benefits,payslips,payrollRecords,auditLogs,onStateChange]);
+  
 
   // Enterprise Modals State
   const [archiveTarget, setArchiveTarget] = useState<{
@@ -391,6 +393,7 @@ export function App({ initialState, onStateChange }: { initialState: SavedWorksp
   const handleSaveProduct = (productData: Product | Omit<Product, 'idproduct'>) => {
     if ('idproduct' in productData && productData.idproduct) {
       setProducts(prev => prev.map(p => p.idproduct === productData.idproduct ? (productData as Product) : p));
+      void API.saveProduct(productData as Product);
       logActivity('Product', productData.idproduct, productData.code, 'EDIT', `Updated product specifications for ${productData.code}`);
       showToast(`Product ${productData.code} successfully updated!`);
     } else {
@@ -402,6 +405,7 @@ export function App({ initialState, onStateChange }: { initialState: SavedWorksp
         deleted_at: null
       };
       setProducts(prev => [newProduct, ...prev]);
+      void API.saveProduct(newProduct);
       logActivity('Product', nextId, newProduct.code, 'CREATE', `Created new subdivision phase: ${newProduct.location} (${newProduct.code})`);
       showToast(`Product ${newProduct.code} successfully added!`);
     }
@@ -410,6 +414,7 @@ export function App({ initialState, onStateChange }: { initialState: SavedWorksp
   const handleSaveClient = (clientData: Client | Omit<Client, 'idclients'>) => {
     if ('idclients' in clientData && clientData.idclients) {
       setClients(prev => prev.map(c => c.idclients === clientData.idclients ? (clientData as Client) : c));
+      void API.saveClient(clientData as Client);
       logActivity('Stakeholder', clientData.idclients, `${clientData.firstname} ${clientData.lastname}`, 'EDIT', `Updated stakeholder profile.`);
       showToast(`Stakeholder ${clientData.firstname} ${clientData.lastname} updated!`);
     } else {
@@ -421,6 +426,7 @@ export function App({ initialState, onStateChange }: { initialState: SavedWorksp
         deleted_at: null
       };
       setClients(prev => [newClient, ...prev]);
+      void API.saveClient(newClient);
       logActivity('Stakeholder', nextId, `${newClient.firstname} ${newClient.lastname}`, 'CREATE', `Registered new stakeholder ${newClient.firstname} ${newClient.lastname}`);
       showToast(`Stakeholder ${newClient.firstname} ${newClient.lastname} registered!`);
     }
@@ -449,6 +455,7 @@ export function App({ initialState, onStateChange }: { initialState: SavedWorksp
       const statement=calculateStatement(newApp,payments);
       if(statement.balance<0||statement.downPaymentOutstanding<0)return 'The revised price or down payment conflicts with existing receipts.';
       setLeads(leads.map(l => l.id === newApp.id ? newApp : l));
+      void API.savePurchaseDetail(newApp);
       logActivity('Purchase', newApp.id, `${newApp.clientName} (Blk ${newApp.blockno} Lot ${newApp.lotno})`, 'EDIT', `Updated purchase terms for ${newApp.clientName}`);
       showToast(`Purchase details for ${newApp.clientName} successfully updated!`);
     } else {
@@ -458,6 +465,7 @@ export function App({ initialState, onStateChange }: { initialState: SavedWorksp
         deleted_at: null
       };
       setLeads([appWithStatus, ...leads]);
+      void API.savePurchaseDetail(appWithStatus);
       logActivity('Purchase', newApp.id, `${newApp.clientName} (Blk ${newApp.blockno} Lot ${newApp.lotno})`, 'CREATE', `Executed lot purchase application for ${newApp.clientName}`);
       showToast(`New lot purchase for ${newApp.clientName} created!`);
     }
@@ -470,13 +478,18 @@ export function App({ initialState, onStateChange }: { initialState: SavedWorksp
     for (const id of new Set(newPay.items.map(i=>i.idpurchasedetails))) { const issue=validateReceipt(leads.find(l=>l.id===id)!,payments,newPay); if(issue)return issue; }
     const earned=new Map<number,number>();
     newPay.items.forEach(i=>{const contract=leads.find(l=>l.id===i.idpurchasedetails)!;earned.set(contract.idagent,(earned.get(contract.idagent)||0)+Math.round(i.amount*contract.agentpercentage)/100);});
-    setAgents(prev=>prev.map(a=>{const amount=earned.get(a.id)||0;return {...a,totalEarned:Math.round((a.totalEarned+amount)*100)/100,balance:Math.round((a.balance+amount)*100)/100};}));
+    setAgents(prev=>{
+      const next = prev.map(a=>{const amount=earned.get(a.id)||0;return {...a,totalEarned:Math.round((a.totalEarned+amount)*100)/100,balance:Math.round((a.balance+amount)*100)/100};});
+      next.forEach(a => void API.saveAgent(a));
+      return next;
+    });
     const payWithStatus: PaymentTransaction = {
       ...newPay,
       status: 'active',
       deleted_at: null
     };
     setPayments([payWithStatus, ...payments]);
+    void API.savePayment(payWithStatus);
     logActivity('Payment', newPay.id, newPay.paymentref, 'CREATE', `Recorded payment OR #${newPay.orderreceipt} of ${formatCurrency(newPay.totalamount)} for ${newPay.paidbyName}`);
     showToast(`Payment of ${formatCurrency(newPay.totalamount)} successfully recorded!`);
   };
@@ -547,7 +560,8 @@ export function App({ initialState, onStateChange }: { initialState: SavedWorksp
         {/* Dynamic Workspace Ledger Views */}
         <div className="app-content-viewport flex-1 pb-10 erp-content">
           {(currentTab === 'overview' || currentTab === 'reports') && <AccountantWorkspace key={currentTab} db={dbState} report={currentTab === 'reports'} onNavigate={setCurrentTab} onPayment={() => {setPaymentLead(null);setIsPaymentModalOpen(true);}} onContract={() => {setEditingLead(null);setApplyClientId(null);setIsAppModalOpen(true);}} onSOA={handleOpenSOA}/>}
-          {currentTab !== 'overview' && currentTab !== 'reports' && <div className="workspace-view-context"><h1 className="workspace-view-title">{NAV_SECTIONS.flatMap(s=>s.items).find(i=>i.id===currentTab)?.label}</h1><p className="workspace-view-description">{['employees','loans-benefits','payroll'].includes(currentTab) ? 'Employee records → adjustments → payroll → payslips → expense vouchers' : 'Properties → buyers → contracts → collections → commissions → cash flow'}</p><details className="related-work"><summary className="related-work-summary">Related tables</summary><div className="context-links">{( ['employees','loans-benefits','payroll'].includes(currentTab) ? NAV_SECTIONS.filter(s=>s.id==='people'||s.id==='finance') : NAV_SECTIONS.filter(s=>s.id==='sales'||s.id==='agents'||s.id==='finance')).flatMap(s=>s.items).map(i=><button key={i.id} className="related-nav-link" aria-current={currentTab===i.id?'page':undefined} onClick={()=>setCurrentTab(i.id as NavigationTab)}>{i.label}</button>)}</div></details></div>}
+          {currentTab === 'printable-accounts' && <PrintableAccountsPage contracts={leads} payments={payments} />}
+          {currentTab !== 'overview' && currentTab !== 'reports' && currentTab !== 'printable-accounts' && <div className="workspace-view-context"><h1 className="workspace-view-title">{NAV_SECTIONS.flatMap(s=>s.items).find(i=>i.id===currentTab)?.label}</h1><p className="workspace-view-description">{['employees','loans-benefits','payroll'].includes(currentTab) ? 'Employee records → adjustments → payroll → payslips → expense vouchers' : 'Properties → buyers → contracts → collections → commissions → cash flow'}</p><details className="related-work"><summary className="related-work-summary">Related tables</summary><div className="context-links">{( ['employees','loans-benefits','payroll'].includes(currentTab) ? NAV_SECTIONS.filter(s=>s.id==='people'||s.id==='finance') : NAV_SECTIONS.filter(s=>s.id==='sales'||s.id==='agents'||s.id==='finance')).flatMap(s=>s.items).map(i=><button key={i.id} className="related-nav-link" aria-current={currentTab===i.id?'page':undefined} onClick={()=>setCurrentTab(i.id as NavigationTab)}>{i.label}</button>)}</div></details></div>}
           {currentTab === 'contracts' && <PurchaseDetailsTable payments={payments} purchases={leads} onNewPurchase={() => {setEditingLead(null);setApplyClientId(null);setIsAppModalOpen(true);}} onEditPurchase={handleEditPurchase} onViewDetails={handleOpenSOA} onViewHistory={handleOpenSOA} onArchivePurchase={p=>handleArchive('Purchase',p.id,p.clientName)} onRestorePurchase={p=>handleRestore('Purchase',p.id,p.clientName)} onPermanentDeletePurchase={p=>handleRequestPermanentDelete('Purchase',p.id,p.clientName)}/>}
           {/* Properties & Lots */}
           {currentTab === 'products' && (

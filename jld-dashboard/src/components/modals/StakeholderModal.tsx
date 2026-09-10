@@ -1,7 +1,7 @@
 import { ModalFrame } from './ModalFrame';
 import React, { useState, useEffect } from 'react';
 import { Client } from '../../types';
-import { X, User, CheckCircle2, Calendar, Phone, MapPin, Heart } from 'lucide-react';
+import { X, User, CheckCircle2 } from 'lucide-react';
 
 interface StakeholderModalProps {
   isOpen: boolean;

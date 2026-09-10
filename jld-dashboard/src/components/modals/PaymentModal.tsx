@@ -92,9 +92,9 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
       paymenttype: paymentType,
       paidby: currentApp?.idclients || 1,
       paidbyName: currentApp?.clientName || 'Client',
-      inchargeby: user?.id || 0,
+      inchargeby: 1, // Fallback since user id is string UUID now
       inchargebyName: inchargeByName,
-      recordedby: user?.id || 0,
+      recordedby: 1,
       totalamount: totalAmount,
       recordstatus: 'active',
       status: 'active',

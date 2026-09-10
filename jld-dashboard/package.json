@@ -4,15 +4,15 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "node server/index.mjs --dev",
+    "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-    "start": "node server/index.mjs",
-    "account:add": "node server/create-account.mjs",
+    "start": "vite preview",
     "test": "node --test tests/*.test.cjs tests/*.test.mjs"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.116.0",
     "@types/papaparse": "^5.5.2",
     "jspdf": "^4.2.1",
     "lucide-react": "^1.41.0",

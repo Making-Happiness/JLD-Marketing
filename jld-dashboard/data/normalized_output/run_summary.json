@@ -1,4 +1,7 @@
 {
-  "status": "reset",
-  "note": "Business records cleared; property inventory retained in src/data/initialData.ts."
+  "generated_at": "2026-09-10T20:59:47",
+  "accounts": 377,
+  "payments": 1759,
+  "events": 100,
+  "balance_rows_for_review": 35
 }

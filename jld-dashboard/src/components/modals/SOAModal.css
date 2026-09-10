@@ -25,7 +25,27 @@
 @media print {
   @page { size:A4 portrait; margin:14mm; }
   body:has(.jld-statement) { background:white!important; overflow:visible!important; }
-  body:has(.jld-statement) > #root { display:none!important; }
+  body:has(dialog .jld-statement) > #root { display:none!important; }
+  body:has(.printables-page) .erp-sidebar,
+  body:has(.printables-page) .erp-header,
+  body:has(.printables-page) .page-heading,
+  body:has(.printables-page) .printables-browser,
+  body:has(.printables-page) .statement-preview-header,
+  body:has(.printables-page) .workspace-save-status,
+  body:has(.printables-page) .soa-controls {
+    display:none!important;
+  }
+  body:has(.printables-page) .printables-page {
+    padding:0!important;
+    margin:0!important;
+    background:white!important;
+  }
+  body:has(.printables-page) .statement-preview {
+    border:0!important;
+    box-shadow:none!important;
+    padding:0!important;
+    background:transparent!important;
+  }
   body:has(.jld-statement) dialog { position:static!important; width:100%!important; max-width:none!important; height:auto!important; max-height:none!important; margin:0!important; padding:0!important; border:0!important; overflow:visible!important; box-shadow:none!important; }
   body:has(.jld-statement) dialog::backdrop { display:none; }
   .soa-shell { width:100%!important; max-width:none!important; max-height:none!important; overflow:visible!important; box-shadow:none!important; border:0!important; }

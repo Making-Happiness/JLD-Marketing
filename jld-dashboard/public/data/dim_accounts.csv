@@ -1,1 +1,378 @@
-account_id,sheet_name,source_row,account_category,reservation_date,location_or_origin,primary_client_name,secondary_client_or_note,commission_pct,commission_raw,sqm,sqm_raw,dicer_agent,block,lot,contact_number,list_price,down_payment,stated_balance,monthly_amortization,monthly_amortization_raw,payment_terms,due_date,due_date_source
+﻿account_id,sheet_name,source_row,account_category,reservation_date,location_or_origin,primary_client_name,secondary_client_or_note,commission_pct,commission_raw,sqm,sqm_raw,dicer_agent,block,lot,contact_number,list_price,down_payment,stated_balance,monthly_amortization,monthly_amortization_raw,payment_terms,due_date,due_date_source
+Buenaflor1_2,Buenaflor1,2,Active,2020-06-03,,"Alido, Jessica",,10.0,10,200.0,200,Vern,1,8,09068019406,240000.0,5000.0,0.0,-,-,CASH,2020-06-03,reservation_date_for_cash
+Buenaflor1_3,Buenaflor1,3,Active,,Gamboa,"Alido,Ivan Karl",,,,210.0,210,,,,,260000.0,260000.0,,,,,,
+Buenaflor1_4,Buenaflor1,4,Active,2020-05-13,,"Are, Rosalie",,10.0,10,400.0,400,Janet,2,2,09389993382,341600.0,20000.0,141600.0,9600.0,9600,5 yrs,2025-05-13,reservation_date_plus_terms_years
+Buenaflor1_5,Buenaflor1,5,Active,,katungal b p2,"Atoc, Glory Jean Modato",,5.0,5(full),200.0,200,Darlyn,1,11,,250000.0,9971.0,-1000.0,-,-,2020-12-18 00:00:00,,
+Buenaflor1_6,Buenaflor1,6,Active,2020-05-15,,"Baldeo, Michael John D",,10.0,10,200.0,200,Karen,1,5,09757682185,280400.0,20000.0,0.0,9600.0,9600,2 yrs,2022-05-15,reservation_date_plus_terms_years
+Buenaflor1_7,Buenaflor1,7,Active,2020-06-13,,"Barroga, Ivan T",,10.0,10,200.0,200,Honey,2,13,09094503574,280400.0,20000.0,0.0,9600.0,9600,2 yrs,2022-06-13,reservation_date_plus_terms_years
+Buenaflor1_8,Buenaflor1,8,Active,2020-03-20,,"Dar, Hannah Avila","Nitor, Roy Archie",10.0,10,200.0,200,Vern,2,3,09559008033,280400.0,10000.0,90400.0,9600.0,9600,2026-03-01 00:00:00,,
+Buenaflor1_9,Buenaflor1,9,Active,2020-05-22,,"De Guzman,Jean","Agduma, Baimon",10.0,10,200.0,200,Joy,1,15,09951584608,260000.0,10000.0,0.0,9600.0,9600,2 yrs,2022-05-22,reservation_date_plus_terms_years
+Buenaflor1_10,Buenaflor1,10,Active,2020-06-12,,"Diwaten, Michell L",,5.0,5(full),400.0,400,Marciano,1,"13,14",09076861192,560800.0,43839.0,74292.0,19200.0,19200,2 yrs,2022-06-12,reservation_date_plus_terms_years
+Buenaflor1_11,Buenaflor1,11,Active,2020-05-29,,"Garcia, Anna Rose Book",,10.0,10,200.0,200,Vern,1,7,09186424119,280400.0,5000.0,0.0,9600.0,9600,2 yrs,2022-05-29,reservation_date_plus_terms_years
+Buenaflor1_12,Buenaflor1,12,Active,2020-12-05,,"Grospe, Francis Ian",,5.0,5,200.0,200,Lolita Grsope,1,4,09204721099,236400.0,20000.0,0.0,9600.0,9600,2 yrs,2022-12-05,reservation_date_plus_terms_years
+Buenaflor1_13,Buenaflor1,13,Active,,salayog,"Johnson, Norelyn Calwag",,5.0,5(full),314.0,314,Marciano,2,15,,440228.0,99600.0,340628.0,-,-,2 yrs-Apr 2022,,
+Buenaflor1_14,Buenaflor1,14,Active,2024-05-21,,"Hifarva,Shirly Gorospe",,3.0,3,200.0,200,Office,2,6,09505136081,414400.0,5000.0,332400.0,13200.0,13200,4 YRS,2028-05-21,reservation_date_plus_terms_years
+Buenaflor1_15,Buenaflor1,15,Active,2020-06-01,,"Israel, Irham Bonga","Pendatun, Edison",10.0,10,600.0,600,Sepi,1,1,,900000.0,100000.0,0.0,37500.0,37500,2 YRS,2022-06-01,reservation_date_plus_terms_years
+Buenaflor1_16,Buenaflor1,16,Active,2020-05-22,,"Lavalle, Lenafe D",,10.0,10,200.0,200,Mylyn,1,6,09480168342,280200.0,5000.0,0.0,5841.0,5841/sm,3 yrs,2023-05-22,reservation_date_plus_terms_years
+Buenaflor1_17,Buenaflor1,17,Active,,New Carmen,"Loraña,Rizalyn",,,,200.0,200,,,,,196000.0,196000.0,0.0,,,,,
+Buenaflor1_18,Buenaflor1,18,Active,2020-05-09,,"Lumantas, Airen Marie","Binas, Jasper",10.0,10,200.0,200,Nikka,1,3,09067742903,280400.0,15000.0,0.0,9600.0,9600,2 yrs,2022-05-09,reservation_date_plus_terms_years
+Buenaflor1_19,Buenaflor1,19,Active,,calean c,"Macote, Marina",Cheresh,10.0,10,200.0,200,Karen,2,14,09261715093,260000.0,15000.0,0.0,17500.0,17500,1 YR,,
+Buenaflor1_20,Buenaflor1,20,Active,,from Sukelco,"Magracia,Imarie A.",,10.0,10,200.0,200,Janet,2,8,09751465485,385600.0,25000.0,360600.0,9600.0,9600,3 YRS,,
+Buenaflor1_21,Buenaflor1,21,Active,,new carmen,"Manglicmot, Theresita Jr",Jodonelle Denver Theodore,10.0,10,200.0,200,-,2,4,,380400.0,73750.0,296650.0,-,-,Dec.2026,,
+Buenaflor1_22,Buenaflor1,22,Active,2020-06-15,,"Marcos, Aiko M",,10.0,10,200.0,200,Vivian E,2,12,09658879881,337200.0,5000.0,170200.0,9600.0,9600,6 yrs,2026-06-15,reservation_date_plus_terms_years
+Buenaflor1_23,Buenaflor1,23,Active,,"Dumago,Marilyn","Maulana,Norlis Abdul",,10.0,10,400.0,400,Janet,1,2,,540000.0,540000.0,0.0,,,CASH,,
+Buenaflor1_24,Buenaflor1,24,Active,2020-06-08,,"Nandal, Warda Pendatun",,10.0,10,400.0,400,Sepi,1,"9,10",09273916129,520400.0,100000.0,0.0,19200.0,19200,2 YEARS,2022-06-08,reservation_date_plus_terms_years
+Buenaflor1_25,Buenaflor1,25,Active,,,"Sagabain,Degkig M.",,3.0,3,150.0,150,Office,1,16,09356251904,255000.0,176000.0,0.0,,,2023-08-01 00:00:00,,
+Buenaflor1_26,Buenaflor1,26,Active,2021-03-20,,"Solano, Pia Rose",,10.0,10,150.0,150,Rudny,2,16,,224400.0,30000.0,0.0,8100.0,8100,2 yrs,2023-03-20,reservation_date_plus_terms_years
+Buenaflor1_27,Buenaflor1,27,Active,,buenaflor p2,"Tonog, Glenn Vincent",,10.0,10,100.0,100(200),Janet,1,12,09360956510,120000.0,40000.0,-1200.0,-,-,CASH,,
+Buenaflor1_28,Buenaflor1,28,Active,2021-07-16,,"Tonog, Glenn Vincent",,10.0,10,100.0,100(200),Janet,1,12,09360956570,129720.0,60000.0,7720.0,5841.0,"5,841/sm",1 YR,2022-07-16,reservation_date_plus_terms_years
+Buenaflor1_29,Buenaflor1,29,Active,,new carmen,"Vingno, Judith",Editha Corpuz,10.0,10,600.0,600,Janet,2,1,09162870401,580000.0,580000.0,0.0,-,-,-,,
+Buenaflor1_30,Buenaflor1,30,Active,2020-06-08,,"Volante, Ingrid",Irish,10.0,10,200.0,200,Nikka,2,9,,280400.0,10000.0,0.0,9600.0,9600,2 yrs,2022-06-08,reservation_date_plus_terms_years
+Buenaflor1_33,Buenaflor1,33,Active,,,BACK OUT,,,,,,,,,,,,,,,,,
+Buenaflor1_34,Buenaflor1,34,Active,2020-06-03,,"Cortez, Ma. Sally C",,10.0,10,200.0,200,Janet,2,7,09971770436,240000.0,10000.0,210000.0,,,REFUNDED,,
+Buenaflor1_35,Buenaflor1,35,Active,,katungal b p2,"Anceno, Roxanne C",,10.0,10,150.0,150,Vern,2,16,09757508504,210300.0,12500.0,154800.0,7200.0,7200,2 yrs,,
+Buenaflor1_36,Buenaflor1,36,Active,2021-02-18,,"Labrador, Rosemarie S",,10.0,10,100.0,100(200),Alfred,2,5,09360913866,149600.0,10000.0,139600.0,5400.0,5400,2 YRS,2023-02-18,reservation_date_plus_terms_years
+Buenaflor1_37,Buenaflor1,37,Active,2020-06-10,,"Ang, Zandro",,10.0,10,200.0,200,Sepi/Fedoc,2,10,,280400.0,5000.0,275400.0,9600.0,9600,2 yrs,2022-06-10,reservation_date_plus_terms_years
+Buenaflor1_40,Buenaflor1,40,Active,,,FULL REFUND,,,,,,,,,,,,,,,,,
+Buenaflor1_41,Buenaflor1,41,Active,2020-06-03,,"Bacero, Ryan A",,10.0,10,200.0,200,Janet,1,12,09973211444,420600.0,8000.0,412600.0,14400.0,14400,2 yrs,2022-06-03,reservation_date_plus_terms_years
+Buenaflor1_42,Buenaflor1,42,Active,2020-05-06,,"Dumago, Alania Leilanie",,10.0,10,600.0,600,Sepi,2,1,09070129874,1020000.0,44000.0,953000.0,37500.0,37500,2 yrs,2022-05-06,reservation_date_plus_terms_years
+Buenaflor1_43,Buenaflor1,43,Active,,Buenaflor p5,"Delgado, Rizza",,7.0,7,200.0,200,Lyn Catriz,1,"9,10",09194587164,656000.0,5000.0,646000.0,16000.0,16000,3 yrs,,
+Buenaflor1_44,Buenaflor1,44,Active,2020-05-26,,"Sagabain, Degkig M",,5.0,5(full),200.0,200,Honey,2,8,09356251904,280400.0,38000.0,104400.0,9600.0,9600,2 yrs,2022-05-26,reservation_date_plus_terms_years
+Buenaflor1_45,Buenaflor1,45,Active,2020-08-01,,"Damian, Bobby L",,10.0,10,200.0,200,Vern,2,7,09498323752,280400.0,25000.0,192000.0,9600.0,9600,2 yrs,2022-08-01,reservation_date_plus_terms_years
+Buenaflor1_46,Buenaflor1,46,Active,2024-03-04,,"Endal,Clinton",,7.0,7,200.0,200,Darlyn,,6,,385600.0,20000.0,365600.0,9600.0,9600,3 YRS,2027-03-04,reservation_date_plus_terms_years
+Buenaflor1_49,Buenaflor1,49,Transferred,2020-05-19,,"Sarreno, Ronald Eleria",,10.0,10,200.0,200,Vern,2,5,09074049437,240000.0,20000.0,0.0,-,-,CASH,2020-05-19,reservation_date_for_cash
+Buenaflor1_50,Buenaflor1,50,Transferred,2020-05-23,,"Satorre, Clariza",,10.0,10,200.0,200,Sanny,2,6,,280400.0,10000.0,270400.0,9600.0,9600,2 yrs,2022-05-23,reservation_date_plus_terms_years
+Buenaflor1_51,Buenaflor1,51,Transferred,2020-05-15,,"Dumago, Marilyn",,10.0,10,400.0,400,Sepi,1,2,09064549745,480000.0,20000.0,0.0,19200.0,19200,2 yrs,2022-05-15,reservation_date_plus_terms_years
+Buenaflor1_52,Buenaflor1,52,Transferred,2020-06-11,,"Gamboa, Shiela Mae",Rufina L,10.0,10,210.0,210,Jiselle C,2,11,09356461400,260000.0,40000.0,0.0,9600.0,9600,2 yrs,2022-06-11,reservation_date_plus_terms_years
+Buenaflor1_56,Buenaflor1,56,Forfeited,,calean a,"Bansalao, Adelyn",,10.0,10,100.0,100(200),Alfred,2,5,,149600.0,5000.0,144600.0,5400.0,5400,2 yrs,,
+Buenaflor1_57,Buenaflor1,57,Forfeited,2020-06-01,,"Palermo, Vicente P",,10.0,10,150.0,150,Sanny,1,16,09099124899,210300.0,30000.0,162800.0,7200.0,7200,2 yrs,2022-06-01,reservation_date_plus_terms_years
+Buenaflor1_58,Buenaflor1,58,Forfeited,2023-05-08,,"Langcap,Monyr Nawal",,7.0,7,200.0,200,Linda,2,7,09166169418,443200.0,5000.0,438200.0,6720.0,6720,5 YRS,2028-05-08,reservation_date_plus_terms_years
+Buenaflor2_2,Buenaflor2,2,Active,2020-09-16,,"Aben, Bernadeth",,10.0,10,100.0,100,Brenda,,13,,120000.0,5000.0,-700.0,-,-,CASH,2020-09-16,reservation_date_for_cash
+Buenaflor2_3,Buenaflor2,3,Active,,lambayong p2,"Alid, Esmael S",,10.0,10_5(full),200.0,200,Marciano,,24,09554980290,247000.0,113660.0,0.0,-,-,2021-01-01 00:00:00,,
+Buenaflor2_4,Buenaflor2,4,Active,2020-08-17,,"Apostol, Imelda M",,10.0,10,100.0,100,Vern/Luz A,,47,09551502847,127000.0,5000.0,0.0,-,-,6 MOS,2021-02-17,reservation_date_plus_terms_months
+Buenaflor2_5,Buenaflor2,5,Active,2020-09-21,,"Apostol, Sharleen Dyane C",,10.0,10,400.0,400,Vern/Jockey,,31,09658608293,480000.0,15000.0,0.0,-,-,1/8/2021-CASH,2020-09-21,reservation_date_for_cash
+Buenaflor2_6,Buenaflor2,6,Active,2020-09-04,,"Azuelo, Jay A",,10.0,10,100.0,100,Maryelle D Peña,,12,09151675867,149600.0,5000.0,0.0,5400.0,5400,2 yrs,2022-09-04,reservation_date_plus_terms_years
+Buenaflor2_7,Buenaflor2,7,Active,2020-09-17,,"Barroquillo, April Chariss H",,5.0,5(full),200.0,200,Darlyn,,6,09353912363,299200.0,5000.0,0.0,10800.0,10800,2 yrs,2022-09-17,reservation_date_plus_terms_years
+Buenaflor2_8,Buenaflor2,8,Active,2024-10-12,,"Borres,Elena Mae N.",,7.0,7,182.0,182,Nhaidy,,38,09363378811,424800.0,5000.0,333800.0,5400.0,5400,6 YRS,2030-10-12,reservation_date_plus_terms_years
+Buenaflor2_9,Buenaflor2,9,Active,2020-08-19,,"Braza, Rosalie",,10.0,10,100.0,100,Sanny,,43,09103187231,149600.0,20000.0,0.0,5400.0,5400,2 yrs,2022-08-19,reservation_date_plus_terms_years
+Buenaflor2_10,Buenaflor2,10,Active,2024-08-02,,"Caigoy,Erna R.",,7.0,7,100.0,100,Janet,,8,09366387200,192800.0,20000.0,153800.0,4800.0,4800,3 YRS,2027-08-02,reservation_date_plus_terms_years
+Buenaflor2_11,Buenaflor2,11,Active,2020-08-17,,"Carado, Christine Joy E",,10.0,10,200.0,200,Honey,,35,09552531732,299200.0,10000.0,0.0,10800.0,10800,2 yrs,2022-08-17,reservation_date_plus_terms_years
+Buenaflor2_12,Buenaflor2,12,Active,2020-08-12,,"Castañeda, Grace Ivy",,10.0,10,200.0,200,Honey,,51,09951940103,284320.0,10000.0,0.0,10800.0,10800,2 YRS,2022-08-12,reservation_date_plus_terms_years
+Buenaflor2_13,Buenaflor2,13,Active,2020-09-28,,"Conde, Shayne Durizza A",,10.0,10,200.0,200,Vern/Jockey,,26,09952940648,269440.0,50000.0,0.0,18286.0,18286,1 yr,2021-09-28,reservation_date_plus_terms_years
+Buenaflor2_14,Buenaflor2,14,Active,2020-09-22,,"Daquera, Ivy A",,5.0,5(full),100.0,100,Darlyn,,16,09658612590,134720.0,5000.0,9560.0,9560.0,9560,1 yr,2021-09-22,reservation_date_plus_terms_years
+Buenaflor2_15,Buenaflor2,15,Active,2020-09-24,,"Dela Cruz, Angelie N",,10.0,10,100.0,100(300),Mona,,1,09460004613,150000.0,150000.0,0.0,-,-,CASH,2020-09-24,reservation_date_for_cash
+Buenaflor2_16,Buenaflor2,16,Active,2020-08-11,,"Dela Cruz, Angelie N",,10.0,10,200.0,200(300),Mona,,1,09460004613,356800.0,15000.0,0.0,13200.0,13200,2 YRS,2022-08-11,reservation_date_plus_terms_years
+Buenaflor2_17,Buenaflor2,17,Active,2020-08-31,,"Diga, Radzma",Razul,5.0,5(full),200.0,200x2,Marciano,,"56,57",09450996145,546800.0,10000.0,0.0,16183.0,16183,4 yrs,2024-08-31,reservation_date_plus_terms_years
+Buenaflor2_18,Buenaflor2,18,Active,2020-08-11,,"Dulos, Jockey A",,10.0,10,540.0,540,Vern,,37,,1020000.0,30000.0,0.0,35640.0,35640,3 YRS,2023-08-11,reservation_date_plus_terms_years
+Buenaflor2_19,Buenaflor2,19,Active,2024-11-16,,"Dumandan,Armour",,7.0,7,127.0,127,Linda,,18,09359580155,217400.0,20000.0,0.0,3810.0,3810,2 YRS,2026-11-16,reservation_date_plus_terms_years
+Buenaflor2_20,Buenaflor2,20,Active,2026-08-31,,"Dumandan,Armour",,,per lot,172.0,172,Reah,,17,09303295698,405920.0,34400.0,371520.0,5160.0,5160,6 YRS,2032-08-31,reservation_date_plus_terms_years
+Buenaflor2_21,Buenaflor2,21,Active,2020-09-18,,"Fran, Maricel",,10.0,10,200.0,200,Aileen Sepi,,7,,299200.0,10000.0,10800.0,10800.0,10800,2 yrs,2022-09-18,reservation_date_plus_terms_years
+Buenaflor2_22,Buenaflor2,22,Active,2024-06-01,,"Gaban,Norilyn",,7.0,7,100.0,100,Precy,,46,09639464416,178400.0,20000.0,0.0,6600.0,6600,2 YRS,2026-06-01,reservation_date_plus_terms_years
+Buenaflor2_23,Buenaflor2,23,Active,2020-08-20,,"Gaurana, Arshley Xerxes A",,10.0,10,200.0,200,Honey,,33,09353613135,299200.0,10000.0,10800.0,10800.0,10800,2 yrs,2022-08-20,reservation_date_plus_terms_years
+Buenaflor2_24,Buenaflor2,24,Active,2025-12-05,,"Gayanandang,Zharmine",,7.0,7,150.0,150,Linda P.,,22,09468106639,354000.0,15000.0,339000.0,4500.0,4500,6 YRS,2031-12-05,reservation_date_plus_terms_years
+Buenaflor2_25,Buenaflor2,25,Active,2020-09-23,,"Gelidon, Louie Jan D",,10.0,10,100.0,100,Honey,,40,09652588490,149600.0,5000.0,0.0,5400.0,5400,2 yrs,2022-09-23,reservation_date_plus_terms_years
+Buenaflor2_26,Buenaflor2,26,Active,2020-08-12,,"Guarin, Lowela",,5.0,5,200.0,200,G Perez,,52,09123820784,269440.0,10000.0,0.0,10800.0,10800,2 yrs,2022-08-12,reservation_date_plus_terms_years
+Buenaflor2_27,Buenaflor2,27,Active,2020-08-11,,"Jangad, Marcial M",,,-,200.0,200 (400),Arlene/Racel,,36,09556386768,225000.0,150000.0,-40000.0,-,-,CASH,2020-08-11,reservation_date_for_cash
+Buenaflor2_28,Buenaflor2,28,Active,2020-08-11,,"Jangad, Marcial M",,,-,200.0,200 (400),Arlene/Racel,,36,09556386768,299200.0,40000.0,14960.0,10800.0,10800,2 yrs,2022-08-11,reservation_date_plus_terms_years
+Buenaflor2_29,Buenaflor2,29,Active,2020-08-15,,"Lagrimas, Lalene P",,10.0,10,100.0,100,Sanny,,10,09956391501,149600.0,5000.0,0.0,10800.0,10800,2 yrs,2022-08-15,reservation_date_plus_terms_years
+Buenaflor2_30,Buenaflor2,30,Active,2026-06-19,,"Lagrimas, Lalene P",,7.0,7,100.0,100,Jiselle,,9,09755701947,192800.0,5000.0,172800.0,4800.0,4800,3 YRS,2029-06-19,reservation_date_plus_terms_years
+Buenaflor2_31,Buenaflor2,31,Active,,"ancheta,E/N","Laspe, Elaine","Bugarin, Marites",10.0,10,200.0,200,Janet,,2,09231048683,235000.0,15000.0,0.0,-,-,CASH,,
+Buenaflor2_32,Buenaflor2,32,Active,2020-08-13,,"Laspe, Lourdes B",,10.0,10,200.0,200x2,Janet/Tonog,,2,09231048683,475000.0,10000.0,0.0,-,-,CASH,2020-08-13,reservation_date_for_cash
+Buenaflor2_33,Buenaflor2,33,Active,,Katungal A,"Literal, Mary Grace Agulan",,10.0,10,100.0,100,Darlyn,,41,09203683707,192800.0,20000.0,149200.0,5400.0,5400,5 yrs,,
+Buenaflor2_34,Buenaflor2,34,Active,2020-09-17,,"Lontiong, Ryan E",,10.0,10,100.0,100,Brenda,,15,09558908577,150340.0,5000.0,0.0,5400.0,5400,2 yrs,2022-09-17,reservation_date_plus_terms_years
+Buenaflor2_35,Buenaflor2,35,Active,2020-08-15,,"Lorin, Erlyn Jane O","Amarillo, JV",10.0,10,100.0,100(200),Janet,,4,09757689525,120000.0,5000.0,0.0,-,-,CASH,2020-08-15,reservation_date_for_cash
+Buenaflor2_36,Buenaflor2,36,Active,,,"Lorin, Erlyn Jane O","Amarillo, JV",10.0,10,100.0,100(200),Janet,,4,09757689525,127360.0,15000.0,0.0,,,1 YR,,
+Buenaflor2_37,Buenaflor2,37,Active,2025-03-03,,"Lorin, Erlyn Jane O.",,7.0,7,200.0,200,Jiselle,,23,09652598362,472000.0,20000.0,400000.0,6000.0,6000,6 YRS,2031-03-03,reservation_date_plus_terms_years
+Buenaflor2_38,Buenaflor2,38,Active,2020-09-30,,"Lucero, Imelda P",,10.0,10,270.0,270,Joy,,53,09555922368,481680.0,60000.0,0.0,17820.0,17820,2 YRS,2022-09-30,reservation_date_plus_terms_years
+Buenaflor2_39,Buenaflor2,39,Active,2024-03-26,,"Lumawan,Simatar Abdul",,7.0,7,100.0,100,Nhaidy,,45,09531235835,178400.0,20000.0,153400.0,6600.0,6600,2 YRS,2026-03-26,reservation_date_plus_terms_years
+Buenaflor2_40,Buenaflor2,40,Active,2024-11-25,,"Macodi,Mangombra",,7.0,7,100.0,100,Jhonda,,42,09810921515,164180.0,20000.0,0.0,12015.0,12015,1 YR,2025-11-25,reservation_date_plus_terms_years
+Buenaflor2_41,Buenaflor2,41,Active,2020-09-01,,"Mangindla, Manny K",,10.0,10,100.0,100,Honey,,11,09066165836,120000.0,5000.0,0.0,-,-,CASH,2020-09-01,reservation_date_for_cash
+Buenaflor2_42,Buenaflor2,42,Active,2020-09-29,,"Molilis, Almira",,10.0,10,150.0,150(300),Sheryl A,,22B,09166882024,191000.0,30000.0,0.0,-,-,6 MOS,2021-03-29,reservation_date_plus_terms_months
+Buenaflor2_43,Buenaflor2,43,Active,2024-09-10,,"Montalvo,Maylyn",Glenn,7.0,7,200.0,200,Janet,,58,09155460592,314270.0,50000.0,0.0,,,6m0s./1 yr,2025-09-10,reservation_date_plus_terms_years
+Buenaflor2_44,Buenaflor2,44,Active,2021-03-11,,"Morales, Hazel Jane",,10.0,10,200.0,200,Johnly/Princess,,3,09525139717,327600.0,30000.0,67000.0,10800.0,10800,4 yrs,2025-03-11,reservation_date_plus_terms_years
+Buenaflor2_45,Buenaflor2,45,Active,2020-10-01,,"Napii, Nasirin",,10.0,10,200.0,200,Honey,,30,09758124969,300000.0,25400.0,122550.0,8750.0,8750,2 yrs,2022-10-01,reservation_date_plus_terms_years
+Buenaflor2_46,Buenaflor2,46,Active,,tina p2/aug16,"Pabilona, Nora",Francis,10.0,10,200.0,200,Karen,,49,,299200.0,5000.0,0.0,10800.0,10800,2 YRS,,
+Buenaflor2_47,Buenaflor2,47,Active,2020-10-06,,"Pamintuan, Ma. Estela J",Damasco,10.0,10,200.0,200,Vern/Luz A,,27,09484174558,269440.0,10000.0,0.0,19120.0,19120,1 YR,2021-10-06,reservation_date_plus_terms_years
+Buenaflor2_48,Buenaflor2,48,Active,2026-05-19,,"Pareño,Kenneth D.",,7.0,7,150.0,150,Linda P.,,19,09457338319,225000.0,30000.0,0.0,18023.0,18023,cash,2026-05-19,reservation_date_for_cash
+Buenaflor2_49,Buenaflor2,49,Active,2020-09-30,,"Reluna, Joel P",,10.0,10,300.0,300,Michelle A,,21,,448800.0,5000.0,268800.0,16200.0,16200,2 yrs,2022-09-30,reservation_date_plus_terms_years
+Buenaflor2_50,Buenaflor2,50,Active,2020-09-26,,"Relunio, Ronald S",,10.0,10,100.0,100,Mylyn,,39,09664777708,149600.0,10000.0,5200.0,5400.0,5400,2 yrs,2022-09-26,reservation_date_plus_terms_years
+Buenaflor2_51,Buenaflor2,51,Active,2020-09-16,,"Quilalang, Chita Ea",,5.0,5,200.0,200,Glecy (5)/Girly (2),,50,09156847561,260000.0,5000.0,0.0,20766.0,20766,1 yr,2021-09-16,reservation_date_plus_terms_years
+Buenaflor2_52,Buenaflor2,52,Active,2020-09-17,,"Quinto, Ricardo F Jr",Maryelle Q. Dela Peña,10.0,10,200.0,200,Ella DP,,5,09452882668,240000.0,10000.0,0.0,-,-,2020-11-01 00:00:00,,
+Buenaflor2_53,Buenaflor2,53,Active,2024-10-18,,Saiden,,7.0,7,100.0,100,Janet,,14,,145000.0,145000.0,0.0,,,CASH,2024-10-18,reservation_date_for_cash
+Buenaflor2_54,Buenaflor2,54,Active,2020-09-17,,"Samadalan, Rehana S",,,.,100.0,100,Linda,,44,09530923168,159600.0,7000.0,0.0,5400.0,5400,2 yrs,2022-09-17,reservation_date_plus_terms_years
+Buenaflor2_55,Buenaflor2,55,Active,2021-02-03,,"Soreño, Aquino T",,10.0,10,200.0,200,Luz,,32,09776114650,299200.0,5000.0,0.0,10800.0,10800,2 yrs,2023-02-03,reservation_date_plus_terms_years
+Buenaflor2_56,Buenaflor2,56,Active,2024-06-20,,"Subrida,Rolan B.",,7.0,7,200.0,200,Linda/Jerocel,,29,09554494521,472000.0,10000.0,406000.0,6000.0,6000,6 YRS,2030-06-20,reservation_date_plus_terms_years
+Buenaflor2_57,Buenaflor2,57,Active,2024-06-22,,"Subrida,Rolan B.",,,,200.0,200,,,28,09554494521,472000.0,5000.0,456000.0,6000.0,6000,6 YRS,2030-06-22,reservation_date_plus_terms_years
+Buenaflor2_58,Buenaflor2,58,Active,2020-09-21,,"Subaldo, Arjay Robert S",,5.0,5(full),400.0,400,Darlyn,,25,09676410329,598400.0,20000.0,0.0,21600.0,21600,2 YRS,2022-09-21,reservation_date_plus_terms_years
+Buenaflor2_59,Buenaflor2,59,Active,2021-04-16,,"Tanael, Melvin S",,10.0,10,200.0,200,Johnly,,34,09166269006,269440.0,10000.0,0.0,10800.0,10800,1 YR,2022-04-16,reservation_date_plus_terms_years
+Buenaflor2_64,Buenaflor2,64,Transferred,2020-10-01,,"Napii, Nasirin",,10.0,10,127.0,127,Honey,,48,09758124969,189992.0,25400.0,,6858.0,6858,2 yrs,2022-10-01,reservation_date_plus_terms_years
+Buenaflor2_65,Buenaflor2,65,Transferred,2020-09-22,,"Protacio, Victor I Jr",,10.0,10,182.0,182,Marciano/Sacandal,,68,09067496390,272272.0,5000.0,,9828.0,9828,2 yrs,2022-09-22,reservation_date_plus_terms_years
+Buenaflor2_66,Buenaflor2,66,Transferred,2020-08-13,,"Tonog, Arlene","Lorin, Erlyn Jane",10.0,10,200.0,200,Janet,,4,09360956510,134720.0,5000.0,94720.0,9560.0,9560,1 YR,2021-08-13,reservation_date_plus_terms_years
+Buenaflor2_67,Buenaflor2,67,Transferred,2020-08-14,,"Ancheta, Estella",Nikka,10.0,10,200.0,200,Janet,,4,09057195730,235000.0,10000.0,220000.0,10800.0,10800,2 yrs,2022-08-14,reservation_date_plus_terms_years
+Buenaflor2_68,Buenaflor2,68,Transferred,,sukelco,"Coyoca, Reann Claire",,,-,100.0,100,-,,16,09331773676,149600.0,19000.0,93000.0,5400.0,5400,2 yrs,,
+Buenaflor2_69,Buenaflor2,69,Transferred,2020-08-21,,"Matanoy, Kristine Joy Doce",,5.0,5(full),100.0,100,Darlyn/Jaro,,62,09759857686,149600.0,5000.0,102600.0,5400.0,5400,2 yrs,2022-08-21,reservation_date_plus_terms_years
+Buenaflor2_70,Buenaflor2,70,Transferred,2024-02-29,,"Hifarva,Shirly Gorospe",,3.0,3,100.0,100,Office,,10,09505136081,179200.0,79400.0,76800.0,,,Nov.2024,,
+Buenaflor2_71,Buenaflor2,71,Transferred,,montilla p9,"Dalamban, Romena M",,10.0,10,200.0,200,Linda/Johnda,,23,09061524204,299200.0,30000.0,124200.0,10350.0,10350,2 yrs,,
+Buenaflor2_72,Buenaflor2,72,Transferred,2020-09-23,,"Guialo, Rakma",,10.0,10,172.0,172,Linda/Johnda,,17,09751381489,308500.0,5000.0,203500.0,9288.0,9288,4 yrs,2024-09-23,reservation_date_plus_terms_years
+Buenaflor2_73,Buenaflor2,73,Transferred,,buenaflor p1,"Gamboa, Rufina L",,10.0,10,200.0,200,Jiselle C,,48,,260000.0,40000.0,0.0,-,-,1 YR,,
+Buenaflor2_74,Buenaflor2,74,Transferred,2024-11-23,,"Dalipe,Carl Dominic","Dela Cruz, Chezter Allan",7.0,7,278.0,278,N. Rizada,,20,09706774822,535984.0,50000.0,415984.0,13344.0,13344,3 YRS,2027-11-23,reservation_date_plus_terms_years
+Buenaflor2_75,Buenaflor2,75,Transferred,2022-03-11,,"Candado, John Regnair",,7.0,7,150.0,150(300),Precy,,22A,09675895656,176400.0,25000.0,0.0,-,-,CASH,2022-03-11,reservation_date_for_cash
+Buenaflor2_76,Buenaflor2,76,Transferred,2024-12-14,,"Paulino,Maria Theresa S.",,7.0,7,150.0,150,Linda,,19,09659157291,289200.0,10000.0,269200.0,7200.0,7200,3 YRS,2027-12-14,reservation_date_plus_terms_years
+Buenaflor2_77,Buenaflor2,77,Transferred,2025-01-09,,"Flores,Febie",,3.0,3,172.0,172,RK Gonzales,,17,09261580422,306848.0,20000.0,110848.0,11352.0,11352,2 YRS,2027-01-09,reservation_date_plus_terms_years
+Buenaflor2_80,Buenaflor2,80,Full Refund/Assumed,2020-09-17,,"Delco, Merrianne G",,10.0,10,200.0,200,Karen/Yrick,,29,09279388377,299200.0,5000.0,294200.0,10800.0,10800,REFUNDED,,
+Buenaflor2_81,Buenaflor2,81,Full Refund/Assumed,2020-08-19,,"Dequina, Roy D",,10.0,10,200.0,200,Vern/Luz A,,27,09758260546,299200.0,5000.0,,10800.0,10800,2 yrs,2022-08-19,reservation_date_plus_terms_years
+Buenaflor2_82,Buenaflor2,82,Full Refund/Assumed,2020-09-29,,"Molilis, Almira",,10.0,10,150.0,150,Sheryl A,,43,,224400.0,5000.0,219400.0,8100.0,8100,2 yrs,2022-09-29,reservation_date_plus_terms_years
+Buenaflor2_85,Buenaflor2,85,Full Refund/Assumed,2020-09-21,,"Lumambas, Sinumangkay D",,10.0,10,100.0,100,Linda,,65,09659173887,149600.0,20000.0,129600.0,5400.0,5400,2 yrs,2022-09-21,reservation_date_plus_terms_years
+Buenaflor2_86,Buenaflor2,86,Full Refund/Assumed,2020-08-13,,"Fuentes, Jeffrey",,5.0,5(full),100.0,100,Darlyn,,10,09092366795,149600.0,5000.0,129600.0,5400.0,5400,2 YRS,2022-08-13,reservation_date_plus_terms_years
+Buenaflor2_87,Buenaflor2,87,Full Refund/Assumed,,katungal b p2,"Sacandal, Datu Yasser Otto",,5.0,5(full),182.0,182,Marciano,,68,09364314218,272272.0,28416.0,186572.0,9828.0,9828,2 yrs,,
+Buenaflor2_88,Buenaflor2,88,Full Refund/Assumed,2022-05-24,,"Narcilla, Cristy C.",,7.0,7,100.0,100,Rudny,,45,09477744457,164000.0,44000.0,120000.0,4000.0,4000,3 YRS,2025-05-24,reservation_date_plus_terms_years
+Buenaflor2_89,Buenaflor2,89,Full Refund/Assumed,2020-08-19,,"Utap, Farhana","Utap,Alvin Sajid B",10.0,10,100.0,100,Sanny,,46,09978317245,149600.0,5000.0,35500.0,5400.0,5400,2 yrs,2022-08-19,reservation_date_plus_terms_years
+Buenaflor2_90,Buenaflor2,90,Full Refund/Assumed,2020-08-24,,"Uminga, Jerry D",,10.0,10,100.0,100,Joy,,12,09759372141,179200.0,5000.0,99800.0,5400.0,5400,4 yrs,2024-08-24,reservation_date_plus_terms_years
+Buenaflor2_91,Buenaflor2,91,Full Refund/Assumed,2020-10-07,,"Badajos, Aidelaida Gose",,5.0,5,150.0,150,Veron,,19,09677807385,246000.0,2000.0,152300.0,8100.0,8100,2 yrs,2022-10-07,reservation_date_plus_terms_years
+Buenaflor2_94,Buenaflor2,94,Forfeited,2020-10-07,,"Badajos, Johnalyn G",,10.0,10,127.0,127,Darlyn,,48,,194592.0,2000.0,192592.0,6858.0,6858,2 yrs,2022-10-07,reservation_date_plus_terms_years
+Buenaflor2_95,Buenaflor2,95,Forfeited,2020-09-16,,"Fernandez, Lotty Joy",,10.0,10,200.0,200,Vern,,25,09776282070,299200.0,5000.0,294200.0,10800.0,10800,2 yrs,2022-09-16,reservation_date_plus_terms_years
+Buenaflor2_96,Buenaflor2,96,Forfeited,,tupi,"Salazar, Norman M",,10.0,10,200.0,200,Karen,,58,09208208800,299200.0,5000.0,284200.0,10800.0,10800,2 yrs,,
+Buenaflor2_97,Buenaflor2,97,Forfeited,2020-09-16,,"Sanggalang, Geraldine",,10.0,10,200.0,200,Vern/Luz A,,55,,299200.0,10000.0,289200.0,10800.0,10800,2 yrs,2022-09-16,reservation_date_plus_terms_years
+Buenaflor2_98,Buenaflor2,98,Forfeited,,buenaflor p1,"Satorre, Clariza",,10.0,10,127.0,127,Sanny,,48,,184000.0,10000.0,158600.0,6000.0,6000,2 yrs,,
+Buenaflor2_99,Buenaflor2,99,Forfeited,2020-08-15,,"Bergado, Jeffrey",,5.0,5,178.0,178,Sheryl A,,48,09199998254,266288.0,5000.0,230688.0,9612.0,9612,3 yrs,2023-08-15,reservation_date_plus_terms_years
+Buenaflor2_100,Buenaflor2,100,Forfeited,2022-06-21,,"Fuentes, Metcher",,7.0,7,182.0,182,Vivian,,38,09653790281,245190.0,5000.0,240190.0,17399.0,17399,1 YR,2023-06-21,reservation_date_plus_terms_years
+Buenaflor2_101,Buenaflor2,101,Forfeited,2020-09-17,,"Mandal, Bairenda S",,5.0,5(full),200.0,200/c,Darlyn,,34,09364818289,318400.0,90000.0,228400.0,11600.0,11600,2 yrs,2022-09-17,reservation_date_plus_terms_years
+Buenaflor2_102,Buenaflor2,102,Forfeited,2020-08-31,,"Hadjiesmael,Sahabudin",,5.0,5(full),200.0,200,Marciano,,28,09352649198,299200.0,30000.0,247600.0,10800.0,10800,2 yrs,2022-08-31,reservation_date_plus_terms_years
+Buenaflor2_103,Buenaflor2,103,Forfeited,2020-09-30,,"Dilangalen, Sittie Ro-anne S",,5.0,5(full),278.0,278,Darlyn,,20,09272803581,415888.0,10000.0,345288.0,15012.0,15012,2 YRS,2022-09-30,reservation_date_plus_terms_years
+Buenaflor2_104,Buenaflor2,104,Forfeited,2020-08-14,,"Estorque, Ivan B",,10.0,10,100.0,100,Karen,,9,09265004935,192800.0,5000.0,130900.0,,,5 yrs,2025-08-14,reservation_date_plus_terms_years
+Buenaflor3_3,Buenaflor3,3,Active,2023-05-20,,"Altura,Erwin",Cristine,7.0,7,100.0,100(200),Amy Del Rosario,2,55,09363349162,178400.0,33200.0,0.0,6600.0,6600,2 YRS,2025-05-20,reservation_date_plus_terms_years
+Buenaflor3_4,Buenaflor3,4,Active,2024-06-28,,"Amit,Ronald L.",,7.0,7,200.0,200,Precy,2,52,90644718467,300000.0,64000.0,0.0,,,2 YRS,2026-06-28,reservation_date_plus_terms_years
+Buenaflor3_5,Buenaflor3,5,Active,2024-02-27,,"Ampang,Sharra Mae",,7.0,7,200.0,200,Darlyn,,31,09263755628,385600.0,40000.0,162400.0,9600.0,9600,3 YRS,2027-02-27,reservation_date_plus_terms_years
+Buenaflor3_6,Buenaflor3,6,Active,,from Katungal B,"Apostol,Jennifer",,3.0,3,200.0,200,Office,2,50,09709805416,240000.0,150000.0,0.0,7500.0,7500,1 YR,,
+Buenaflor3_7,Buenaflor3,7,Active,2025-11-03,,"Baroga,Maribic",,7.0,7,200.0,200,"Jiselle/Antonio,J.",,49,09973655704,309680.0,145500.0,116180.0,12015.0,12015,spot cash/1 yr,2025-11-03,reservation_date_for_cash
+Buenaflor3_8,Buenaflor3,8,Active,2023-04-04,,"Basanes,Jeffrey",,3.0,3,200.0,200,Office,,29,09555541955,357200.0,129200.0,157000.0,3900.0,3900,4 YRS,2027-04-04,reservation_date_plus_terms_years
+Buenaflor3_9,Buenaflor3,9,Active,2021-09-03,,"Berdin, Charie G",,7.0,7,200.0,200,Johnly,2,45,09074913903,240000.0,180000.0,0.0,-,-,CASH - 6mos,2021-09-03,reservation_date_for_cash
+Buenaflor3_10,Buenaflor3,10,Active,2023-03-22,,"Berdin,Charie G.",,3.0,3,200.0,200,Office,2,44,09074913903,312800.0,5000.0,247800.0,6000.0,6000,2 YRS,2025-03-22,reservation_date_plus_terms_years
+Buenaflor3_11,Buenaflor3,11,Active,2024-03-14,,"Bernaldez,Angislyh",,7.0,7,200.0,200,Naidy,,57,09483972315,300000.0,20000.0,0.0,6000.0,6000,Cash,2024-03-14,reservation_date_for_cash
+Buenaflor3_12,Buenaflor3,12,Active,2023-07-10,,"Bernasol,Mary Grace N.",,7.0,7,200.0,200,Amy Del Rosario,,47,09975217334,519840.0,,481602.0,4232.0,4232,10YRS/SM,2033-07-10,reservation_date_plus_terms_years
+Buenaflor3_13,Buenaflor3,13,Active,2022-05-30,,"Bigkog, Moner Akan",,7.0,7,200.0,200,Janet/ H. Bigkog,1,59,09530020121,349200.0,,233000.0,9700.0,9700,3 YRS/SM,2025-05-30,reservation_date_plus_terms_years
+Buenaflor3_14,Buenaflor3,14,Active,2021-07-06,,"Bugarin, Marites","Lenchonsito, Linsy",7.0,7,400.0,400,Janet,1,2,09679622087,570000.0,5000.0,0.0,26400.0,26400,CASH,2021-07-06,reservation_date_for_cash
+Buenaflor3_15,Buenaflor3,15,Active,2022-12-06,,"Burgos,Jasmin P.",,7.0,7,200.0,200,Janet,1,33,09757426007,349200.0,,304200.0,9700.0,9700,3 YRS/SM,2025-12-06,reservation_date_plus_terms_years
+Buenaflor3_16,Buenaflor3,16,Active,2025-11-10,,"Ceballos,Emmanuel",,7.0,7,200.0,200,Amy Del Rosario,,48,09635436646,472000.0,20000.0,396000.0,6000.0,6000,6 YRS,2031-11-10,reservation_date_plus_terms_years
+Buenaflor3_17,Buenaflor3,17,Active,2021-09-15,,"Dela Gracia, John",,7.0,7,200.0,200,Vern,1,12,09978221003,349200.0,10000.0,304200.0,9700.0,"9,700/sm",3 YRS,2024-09-15,reservation_date_plus_terms_years
+Buenaflor3_18,Buenaflor3,18,Active,2022-06-20,,"Delos Santos, Ma. Rose Ann D.",,7.0,7,200.0,200,Janet,1,24,09389833401,356800.0,30800.0,298500.0,10800.0,10800,4 YRS,2026-06-20,reservation_date_plus_terms_years
+Buenaflor3_19,Buenaflor3,19,Active,2023-10-20,,"De Tomas,Jenny Rose Magbanua",,3.0,3,200.0,200,Office,1,11,09555014160,414400.0,5000.0,379400.0,7800.0,7800,4 YRS,2027-10-20,reservation_date_plus_terms_years
+Buenaflor3_20,Buenaflor3,20,Active,,E. Erquiza,"Dumpao,Indong Abdulhak",,3.0,3,200.0,200,office,2,60,09182005815,299200.0,93000.0,0.0,10800.0,10800,2 yrs,,
+Buenaflor3_21,Buenaflor3,21,Active,2023-02-01,,"Ebanos,Jeavy Mae","Arroza,Heaven Grace",7.0,7,200.0,200,Agasandra,2,46,09190932256,349200.0,5000.0,293200.0,9700.0,9700,3 YRS/SM,2026-02-01,reservation_date_plus_terms_years
+Buenaflor3_22,Buenaflor3,22,Active,2023-03-24,,"Elisan,Merlina Gabriel",,7.0,7,200.0,200,Cabaltica,2,58,,356148.0,5000.0,0.0,13200.0,13200,2 YRS,2025-03-24,reservation_date_plus_terms_years
+Buenaflor3_23,Buenaflor3,23,Active,2022-06-24,,"Flores, Jenie C.",,7.0,7,100.0,100 (200),Janet,2,55,09979328991,174600.0,,0.0,4850.0,4850,3 YRS/SM,2025-06-24,reservation_date_plus_terms_years
+Buenaflor3_24,Buenaflor3,24,Active,2023-09-23,,"Fontanilla,Analyn",,7.0,7,200.0,200,Janet Agor,1,9,09973023713,300000.0,300000.0,0.0,,,CASH,2023-09-23,reservation_date_for_cash
+Buenaflor3_25,Buenaflor3,25,Active,2025-10-03,,"Gamino,Maricel",,7.0,7,200.0,200,Naidy,,43,09169571432,472000.0,5000.0,432000.0,6000.0,6000,6 YRS,2031-10-03,reservation_date_plus_terms_years
+Buenaflor3_26,Buenaflor3,26,Active,2025-06-27,,"Gillesania,Ziana Alexa",Julie Gillesania,7.0,7,150.0,150(300),Mike A.,,62B,09291443293,332400.0,30000.0,252000.0,5040.0,5040,5 YRS,2030-06-27,reservation_date_plus_terms_years
+Buenaflor3_27,Buenaflor3,27,Active,2025-06-27,,"Gillesania,Mia Maxine",Julie Gillesania,7.0,7,150.0,150(300),Mike A.,,62A,09291443293,332400.0,30000.0,252000.0,5040.0,5040,5 YRS,2030-06-27,reservation_date_plus_terms_years
+Buenaflor3_28,Buenaflor3,28,Active,,Landamay,"Horcerada, Honey Grace",,7.0,7,200.0,200,HOPE,2,51,09776769027,299200.0,126700.0,111000.0,8000.0,8000,3 yrs,,
+Buenaflor3_29,Buenaflor3,29,Active,2022-03-29,,"Hunas, Edelin O.",,7.0,7,100.0,100 (400),Opiaza/Vern,2,63,09755468966,150000.0,150000.0,0.0,-,-,CASH,2022-03-29,reservation_date_for_cash
+Buenaflor3_30,Buenaflor3,30,Active,2022-03-29,,"Hunas, Edelin O.",,7.0,7,300.0,300 (400),OFFICE,2,63,09755468966,535200.0,32816.0,0.0,19800.0,19800,2 YRS,2024-03-29,reservation_date_plus_terms_years
+Buenaflor3_31,Buenaflor3,31,Active,2021-07-07,,"Ignacio, Althea Mae",,7.0,7,150.0,150,Sanny,1,40,09357145302,225870.0,10000.0,0.0,8100.0,8100,2025-08-01 00:00:00,,
+Buenaflor3_32,Buenaflor3,32,Active,2021-10-13,,"Kambal, Norhaya","Pana,Samra A.",7.0,7,200.0,200,Honey,1,34,09553456732,363400.0,,0.0,9700.0,9700/sm,4 YRS,2025-10-13,reservation_date_plus_terms_years
+Buenaflor3_33,Buenaflor3,33,Active,2021-10-08,,"Kamid, Manilyn",,7.0,7,200.0,200,Vern,1,7,09270480303,367400.0,5000.0,130300.0,9700.0,9700/sm,4 YRS,2025-10-08,reservation_date_plus_terms_years
+Buenaflor3_34,Buenaflor3,34,Active,,Tina P2,"Lalantacon, Joemar",,7.0,7,200.0,200,Vern,2,53,09484629929,299200.0,276000.0,0.0,10800.0,10800,2 yrs,,
+Buenaflor3_35,Buenaflor3,35,Active,,Katungal B,"Legarda, Reynald S.",,,-,200.0,200,OFFICE,,36,09551050204,202000.0,82000.0,0.0,-,-,CASH,,
+Buenaflor3_36,Buenaflor3,36,Active,2025-07-15,,"Malingco,Maeca Belle","Ferrer, Jhonrey",7.0,7,200.0,200,Janet/Simpal,1,28,09675321848,385600.0,5000.0,335600.0,12000.0,12000,3 YRS,2028-07-15,reservation_date_plus_terms_years
+Buenaflor3_37,Buenaflor3,37,Active,,montilla p4,"Mapandala, Sarah B.",,3.0,3,116.0,116,OFFICE,2,42,09757453481,204640.0,50000.0,109400.0,4640.0,4640,Dec. 2026,,
+Buenaflor3_38,Buenaflor3,38,Active,2021-07-15,,"Warda, Kagui M",,7.0,7,150.0,150(300),Agasandra,1,4B,09534105700,224400.0,5000.0,99400.0,8100.0,8100,2 YRS,2023-07-15,reservation_date_plus_terms_years
+Buenaflor3_39,Buenaflor3,39,Active,2021-11-18,,"Pareñas, Joy L.",,7.0,7,400.0,400,Karen,1,"18,19",,698400.0,10000.0,0.0,19400.0,19400,3 YRS/SM,2024-11-18,reservation_date_plus_terms_years
+Buenaflor3_40,Buenaflor3,40,Active,2022-02-14,,"Pasaporte, Romelyn",,7.0,7,200.0,200,Amy Del Rosario,1,23,,349200.0,,-17800.0,19400.0,19400,3 YRS/SM,2025-02-14,reservation_date_plus_terms_years
+Buenaflor3_41,Buenaflor3,41,Active,2021-08-26,,"Prado, Ian Robert",,7.0,7,150.0,150,Honey,2,41,09979881636,180000.0,180000.0,0.0,-,-,CASH - 6mos,2021-08-26,reservation_date_for_cash
+Buenaflor3_42,Buenaflor3,42,Active,2022-03-26,,"Ramos, Remalyn P.",,7.0,7,200.0,200,Linda,1,14,09358462804,240000.0,150000.0,0.0,-,-,CASH,2022-03-26,reservation_date_for_cash
+Buenaflor3_43,Buenaflor3,43,Active,2022-07-12,,"Razon, Cherry Mae Modesto",,7.0,7,200.0,200,Coloma,2,56,09750789107,328000.0,13500.0,269500.0,8000.0,8000,3 YRS,2025-07-12,reservation_date_plus_terms_years
+Buenaflor3_44,Buenaflor3,44,Active,2020-10-09,,"Sendad,Anwar",,7.0,7,200.0,200,Honey C.,1,6,,342200.0,90000.0,236400.0,8000.0,8000,4 YRS,2024-10-09,reservation_date_plus_terms_years
+Buenaflor3_45,Buenaflor3,45,Active,2023-02-07,,"Simpal,Vicky C.","Carbonilla,Joy Jacinto",,,125.0,125,Michelle C.,1,38,09079578379,195500.0,39000.0,0.0,6521.0,6521,2 YRS/SM,2025-02-07,reservation_date_plus_terms_years
+Buenaflor3_46,Buenaflor3,46,Active,2024-04-12,,"Sudio,Alma F.",,7.0,7,200.0,200,Linda P./Nuñez,,16,09368163742,356800.0,40000.0,264000.0,13200.0,13200,2 YRS,2026-04-12,reservation_date_plus_terms_years
+Buenaflor3_47,Buenaflor3,47,Active,2025-02-18,,"Tuan,Eleen Mae",,7.0,7,200.0,200,Jiselle,,21,09357171507,472000.0,17800.0,423200.0,6000.0,6000,6 YRS,2031-02-18,reservation_date_plus_terms_years
+Buenaflor3_48,Buenaflor3,48,Active,2021-07-15,,"Tantong, Datukong Donde",,7.0,7,150.0,150(300),Agasandra,1,4A,,224400.0,5000.0,144000.0,8100.0,8100,2 YRS,2023-07-15,reservation_date_plus_terms_years
+Buenaflor3_49,Buenaflor3,49,Active,2022-02-14,,"Tomias, Joshua Kim",,,,200.0,200,OFFICE,2,54,,240000.0,100000.0,0.0,-,-,CASH,2022-02-14,reservation_date_for_cash
+Buenaflor3_55,Buenaflor3,55,Transferred,2021-07-05,,"Madriaga, Norie B",,7.0,7,400.0,400,Johnly,2,1,09215691797,580000.0,10000.0,570000.0,-,-,CASH - 6mos,2021-07-05,reservation_date_for_cash
+Buenaflor3_56,Buenaflor3,56,Transferred,2021-07-12,,"Belotindos, Veronica C",,7.0,7,200.0,200,Vern,1,4,09269722205,299200.0,15000.0,257400.0,10800.0,10800,2 YRS,2023-07-12,reservation_date_plus_terms_years
+Buenaflor3_57,Buenaflor3,57,Transferred,2023-03-02,,"Daniel,John Rey",,3.0,3,200.0,200,Office,2,52,09551536452,385600.0,20000.0,360600.0,9600.0,9600,3YRS,2026-03-02,reservation_date_plus_terms_years
+Buenaflor3_58,Buenaflor3,58,Transferred,2023-09-23,,"Fontanilla,Arnel S.",,7.0,7,200.0,200,Janet Agor,1,9,09973023713,300000.0,300000.0,0.0,,,CASH,2023-09-23,reservation_date_for_cash
+Buenaflor3_59,Buenaflor3,59,Transferred,,new carmen,"Erquiza, Eduardo Bagayas Jr",,3.0,3,200.0,200,office,2,60,09182005815,299200.0,93000.0,0.0,10800.0,10800,2 yrs,,
+Buenaflor3_63,Buenaflor3,63,Transferred,2021-11-23,,"Onia, Mary Ann R.",,7.0,7,200.0,200,Vern/Biñas,1,18,09356928712,349200.0,10000.0,339200.0,9700.0,9700,3 YRS/SM,2024-11-23,reservation_date_plus_terms_years
+Buenaflor3_64,Buenaflor3,64,Transferred,2022-07-12,,"Sansalona, Michael Emba",,5.0,5,200.0,200,Sansalona,2,49,09973480585,299200.0,6000.0,278200.0,10800.0,10800,2 YRS,2024-07-12,reservation_date_plus_terms_years
+Buenaflor3_65,Buenaflor3,65,Transferred,2022-12-06,,"Flores ,Glory Gene A.",,7.0,7,200.0,200,Janet,,9,,349200.0,,,9700.0,9700,3 YRS/SM,2025-12-06,reservation_date_plus_terms_years
+Buenaflor3_66,Buenaflor3,66,Transferred,2021-08-16,,"Tabura, Ariane B",,7.0,7,200.0,200,Honey,2,59,,269440.0,10000.0,251440.0,19120.0,19120,1 YR,2022-08-16,reservation_date_plus_terms_years
+Buenaflor3_67,Buenaflor3,67,Transferred,2023-02-07,,"Baraguir,Soliman Q.",,7.0,7,200.0,200,Sheryl A.,1,6,09359949183,314180.0,200000.0,114180.0,,,1 YR,2024-02-07,reservation_date_plus_terms_years
+Buenaflor3_68,Buenaflor3,68,Transferred,2022-03-25,,"Rellama, Bon Jovi",,10.0,10,200.0,200,Janet/Mary Grace,1,23,09979445777,299200.0,26000.0,270200.0,7588.0,7588,3 YRS,2025-03-25,reservation_date_plus_terms_years
+Buenaflor3_72,Buenaflor3,72,Full Refund/Assumed,2022-05-23,,"Cautivar, Ken",,7.0,7,125.0,125,Janet,1,38,,218250.0,,213250.0,6063.0,6063,3 YRS/SM,2025-05-23,reservation_date_plus_terms_years
+Buenaflor3_73,Buenaflor3,73,Full Refund/Assumed,2021-08-20,,"Tolentino, Kathleen Charisse B",,7.0,7,200.0,200,Janet,1,9,09354270024,349200.0,9700.0,300700.0,9700.0,"9,700/sm",3 YRS,2024-08-20,reservation_date_plus_terms_years
+Buenaflor3_74,Buenaflor3,74,Full Refund/Assumed,2022-08-01,,"Padernal, Gerld",,7.0,7,200.0,200,Janet,,29,09077176130,349200.0,,346700.0,9700.0,9700,3 YRS/SM,2025-08-01,reservation_date_plus_terms_years
+Buenaflor3_75,Buenaflor3,75,Full Refund/Assumed,2023-02-02,,"Paglala,Maribel",,7.0,7,200.0,200,Sherryl A.,2,47,09667029971,385600.0,5000.0,345600.0,9600.0,9600,3 YRS,2026-02-02,reservation_date_plus_terms_years
+Buenaflor3_78,Buenaflor3,78,Forfeited,2021-07-06,,Yadao,,7.0,7,200.0,200,Aileen,2,61,,299200.0,5000.0,294200.0,10800.0,10800,2 YRS,2023-07-06,reservation_date_plus_terms_years
+Buenaflor3_79,Buenaflor3,79,Forfeited,2021-08-27,,"Gabato, Christine Joy C",,7.0,7,200.0,200,Janet,1,11,09511993109,328000.0,5000.0,323000.0,8000.0,8000,3 YRS,2024-08-27,reservation_date_plus_terms_years
+Buenaflor3_80,Buenaflor3,80,Forfeited,2021-09-30,,"Asi, Nora A",,7.0,7,200.0,200,Sandra,2,46,,349200.0,5000.0,344200.0,9700.0,9700,3 YRS,2024-09-30,reservation_date_plus_terms_years
+Buenaflor3_81,Buenaflor3,81,Forfeited,2022-08-16,,"Baher, Josie D.",,7.0,7,125.0,125,Sanny,1,38,,218250.0,,215750.0,6063.0,6063,3 YRS/SM,2025-08-16,reservation_date_plus_terms_years
+Buenaflor3_82,Buenaflor3,82,Forfeited,2022-08-30,,"Afdal, Bailyn T.",,7.0,7,200.0,200,Janet/Simpal,,26,09675321848,328000.0,5000.0,323000.0,8000.0,8000,3 YRS,2025-08-30,reservation_date_plus_terms_years
+Buenaflor3_83,Buenaflor3,83,Forfeited,2021-08-30,,"Doromal, Aislinn Gwyneth",,3.0,3,200.0,200,office,58,6,,254720.0,10000.0,234720.0,-,-,CASH - 6mos,2021-08-30,reservation_date_for_cash
+Buenaflor3_84,Buenaflor3,84,Forfeited,,Dansuli,"Dumato, Sittie Farizza N.",,7.0,7,200.0,200,Janet,2,48,,328000.0,21766.0,306234.0,8000.0,8000,3 YRS,,
+Buenaflor3_85,Buenaflor3,85,Forfeited,2021-09-21,,"Enad, Marineth Seduco",,7.0,7,200.0,200,Precy,2,57,09363374882,349200.0,5000.0,344200.0,9700.0,"9,700/sm",3 YRS,2024-09-21,reservation_date_plus_terms_years
+Buenaflor3_86,Buenaflor3,86,Forfeited,2022-05-26,,"Gara, Alifa Hanna C.",,3.0,3,200.0,200,OFFICE,1,31,09127783451,328000.0,30000.0,298000.0,8000.0,8000,3 YRS,2025-05-26,reservation_date_plus_terms_years
+Buenaflor3_87,Buenaflor3,87,Forfeited,2022-08-30,,"Simpal, Causar A.",,7.0,7,200.0,200,Janet,,6,,328000.0,5000.0,323000.0,8000.0,8000,3 YRS,2025-08-30,reservation_date_plus_terms_years
+Buenaflor3_88,Buenaflor3,88,Forfeited,2021-09-30,,"Villegas, Dominador",,7.0,7,200.0,200,Sandra,2,56,09653261115,349200.0,10000.0,319200.0,,,,,
+Buenaflor3_89,Buenaflor3,89,Forfeited,2022-01-17,,"Angelo, Michael Jay",,7.0,7,100.0,100 (200),Amy Del R.,2,55,09636487597,156400.0,5000.0,138900.0,13033.0,13033,2 YRS/SM,2024-01-17,reservation_date_plus_terms_years
+Buenaflor3_90,Buenaflor3,90,Forfeited,2022-09-16,,"Baganian, Wenalyn",,7.0,7,200.0,200,Glecy,1,31,09701910793,276400.0,,261400.0,23033.32,23033.32,1 YR/SM,2023-09-16,reservation_date_plus_terms_years
+Buenaflor3_91,Buenaflor3,91,Forfeited,2022-04-28,,"Ollos, Mae Ann G.",,3.0,3,200.0,200,OFFICE,2,52,09750781254,328000.0,33000.0,295000.0,8000.0,8000,3 YRS,2025-04-28,reservation_date_plus_terms_years
+Buenaflor3_92,Buenaflor3,92,Forfeited,2022-12-02,,"Quejada,Christine G.",,7.0,7,200.0,200,Honey,2,49,09530921879,349200.0,,329800.0,9700.0,9700,3 YRS/SM,2025-12-02,reservation_date_plus_terms_years
+Buenaflor3_93,Buenaflor3,93,Forfeited,2023-03-29,,"Dano,Marites C.",,7.0,7,200.0,200,Agasandra,2,48,09489004726,492000.0,10000.0,482000.0,6834.0,6834,6 YRS/SM,2029-03-29,reservation_date_plus_terms_years
+Buenaflor3_94,Buenaflor3,94,Forfeited,2021-07-26,,"Banzales, Reynan",,7.0,7,200.0,200,Brenda,2,59,09104687909,299200.0,20000.0,219800.0,10800.0,10800,2 YRS,2023-07-26,reservation_date_plus_terms_years
+Buenaflor3_95,Buenaflor3,95,Forfeited,2022-12-15,,"Abri,Alibai Inok",,7.0,7,200.0,200,Agasandra,2,43,09350969763,349200.0,19400.0,329800.0,9700.0,9700,3YRS/SM,2025-12-15,reservation_date_plus_terms_years
+Buenaflor 4_2,Buenaflor 4,2,Active,2022-03-07,,"Arroza, Johnrie Barrios",,7.0,7,300.0,300,Agasandra,,25,09355653275,464180.0,,0.0,,,1 YR/SM,2023-03-07,reservation_date_plus_terms_years
+Buenaflor 4_3,Buenaflor 4,3,Active,2023-01-27,,"Atchuela,Norkisa V.",,,,281.0,281,no form,,32,09300641216,501304.0,10000.0,461304.0,,,2 YRS,2025-01-27,reservation_date_plus_terms_years
+Buenaflor 4_4,Buenaflor 4,4,Active,2024-05-06,,"Bancaco,Charlie",,7.0,7,200.0,200,Naidy,,35,09919345691,528000.0,30000.0,465000.0,,,6 YRS,2030-05-06,reservation_date_plus_terms_years
+Buenaflor 4_5,Buenaflor 4,5,Active,,Hennie Bigkog,"Bigkog,Rina",,7.0,7,300.0,300,Janet C./Hennie Bigkog,,17,09946963558,621600.0,68204.0,430396.0,,,4 YRS,,
+Buenaflor 4_6,Buenaflor 4,6,Active,2023-01-27,,"Camales,Jiza Lou",,,,300.0,300,,,30,09369019267,535200.0,10000.0,371200.0,,,2 YRS,2025-01-27,reservation_date_plus_terms_years
+Buenaflor 4_7,Buenaflor 4,7,Active,2022-05-31,,"Caños, Jr. D.",Janet Caños,7.0,7,300.0,300,,,22,09635650513,578400.0,,563400.0,,,3 YRS/sm,2025-05-31,reservation_date_plus_terms_years
+Buenaflor 4_8,Buenaflor 4,8,Active,,"Acar, R","Dimaya, Czarina B",,7.0,7,300.0,300,Madriaga/Precy,,8,09206337719,592600.0,20000.0,0.0,,,4 YRS,,
+Buenaflor 4_9,Buenaflor 4,9,Active,2021-10-13,,"Dizon, Jorgu Jovita",,7.0,7,300.0,300,Nicka,,27,09971764545,578400.0,,0.0,,,3 YRS,2024-10-13,reservation_date_plus_terms_years
+Buenaflor 4_10,Buenaflor 4,10,Active,2022-06-15,,"Lasamana, Ruffaida Makalingkang",,7.0,7,300.0,300,Janet,,13,09553153471,400000.0,150000.0,0.0,,,CASH,2022-06-15,reservation_date_for_cash
+Buenaflor 4_11,Buenaflor 4,11,Active,2021-08-16,,"Madriaga, Norie B",,7.0,7,300.0,300,Johnly,,5,09215291797,535200.0,20000.0,0.0,,,2 YRS,2023-08-16,reservation_date_plus_terms_years
+Buenaflor 4_12,Buenaflor 4,12,Active,2022-08-05,,"Mungcal, Cherryl",,7.0,7,300.0,300,Aileen,,20,09661566648,578400.0,20000.0,255400.0,,,3 YRS,2025-08-05,reservation_date_plus_terms_years
+Buenaflor 4_13,Buenaflor 4,13,Active,2021-07-06,,"Quidilla, Julie Ann",,7.0,7,400.0,400,Brenda,,1,09261435457,689600.0,40000.0,0.0,,,2 YRS,2023-07-06,reservation_date_plus_terms_years
+Buenaflor 4_14,Buenaflor 4,14,Active,2023-02-27,,"Salik,Saidel R.",,7.0,7,150.0,150,Sepi,,39,,289200.0,70000.0,164200.0,,,3 YRS,2026-02-27,reservation_date_plus_terms_years
+Buenaflor 4_15,Buenaflor 4,15,Active,2023-01-28,,"Simbajon,Hazel",,,,300.0,300,,,10,09187793468,418400.0,10000.0,178400.0,,,CASH/2 yrs,2023-01-28,reservation_date_for_cash
+Buenaflor 4_16,Buenaflor 4,16,Active,2021-07-07,,"Sumalinog, Ma. Stiffany C",,7.0,7,300.0,300,Madriaga/Office,,3,09557502036,535000.0,5000.0,0.0,,,2 YRS,2023-07-07,reservation_date_plus_terms_years
+Buenaflor 4_17,Buenaflor 4,17,Active,2024-01-16,,"Tinio,Jomar C.",,7.0,7,300.0,300,Naidy Menson,,15,,792000.0,15000.0,707000.0,,,6 YRS,2030-01-16,reservation_date_plus_terms_years
+Buenaflor 4_18,Buenaflor 4,18,Active,2021-07-26,,"Vergara, Guadalupe",,7.0,7,150.0,150,Vern,,37,09353682912,225000.0,5000.0,0.0,,,6 MOS,2022-01-26,reservation_date_plus_terms_months
+Buenaflor 4_22,Buenaflor 4,22,Active,2021-07-09,,"Acar, Rojene B",,7.0,7,300.0,300,Madriaga/Johnly,,5,09553151187,450000.0,5000.0,445000.0,,,6 MOS,2022-01-09,reservation_date_plus_terms_months
+Buenaflor 4_23,Buenaflor 4,23,Active,2021-07-31,,"Malana, Floressa Merced E",,7.0,7,200.0,200,Sgt. Portuito,,35,09277389031,356799.0,44600.0,312199.0,,,2 YRS,2023-07-31,reservation_date_plus_terms_years
+Buenaflor 4_24,Buenaflor 4,24,Active,2022-05-30,,"Bigkog, Hennie M.",,7.0,7,300.0,300,Janet,,17,09050432069,578400.0,,510196.0,,,3 YRS/sm,2025-05-30,reservation_date_plus_terms_years
+Buenaflor 4_27,Buenaflor 4,27,Forfeited,2021-07-13,,"Ledesma, Bailyn",,7.0,7,150.0,150,Aileen,,39,,267600.0,5000.0,262600.0,,,2 YRS,2023-07-13,reservation_date_plus_terms_years
+Buenaflor 4_28,Buenaflor 4,28,Forfeited,2021-12-03,,"Mosquera, Jenefer Lyn S.",,7.0,7,100.0,100 (300),Agasandra,,13,09754422723,192800.0,,176300.0,,,3 YRS/sm,2024-12-03,reservation_date_plus_terms_years
+Buenaflor 4_29,Buenaflor 4,29,Forfeited,2021-07-09,,"Sablay, Evelyn B",,7.0,7,300.0,300,Madriaga/Johnly,,4,09499599941,450000.0,5000.0,445000.0,,,6 MOS,2022-01-09,reservation_date_plus_terms_months
+Buenaflor 4_30,Buenaflor 4,30,Forfeited,2022-08-16,,"Baher, Josie D.",,7.0,7,300.0,300,Sanny,,22,,578400.0,2500.0,575900.0,,,3 YRS,2025-08-16,reservation_date_plus_terms_years
+Buenaflor 4_31,Buenaflor 4,31,Forfeited,2021-08-14,,"Canos, Ryan",,7.0,7,300.0,300,Janet,,6,09358997124,577860.0,10000.0,567860.0,,,3 YRS,2024-08-14,reservation_date_plus_terms_years
+Buenaflor 4_35,Buenaflor 4,35,Back Out,2021-09-01,,"Saplaan, Merybeth",,7.0,7,300.0,300,Sanny,,15,,578400.0,20000.0,178400.0,,,3 YRS,2024-09-01,reservation_date_plus_terms_years
+Buenaflor 5_3,Buenaflor 5,3,Active,2024-04-06,,"Adorador,James",,,,200.0,200,Ash,,29,,206268.0,,,,,1 YR,2025-04-06,reservation_date_plus_terms_years
+Buenaflor 5_4,Buenaflor 5,4,Active,2024-03-03,,"Adorador,Amy",,,,,,,,,,,5000.0,,,,,,
+Buenaflor 5_5,Buenaflor 5,5,Active,,,"Aguilar,David Jr.",,,,200.0,200,,,12,09638395254,206268.0,,,,,1 YR,,
+Buenaflor 5_6,Buenaflor 5,6,Active,2024-02-29,,"Ali,Tarhata Tamundo",,,,200.0,200,Darlyn,,40,09677329961,242668.0,10000.0,232668.0,,,4 YRS,2028-02-29,reservation_date_plus_terms_years
+Buenaflor 5_7,Buenaflor 5,7,Active,2024-02-29,,"Ali,Tahira",,,,200.0,200,,,,09369608038,242668.0,10000.0,,,,4 YRS,2028-02-29,reservation_date_plus_terms_years
+Buenaflor 5_8,Buenaflor 5,8,Active,2024-02-12,,"Aliman,Norhaya D.",,,,300.0,300,Linda P.,,45,09956871861,544400.0,2000.0,,,,6 YRS,2030-02-12,reservation_date_plus_terms_years
+Buenaflor 5_9,Buenaflor 5,9,Active,,Calean B,"Andaya, Nancy R.",,7.0,7,268.0,268,Mark S.,,50,09677308332,341703.0,44600.0,0.0,,,3 YRS,,
+Buenaflor 5_10,Buenaflor 5,10,Active,,Katungal B,"Apostol,Jemajo Elizabeth Eder",,7.0,7,100.0,100,Darlyn,,86,09353686150,85000.0,,-3750.0,,,,,
+Buenaflor 5_11,Buenaflor 5,11,Active,2024-04-22,,"Apostol,Princess Mae",,,,100.0,100,,,98,,110000.0,,,,,3 YRS,2027-04-22,reservation_date_plus_terms_years
+Buenaflor 5_12,Buenaflor 5,12,Active,2024-04-26,,"Arabit,Jetro S.",,,,200.0,200,,,66,09173374425,131920.0,131920.0,0.0,,,CASH,2024-04-26,reservation_date_for_cash
+Buenaflor 5_13,Buenaflor 5,13,Active,2024-02-09,,"Araña,Jeoffre Jr. P.",,,,200.0,200,Darlyn,,22,09301509890,288000.0,2320.0,285680.0,,,6 YRS,2030-02-09,reservation_date_plus_terms_years
+Buenaflor 5_14,Buenaflor 5,14,Active,2022-05-30,,"Arciaga, Andrea May","Caniel, Jenelyn B.",7.0,7,300.0,300,Janet/Walden,,131133135,,322798.0,3000.0,309798.0,,,2 YRS,2024-05-30,reservation_date_plus_terms_years
+Buenaflor 5_15,Buenaflor 5,15,Active,2024-02-06,,"Are,Joyssel Ashley",,,,100.0,100,Darlyn,,102,09652665684,144000.0,,142000.0,,,6 YRS,2030-02-06,reservation_date_plus_terms_years
+Buenaflor 5_16,Buenaflor 5,16,Active,2024-04-24,,"Arquio,Jasper",,,,200.0,200,Darlyn,,116,09057771839,288000.0,,,,,6 YRS,2030-04-24,reservation_date_plus_terms_years
+Buenaflor 5_17,Buenaflor 5,17,Active,2024-02-16,,"Baclas,Jean",,,,200.0,200,Janet,,45,09556372904,288000.0,,,,,,,
+Buenaflor 5_18,Buenaflor 5,18,Active,2024-02-21,,"Bajon,Arah",,,,,,Walden,,136138,09554753315,,5000.0,,,,,,
+Buenaflor 5_19,Buenaflor 5,19,Active,2022-05-21,,"Bajon, Lorena Botarara",,7.0,7,100.0,100,Janet/Walden,,137,09553165609,180000.0,,175000.0,,,6 YRS/SM,2028-05-21,reservation_date_plus_terms_years
+Buenaflor 5_20,Buenaflor 5,20,Active,2024-02-24,,"Bangquiao,Rodel Uy",,,,200.0,200,Walden/Anne C.,,"95,96",09553056162,288000.0,2000.0,286000.0,,,6 YRS,2030-02-24,reservation_date_plus_terms_years
+Buenaflor 5_21,Buenaflor 5,21,Active,2024-02-28,,"Batislaong,Lany S.",,,,200.0,200,,,36,09647629881,,2000.0,,,,,,
+Buenaflor 5_22,Buenaflor 5,22,Active,2024-02-14,,"Billones,Rodney Mark",,,,100.0,100,Glecy,,77,09679750869,144000.0,3000.0,138000.0,,,6 YRS,2030-02-14,reservation_date_plus_terms_years
+Buenaflor 5_23,Buenaflor 5,23,Active,2024-03-04,,"Biñas,Ghierley",,,,200.0,200,,,6,09057769656,353600.0,15000.0,338600.0,,,6 YRS,2030-03-04,reservation_date_plus_terms_years
+Buenaflor 5_24,Buenaflor 5,24,Active,2024-02-21,,"Bonilla,Eugene III",,,,100.0,100,Anne C.,,76,09659928825,110000.0,,,,,3 YRS,2027-02-21,reservation_date_plus_terms_years
+Buenaflor 5_25,Buenaflor 5,25,Active,2022-06-03,,"Calizo, Selfa Dumancas",,7.0,7,300.0,300,Janet/Walden,,125127129,09068911747,488988.0,5000.0,483988.0,,,6 YRS,2028-06-03,reservation_date_plus_terms_years
+Buenaflor 5_26,Buenaflor 5,26,Active,2024-04-04,,"Campaan,Romel",,,,200.0,200,Darlyn,,112,09301126943,288000.0,,,,,6 YRS,2030-04-04,reservation_date_plus_terms_years
+Buenaflor 5_27,Buenaflor 5,27,Active,2024-02-28,,"Candelario,Gavino",,,,374.0,374,Walden,,49,09554259424,329120.0,100000.0,229120.0,,,6 YRS,2030-02-28,reservation_date_plus_terms_years
+Buenaflor 5_28,Buenaflor 5,28,Active,2024-02-09,,"Caños,Ryan D.",,,,400.0,400f/400 i,Darlyn,,"15,16,17,18",09358997124,501212.0,13924.0,459440.0,,,3 YRS,2027-02-09,reservation_date_plus_terms_years
+Buenaflor 5_29,Buenaflor 5,29,Active,2024-02-12,,"Casiple,Beverly",,,,100.0,100,,,67,,144000.0,2000.0,142000.0,,,6 YRS,2030-02-12,reservation_date_plus_terms_years
+Buenaflor 5_30,Buenaflor 5,30,Active,2024-03-01,,"Castillo,Teresa",,,,100.0,100,,,75,09976219791,132668.0,,,,,5 YRS,2029-03-01,reservation_date_plus_terms_years
+Buenaflor 5_31,Buenaflor 5,31,Active,,,"Cataluña,Ricky R.",,,,100.0,100,,,132,09301122792,144000.0,,,,,6 YRS,,
+Buenaflor 5_32,Buenaflor 5,32,Active,2024-02-17,,"Celiz,Edwin L.",,,,100.0,100,,,137,09269244843,144000.0,2000.0,142000.0,,,6 YRS,2030-02-17,reservation_date_plus_terms_years
+Buenaflor 5_33,Buenaflor 5,33,Active,2024-02-29,,"Coniega,Evelyn",,,,100.0,100,,,93,09754480233,144000.0,2000.0,140000.0,,,6 YRS,2030-02-28,reservation_date_plus_terms_years
+Buenaflor 5_34,Buenaflor 5,34,Active,2024-02-19,,"Consabo,Ferlou Well P.",,,,200.0,200,,,11,09092923448,176000.0,15000.0,161000.0,,,open contract,,
+Buenaflor 5_35,Buenaflor 5,35,Active,2024-02-27,,"Coyoca,Reann Claire",,,,100.0,100,Darlyn,,111,09129964103,121334.0,10000.0,111334.0,,,4 YRS,2028-02-27,reservation_date_plus_terms_years
+Buenaflor 5_36,Buenaflor 5,36,Active,2024-02-17,,"Dadivas,Jomelyn",,,,100.0,100,,,74,09656807716,132668.0,2210.0,130458.0,,,5 YRS,2029-02-17,reservation_date_plus_terms_years
+Buenaflor 5_37,Buenaflor 5,37,Active,,Buenaflor p2,"Dalamban,Romena",,,,200.0,200,Linda/Johnda,,10,,175000.0,,0.0,,,,,
+Buenaflor 5_38,Buenaflor 5,38,Active,2024-03-01,,"Dalida,Crisanto",,,,100.0,100,Jonna Gaspar,,99,09674694575,144000.0,2000.0,142000.0,,,6 YRS,2030-03-01,reservation_date_plus_terms_years
+Buenaflor 5_39,Buenaflor 5,39,Active,2024-04-12,,"Damasco,Irene Rom",,,,100.0,100,Glecy,,134,09262742970,,,,,,,,
+Buenaflor 5_40,Buenaflor 5,40,Active,2024-02-29,,"Dared,Parisa Adam",,,,200.0,200,Darlyn,,38,09056669869,242668.0,5000.0,237668.0,,,4 YRS,2028-02-29,reservation_date_plus_terms_years
+Buenaflor 5_41,Buenaflor 5,41,Active,2023-02-13,,"Darjan,Richard E.",,7.0,7,200.0,200,Janet,,28,09758357914,360000.0,5000.0,355000.0,,,6 YRS,2029-02-13,reservation_date_plus_terms_years
+Buenaflor 5_42,Buenaflor 5,42,Active,2024-02-17,,"Darullo,Ronel",,,,200.0,200,,,"80,82",09124172590,288000.0,4000.0,280000.0,,,6 YRS,2030-02-17,reservation_date_plus_terms_years
+Buenaflor 5_43,Buenaflor 5,43,Active,2024-02-28,,"Defensor,Jueve S.",,,,200.0,200,Darlyn,,59,09647629881,288000.0,2700.0,285300.0,,,6 YRS,2030-02-28,reservation_date_plus_terms_years
+Buenaflor 5_44,Buenaflor 5,44,Active,2024-03-19,,"Deke,Nelson J.",,,,100.0,100,,,130,09675718933,110000.0,,,,,3 YRS,2027-03-19,reservation_date_plus_terms_years
+Buenaflor 5_45,Buenaflor 5,45,Active,2024-03-07,,"Delongpongan,Jusop Mar",,,,100.0,100,,,100,09486071899,144000.0,,,,,6 YRS,2030-03-07,reservation_date_plus_terms_years
+Buenaflor 5_46,Buenaflor 5,46,Active,2024-10-15,,"Diaz,Joan",,,,100.0,100,,,,,,,,,,,,
+Buenaflor 5_47,Buenaflor 5,47,Active,2024-02-19,,"Elisan,Mary Joy",,,,300.0,300,,,47,09187186847,530400.0,68000.0,462400.0,,,6 YRS,2030-02-19,reservation_date_plus_terms_years
+Buenaflor 5_48,Buenaflor 5,48,Active,2024-04-04,,"Equipado,Benito Jr.",,,,400.0,400,,,4 & 6,09552518790,394672.0,,,,,2 YRS,2026-04-04,reservation_date_plus_terms_years
+Buenaflor 5_49,Buenaflor 5,49,Active,2022-08-04,,"Farinas, Mary Jean G.",,7.0,7,200.0,200,Darlyn,,48,09099446059,226668.0,15000.0,0.0,,,2 YRS,2024-08-04,reservation_date_plus_terms_years
+Buenaflor 5_50,Buenaflor 5,50,Active,2024-02-24,,"Fernando,Estelita",,,,100.0,100,Joanna Gaspas,,81,09918269145,132668.0,2211.0,130457.0,,,5 YRS,2029-02-24,reservation_date_plus_terms_years
+Buenaflor 5_51,Buenaflor 5,51,Active,2024-02-21,,"Fernando,Jun",,,,200.0,200,,,59,09705393969,288000.0,2500.0,285500.0,,,6 YRS,2030-02-21,reservation_date_plus_terms_years
+Buenaflor 5_52,Buenaflor 5,52,Active,2024-02-24,,"Fernando,Welito",,,,100.0,100,Jonna Gaspar,,79,09918269145,110000.0,6000.0,104000.0,,,3 YRS,2027-02-24,reservation_date_plus_terms_years
+Buenaflor 5_53,Buenaflor 5,53,Active,2024-02-29,,"Flores,Lito N.",,,,100.0,100,Darlyn,,91,09750356493,144000.0,2000.0,140000.0,,,6 YRS,2030-02-28,reservation_date_plus_terms_years
+Buenaflor 5_54,Buenaflor 5,54,Active,2024-02-13,,"Francisco,Julius C.",,,,200.0,200,,,4,09500225753,288000.0,4000.0,280000.0,,,6 YRS,2030-02-13,reservation_date_plus_terms_years
+Buenaflor 5_55,Buenaflor 5,55,Active,2022-05-18,,"Hermopia, April Ann Jara",,7.0,7,200.0,200,Luz/Sharon Alaza,,66,,340200.0,,321290.0,,,6 YRS/SM,2028-05-18,reservation_date_plus_terms_years
+Buenaflor 5_56,Buenaflor 5,56,Active,2024-02-27,,"Gabales,Leli Mae",,,,200.0,200,,,113115,09357555083,288000.0,2000.0,286000.0,,,6 YRS,2030-02-27,reservation_date_plus_terms_years
+Buenaflor 5_57,Buenaflor 5,57,Active,2024-02-23,,"Gabales,Vincent Nicolas",,,,100.0,100,Darlyn,,70,09308158472,68000.0,68000.0,0.0,,,CASH,2024-02-23,reservation_date_for_cash
+Buenaflor 5_58,Buenaflor 5,58,Active,2022-05-23,,"Galeno, Medelyn Ignacio",,7.0,7,111.0,111(334),Janet/Walden,,51,09639330523,231284.0,5000.0,186284.0,,,6 YRS,2028-05-23,reservation_date_plus_terms_years
+Buenaflor 5_59,Buenaflor 5,59,Active,2024-02-05,,"Gammad,Rodjhon Afdal",Ivy,,,200.0,200,Darlyn,,29,09155522700,368000.0,5200.0,362800.0,,,6 YRS,2030-02-05,reservation_date_plus_terms_years
+Buenaflor 5_60,Buenaflor 5,60,Active,2024-02-29,,"Gandal, Noel Delos Santos",,,,100.0,100,,,121,09644749449,,2000.0,,,,,,
+Buenaflor 5_61,Buenaflor 5,61,Active,2024-02-16,,"Garcia,Edward",,,,200.0,200,Glecy,,13,09489164089,281212.0,30000.0,220212.0,,,3 YRS,2027-02-16,reservation_date_plus_terms_years
+Buenaflor 5_62,Buenaflor 5,62,Active,2024-02-12,,"Gascon,Edna B.",,,,100.0,100,,,68,,144000.0,2000.0,142000.0,,,6 YRS,2030-02-12,reservation_date_plus_terms_years
+Buenaflor 5_63,Buenaflor 5,63,Active,2024-02-05,,"Gascon,Rona Laine",,,,427.0,427,Janet/Gerl,,"108,107,65,66",09267927849,653310.0,6000.0,645310.0,,,6 YRS,2030-02-05,reservation_date_plus_terms_years
+Buenaflor 5_64,Buenaflor 5,64,Active,,,"Gaspar, Marvin",,,,100.0,100,Gaspar,,,,144000.0,,,,,6 YRS,,
+Buenaflor 5_65,Buenaflor 5,65,Active,,Buenaflor p2,"Guialo,Rakma",,,,200.0,200,Linda/Johnda,,8,,158668.0,,53668.0,,,2 YRS,,
+Buenaflor 5_66,Buenaflor 5,66,Active,2024-02-12,,"Lames,Sheila",,,,200.0,200,Darlyn,,19,09551907231,281212.0,7812.0,265588.0,,,3 YRS,2027-02-12,reservation_date_plus_terms_years
+Buenaflor 5_67,Buenaflor 5,67,Active,2022-05-23,,"Ledesma, Arlyn Galeno",,7.0,7,300.0,300,Janet,,"52,53,54",09367659148,479400.0,5000.0,377900.0,,,6 YRS,2028-05-23,reservation_date_plus_terms_years
+Buenaflor 5_68,Buenaflor 5,68,Active,2024-02-29,,"Lumambas,Yasser",,,,100.0,100,Darlyn,,69,09284593356,68000.0,5000.0,28000.0,,,CASH,2024-02-29,reservation_date_for_cash
+Buenaflor 5_69,Buenaflor 5,69,Active,2024-03-11,,"Lumawan,Simatar",,,,200.0,200,Linda/Ash,,24,09531235835,212000.0,2000.0,210000.0,,,,,
+Buenaflor 5_70,Buenaflor 5,70,Active,2024-02-29,,"Lumenda,Bai Febraida",,,,200.0,200,Darlyn,,44,09654634050,242668.0,5000.0,237668.0,,,4 YRS,2028-02-29,reservation_date_plus_terms_years
+Buenaflor 5_71,Buenaflor 5,71,Active,2024-02-09,,"Macote,Rommel C.",,,,189.0,189,Glecy,,64,09551495421,272160.0,10000.0,262160.0,,,6 YRS,2030-02-09,reservation_date_plus_terms_years
+Buenaflor 5_72,Buenaflor 5,72,Active,2024-02-17,,"Malcontento,Princess Angel",,,,600.0,600,Glecy,,"60,61,62",09610356616,864000.0,10000.0,844000.0,,,6 YRS,2030-02-17,reservation_date_plus_terms_years
+Buenaflor 5_73,Buenaflor 5,73,Active,2024-02-29,,"Mamalangkap,Bai Sarah",,,,200.0,200,Darlyn,,58,09955305172,242668.0,5000.0,237668.0,,,4 YRS,2028-02-29,reservation_date_plus_terms_years
+Buenaflor 5_74,Buenaflor 5,74,Active,2024-03-04,,"Mariano,Airishvet",,,,100.0,100,,,85,09756818399,68000.0,68000.0,0.0,,,CASH,2024-03-04,reservation_date_for_cash
+Buenaflor 5_75,Buenaflor 5,75,Active,2024-02-14,,"Menson,Aisa",,,,200.0,200,Linda P.,,57,09755193191,197336.0,10000.0,187336.0,,,2 YRS,2026-02-14,reservation_date_plus_terms_years
+Buenaflor 5_76,Buenaflor 5,76,Active,2024-02-12,,"Miura,Donadith Joy",,,,200.0,200,,,21,09613247654,281212.0,7812.0,265588.0,,,3 YRS,2027-02-12,reservation_date_plus_terms_years
+Buenaflor 5_77,Buenaflor 5,77,Active,2014-02-13,,"Montazi,Beljare",,,,100.0,100,,,84,09066308125,110000.0,3000.0,103944.0,,,3 YRS,2017-02-13,reservation_date_plus_terms_years
+Buenaflor 5_78,Buenaflor 5,78,Active,2024-02-16,,"Monteson,Teddy A.",,,,200.0,200,,,1,09751889581,222268.0,20000.0,142268.0,,,1 YR,2025-02-16,reservation_date_plus_terms_years
+Buenaflor 5_79,Buenaflor 5,79,Active,2024-03-09,,"Navarra,Evangeline",,,,200.0,200,Darlyn,,23,09853119638,369600.0,2500.0,364600.0,,,6 YRS,2030-03-09,reservation_date_plus_terms_years
+Buenaflor 5_80,Buenaflor 5,80,Active,2024-04-01,,"Niñora,Jane Rose",,,,100.0,100,,,98,09928365738,110000.0,2000.0,108000.0,,,3 YRS,2027-04-01,reservation_date_plus_terms_years
+Buenaflor 5_81,Buenaflor 5,81,Active,2024-01-07,,"Otto,Guiamalon",,,,200.0,200,Jiselle C.,,18,,226668.0,,106668.0,,,2 YRS,2026-01-07,reservation_date_plus_terms_years
+Buenaflor 5_82,Buenaflor 5,82,Active,2024-03-11,,"Pablo,Antonio","Traqueña,Richelle",,,200.0,200,Ash/Linda,,26,09267927529,212000.0,2000.0,210000.0,,,,,
+Buenaflor 5_83,Buenaflor 5,83,Active,2024-02-09,,"Paculba,Mary Eden",,,,200.0,200,Glecy,,126128,09994958234,288000.0,4000.0,284000.0,,,6 YRS,2030-02-09,reservation_date_plus_terms_years
+Buenaflor 5_84,Buenaflor 5,84,Active,2022-12-10,,"Palcis,Archie Galeno",,7.0,7,111.0,111(334),Janet/Walden,,51,,231284.0,,163574.0,,,6 YRS/SM,2028-12-10,reservation_date_plus_terms_years
+Buenaflor 5_85,Buenaflor 5,85,Active,2024-03-01,,"Palmares,Joy",,,,200.0,200,Darlyn,,101103,09652665684,288000.0,4000.0,280000.0,,,6 YRS,2030-03-01,reservation_date_plus_terms_years
+Buenaflor 5_86,Buenaflor 5,86,Active,2024-02-19,,"Palo,Wharloun C.",,,,200.0,200,,,114,09350215938,288000.0,4000.0,284000.0,,,6 YRS,2030-02-19,reservation_date_plus_terms_years
+Buenaflor 5_87,Buenaflor 5,87,Active,2024-02-13,,"Paloma,Sheilanie",Mark Daryl,,,200.0,200,,,2,09654266638,136000.0,136000.0,0.0,,,CASH,2024-02-13,reservation_date_for_cash
+Buenaflor 5_88,Buenaflor 5,88,Active,,montilla p2,"Pasandalan,Moktar",,,,,,Linda,,,,,25000.0,,,,,,
+Buenaflor 5_89,Buenaflor 5,89,Active,2022-12-10,,"Parantar,Jerald Alcuizar",,7.0,7,111.0,111(334),Janet/Walden,,51,09512651049,231284.0,,169542.0,,,6 YRS/SM,2028-12-10,reservation_date_plus_terms_years
+Buenaflor 5_90,Buenaflor 5,90,Active,2024-02-21,,"Parcon,Stevelyn Navarro",,,,300.0,300,Darlyn,,109110,09456127579,398004.0,4633.0,391371.0,,,5 YRS,2029-02-21,reservation_date_plus_terms_years
+Buenaflor 5_91,Buenaflor 5,91,Active,2024-02-14,,"Piang,Jo -Ann Hayna",,,,200.0,200,Darlyn,,30,09279206148,265336.0,4450.0,260886.0,,,5 YRS,2029-02-14,reservation_date_plus_terms_years
+Buenaflor 5_92,Buenaflor 5,92,Active,2024-04-22,,"Racsa,Maricel Retialo",,,,100.0,100,,,75,09355575293,68000.0,,,,,CASH,2024-04-22,reservation_date_for_cash
+Buenaflor 5_93,Buenaflor 5,93,Active,2024-04-22,,"Retialo,Janet",,,,100.0,100,,,38,09355575293,68000.0,,,,,CASH,2024-04-22,reservation_date_for_cash
+Buenaflor 5_94,Buenaflor 5,94,Active,2024-03-28,,"Rodriguez,Suellen Escalera",,,,200.0,200,Glecy,,7,,176000.0,5000.0,171000.0,,,CASH,2024-03-28,reservation_date_for_cash
+Buenaflor 5_95,Buenaflor 5,95,Active,2024-02-09,,"Romero,Joycele",,,,,,,,,,,2000.0,,,,,,
+Buenaflor 5_96,Buenaflor 5,96,Active,2024-02-17,,"Rio,Jolelyn",,,,100.0,100,Jonna Gaspar,,72,09367944637,132668.0,2200.0,130468.0,,,5 YRS,2029-02-17,reservation_date_plus_terms_years
+Buenaflor 5_97,Buenaflor 5,97,Active,2024-02-09,,"Saducos,John Churchill Gil L.",,,,199.0,199,Darlyn,,32,09102543791,218900.0,6100.0,212800.0,,,3 YRS,2027-02-09,reservation_date_plus_terms_years
+Buenaflor 5_98,Buenaflor 5,98,Active,2024-02-15,,"Salmo,Analyn F.",,,,100.0,100,Glecy,,78,09263766711,110000.0,3000.0,104000.0,,,3 YRS,2027-02-15,reservation_date_plus_terms_years
+Buenaflor 5_99,Buenaflor 5,99,Active,2024-02-29,,"Sally,Mariam Sapi",,,,100.0,100,,,71,09289593356,87334.0,5000.0,74834.0,,,1 YR,2025-02-28,reservation_date_plus_terms_years
+Buenaflor 5_100,Buenaflor 5,100,Active,2024-03-04,,"Sally,Mina Sapi",,,,100.0,100,Darlyn,,,09308158472,,10000.0,,,,,,
+Buenaflor 5_101,Buenaflor 5,101,Active,2024-02-29,,"Sampoling,Sharon Tayco",,,,200.0,200,Jonna Gaspar,,20,09050254609,288000.0,4000.0,284000.0,,,6 YRS,2030-02-28,reservation_date_plus_terms_years
+Buenaflor 5_102,Buenaflor 5,102,Active,2024-02-17,,"Seguban,Jonalyn",Mark Alvin,,,100.0,100,,,,,110000.0,,,,,3 YRS/SM,2027-02-17,reservation_date_plus_terms_years
+Buenaflor 5_103,Buenaflor 5,103,Active,2024-02-21,,"Seguban,Jonalyn",,,,200.0,200,,,"92,94",,220000.0,3056.0,216944.0,,,3 YRS,2027-02-21,reservation_date_plus_terms_years
+Buenaflor 5_104,Buenaflor 5,104,Active,2024-02-29,,"Sentinta,Jomar Apellido",,,,100.0,100,Darlyn,,117,09066107156,144000.0,2000.0,140000.0,,,6 YRS,2030-02-28,reservation_date_plus_terms_years
+Buenaflor 5_105,Buenaflor 5,105,Active,2024-02-29,,"Sentinta,Norberto Nicolas",,,,100.0,100,Darlyn,,119,09975247897,144000.0,2000.0,142000.0,,,6 YRS,2030-02-28,reservation_date_plus_terms_years
+Buenaflor 5_106,Buenaflor 5,106,Active,2024-02-27,,"Seredica,Charise",,,,100.0,100,Glecy,,83,09555602255,144000.0,2000.0,140000.0,,,6 YRS,2030-02-27,reservation_date_plus_terms_years
+Buenaflor 5_107,Buenaflor 5,107,Active,2024-03-04,,"Seredica,Rannie",,,,,,,,,,,2000.0,,,,,,
+Buenaflor 5_108,Buenaflor 5,108,Active,2024-02-28,,"Simon,Shielou C.",,,,200.0,200,Gerlie,,"87,88",09647646343,136000.0,4000.0,106000.0,,,3 mos.,2024-05-28,reservation_date_plus_terms_months
+Buenaflor 5_109,Buenaflor 5,109,Active,2024-02-22,,"Smith,Shania Chelsea Nono",,,,100.0,100,Darlyn,,104,09652665684,144000.0,2000.0,140000.0,,,6 YRS,2030-02-22,reservation_date_plus_terms_years
+Buenaflor 5_110,Buenaflor 5,110,Active,2024-02-28,,"Sodusta,Jheve Defensor",,,,,,,,,,,2700.0,,,,,,
+Buenaflor 5_111,Buenaflor 5,111,Active,2024-03-12,,"Suminda,Norhana",,,,100.0,100,,,98,,110000.0,,,,,3 YRS,2027-03-12,reservation_date_plus_terms_years
+Buenaflor 5_112,Buenaflor 5,112,Active,2024-02-14,,"Taburnal,Mark Joseph",,,,100.0,100,,,89,09754009701,110000.0,10000.0,97000.0,,,3 YRS,2027-02-14,reservation_date_plus_terms_years
+Buenaflor 5_113,Buenaflor 5,113,Active,2024-02-14,,"Taburnal,Mark Joseph",,,,100.0,100,,,90,09754009701,68000.0,58000.0,0.0,,,CASH,2024-02-14,reservation_date_for_cash
+Buenaflor 5_114,Buenaflor 5,114,Active,,,"Talib,Sulobai",,,,,,,,,,,,,,,,,
+Buenaflor 5_115,Buenaflor 5,115,Active,2024-03-01,,"Tagusi,Sonia",,,,400.0,400,Glecy,,"12,14",09977640606,,2000.0,,,,,,
+Buenaflor 5_116,Buenaflor 5,116,Active,,,"Tingson,Jailyn",,,,200.0,200,Glecy,,122,09126767207,174000.0,,,,,1 YR,,
+Buenaflor 5_117,Buenaflor 5,117,Active,,,"Tingson,Shena","Martinez,Rex",,,100.0,100,Glecy,,121,09363785703,121334.0,,,,,4 YRS,,
+Buenaflor 5_118,Buenaflor 5,118,Active,2024-02-12,,"Torano,Reynald V.",,,,200.0,200,,,55,09261719662,288000.0,4000.0,280000.0,,,6 YRS,2030-02-12,reservation_date_plus_terms_years
+Buenaflor 5_119,Buenaflor 5,119,Active,2024-03-30,,"Umali,Vanessa Pearl",,,,,,,,,,,5000.0,,,,,,
+Buenaflor 5_120,Buenaflor 5,120,Active,2025-09-13,,"Utto,Jonalyn",,,per lot,200.0,200,Jiselle C.,,,,288000.0,4000.0,258200.0,,,6 YRS,2031-09-13,reservation_date_plus_terms_years
+Buenaflor 5_121,Buenaflor 5,121,Active,2024-02-12,,"Villapa,Lady Rose",,,,200.0,200,Glecy,,5,,369600.0,2500.0,364100.0,,,6 YRS,2030-02-12,reservation_date_plus_terms_years
+Buenaflor 5_122,Buenaflor 5,122,Active,2024-02-17,,"Villaraiz,Roldan",,,,,,,,,,,,,,,,,
+Buenaflor 5_129,Buenaflor 5,129,Transferred,2022-05-31,,"Delgado, Rizza",,7.0,7,200.0,200,Lyn Catriz,,50,09194587164,360000.0,,355000.0,,,6 YRS/SM,2028-05-31,reservation_date_plus_terms_years
+Buenaflor 5_130,Buenaflor 5,130,Transferred,2022-05-23,,"Galeno, Medelyn Ignacio",,7.0,7,111.0,111(334),Janet/Walden,,53,09639330523,693852.0,5000.0,685852.0,,,6 YRS,2028-05-23,reservation_date_plus_terms_years
+Buenaflor 5_131,Buenaflor 5,131,Transferred,,"Galeno,M","Jayawon,Joeffry",,,,111.0,111(334),,,53,09367475189,200400.0,,170400.0,,,6 YRS/SM,,
+Buenaflor 5_132,Buenaflor 5,132,Transferred,,Calean B,"Ofrecio, Juvy R.",,7.0,7,200.0,200,Mark S.,,34,09354340801,283336.0,44100.0,169236.0,,,4 YRS,,
+Buenaflor 5_135,Buenaflor 5,135,Back Out,2023-01-11,,"Eliseo,Analu P.",,3.5,3.5,100.0,100(200),Jhonda Abod,,36,09168291673,180000.0,,177500.0,,,6YRS/SM,2029-01-11,reservation_date_plus_terms_years
+Buenaflor 5_136,Buenaflor 5,136,Back Out,2023-02-13,,"Procalla,Vilma",,3.5,3.5,100.0,100(200),Jhonda Abod,,36,,180000.0,,177500.0,,,6 YRS/SM,2029-02-13,reservation_date_plus_terms_years
+Buenaflor 5_137,Buenaflor 5,137,Back Out,,Sampao,"Orbita,Raymond",,3.0,3,100.0,100,Office,,85,09354829952,99167.0,,51167.0,,,Dec.2023,,
+Buenaflor 5_142,Buenaflor 5,142,Forfeited,2022-05-21,,"Bajon, Arah",,7.0,7,100.0,100 (337),Janet/Walden,,77,09554753315,180000.0,,180000.0,,,6 YRS/SM,2028-05-21,reservation_date_plus_terms_years
+Buenaflor 5_143,Buenaflor 5,143,Forfeited,2022-05-21,,"Bajon, Rashel Mae",,7.0,7,100.0,100 (337),Janet/Walden,,77,09984979145,180000.0,,180000.0,,,6 YRS/SM,2028-05-21,reservation_date_plus_terms_years
+Buenaflor 6_2,Buenaflor 6,2,Active,2026-07-23,,"Vingno,Ernie",,,,200.0,200,Katungal B P2,,,,,30500.0,205500.0,,,6 YRS,2032-07-23,reservation_date_plus_terms_years
