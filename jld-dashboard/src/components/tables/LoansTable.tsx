@@ -25,7 +25,7 @@ export function LoansTable(p:LoansTableProps){
         ]}
         summary={rows=><span className="loans-summary-total">Total <strong>{formatCurrency(rows.reduce((s,r)=>s+r.amount,0))}</strong></span>}
       >
-        <div className="loans-tabs-container module-tabs">
+        <div className="loans-tabs-container workspace-tabs">
           <button className="loans-tab-button" aria-pressed={mode==='loans'} onClick={()=>setMode('loans')}>Loans & cash advances</button>
           <button className="loans-tab-button" aria-pressed={mode==='benefits'} onClick={()=>setMode('benefits')}>Benefits & earnings</button>
         </div>

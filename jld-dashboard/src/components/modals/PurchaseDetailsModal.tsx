@@ -8,18 +8,30 @@ export function PurchaseDetailsModal(p:PurchaseDetailsModalProps){
   const client=p.client;
   return (
     <ModalFrame title="Buyer contracts" onClose={p.onClose}>
-      <div className="contract-details-modal-shell form-shell">
+      <div className="contract-details-modal-shell form-shell form-shell-wide">
         <header className="contract-details-modal-header form-header">
-          <div className="contract-details-icon-wrapper form-heading-icon"><FileText size={22}/></div>
-          <div className="contract-details-title-group">
-            <span className="contract-details-eyebrow form-eyebrow">PROPERTY & SALES</span>
-            <h2 className="contract-details-title">Buyer contracts</h2>
-            <p className="contract-details-subtitle">{client.fullname||`${client.firstname} ${client.lastname}`} · Buyer #{client.idclients}</p>
+          <div className="contract-details-icon-wrapper form-heading-icon">
+            <FileText size={22}/>
           </div>
-          <button className="contract-details-close-btn form-close" onClick={p.onClose} aria-label="Close contracts"><X size={20}/></button>
+          <div className="contract-details-title-group">
+            <span className="contract-details-eyebrow form-eyebrow">PURCHASE CONTRACTS</span>
+            <h2 className="contract-details-title">Buyer Contracts</h2>
+            <p className="contract-details-subtitle">
+              {client.fullname || `${client.firstname} ${client.lastname}`} · Stakeholder #{client.idclients}
+            </p>
+          </div>
+          <button className="contract-details-close-btn form-close" onClick={p.onClose} aria-label="Close contracts">
+            <X size={18}/>
+          </button>
         </header>
-        <div className="contract-details-body">
-          <PurchaseDetailsTable purchases={p.purchases} onNewPurchase={()=>p.onAddNewPurchase(client)} onEditPurchase={p.onEditPurchase} onViewDetails={p.onViewHistory} onArchivePurchase={p.onArchivePurchase}/>
+        <div className="contract-details-body form-body" style={{ padding: '20px 24px' }}>
+          <PurchaseDetailsTable
+            purchases={p.purchases}
+            onNewPurchase={() => p.onAddNewPurchase(client)}
+            onEditPurchase={p.onEditPurchase}
+            onViewDetails={p.onViewHistory}
+            onArchivePurchase={p.onArchivePurchase}
+          />
         </div>
       </div>
     </ModalFrame>
