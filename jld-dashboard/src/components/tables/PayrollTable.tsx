@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Printer } from 'lucide-react';
+import { Printer, X, ReceiptText } from 'lucide-react';
 import type { PayrollRecord,PayslipRecord } from '../../types';
 import { formatCurrency } from '../../utils/calculations';
 import { payslipFromPayroll } from '../../utils/workflows';
@@ -11,7 +11,7 @@ export function PayrollTable(p:PayrollTableProps){
   const [selectedSlip,setSelectedSlip]=useState<PayslipRecord|null>(null);
   const slips=p.payslips||[];
   const tabs=(
-    <div className="payroll-mode-tabs module-tabs">
+    <div className="payroll-mode-tabs workspace-tabs">
       <button className="payroll-tab-button" aria-pressed={mode==='payroll'} onClick={()=>setMode('payroll')}>Payroll records</button>
       <button className="payroll-tab-button" aria-pressed={mode==='payslips'} onClick={()=>setMode('payslips')}>Employee payslips</button>
     </div>
@@ -65,60 +65,101 @@ export function PayrollTable(p:PayrollTableProps){
       )}
 
       {selectedSlip && (
-        <ModalFrame onClose={()=>setSelectedSlip(null)} title="Payslip">
-          <div className="payslip-preview-modal-card bg-white rounded-2xl max-w-lg w-full p-6 border border-slate-200 shadow-2xl space-y-4 text-xs">
-            <div className="payslip-modal-header text-center pb-3 border-b border-slate-200">
-              <h3 className="payslip-company-title text-base font-bold text-slate-900">JLD SUBDIVISION &amp; REAL PROPERTY</h3>
-              <p className="payslip-doc-subtitle text-slate-500 text-[11px]">Employee payslip · {selectedSlip.payoutStatus}</p>
-              <div className="payslip-period-banner mt-1 font-bold text-slate-800">{selectedSlip.month}</div>
-            </div>
-
-            <div className="payslip-metadata-grid grid grid-cols-2 gap-2 text-slate-700">
-              <div className="payslip-meta-item"><span className="payslip-meta-label text-slate-400">Employee:</span> <strong className="payslip-meta-val text-slate-900">{selectedSlip.employeeName}</strong></div>
-              <div className="payslip-meta-item"><span className="payslip-meta-label text-slate-400">Designation:</span> <span className="payslip-meta-val">{selectedSlip.designation}</span></div>
-            </div>
-
-            <div className="payslip-financial-breakdown border-t border-b border-slate-200 py-3 space-y-2">
-              <div className="payslip-breakdown-row flex justify-between">
-                <span className="payslip-breakdown-label">Basic Salary:</span>
-                <span className="payslip-breakdown-value font-semibold">{formatCurrency(selectedSlip.basicSalary)}</span>
+        <ModalFrame onClose={()=>setSelectedSlip(null)} title={`Payslip - ${selectedSlip.employeeName}`}>
+          <div className="payslip-modal-shell form-shell form-shell-compact">
+            {/* Header */}
+            <header className="payslip-modal-header form-header">
+              <div className="payslip-icon-badge form-heading-icon">
+                <ReceiptText size={22} />
               </div>
-              <div className="payslip-breakdown-row flex justify-between text-emerald-700">
-                <span className="payslip-breakdown-label">Overtime &amp; Special Pay:</span>
-                <span className="payslip-breakdown-value font-semibold">+{formatCurrency(selectedSlip.overtimeEarnings)}</span>
+              <div className="payslip-title-group">
+                <span className="payslip-eyebrow form-eyebrow">PAYSLIP PREVIEW</span>
+                <h2 className="payslip-title">{selectedSlip.employeeName}</h2>
+                <p className="payslip-subtitle">
+                  {selectedSlip.designation} · {selectedSlip.month} · {selectedSlip.payoutStatus}
+                </p>
               </div>
-              <div className="payslip-breakdown-row flex justify-between text-emerald-700">
-                <span className="payslip-breakdown-label">Allowances &amp; Benefits:</span>
-                <span className="payslip-breakdown-value font-semibold">+{formatCurrency(selectedSlip.benefits)}</span>
-              </div>
-              <div className="payslip-breakdown-row flex justify-between text-rose-600">
-                <span className="payslip-breakdown-label">Cash Advance Deduction:</span>
-                <span className="payslip-breakdown-value font-semibold">-{formatCurrency(selectedSlip.cashAdvanceDeduction)}</span>
-              </div>
-              <div className="payslip-breakdown-row flex justify-between text-rose-600">
-                <span className="payslip-breakdown-label">Other Deductions (CA/Egg/Rice/Merienda):</span>
-                <span className="payslip-breakdown-value font-semibold">-{formatCurrency(selectedSlip.otherDeductions)}</span>
-              </div>
-            </div>
-
-            <div className="payslip-total-row flex justify-between items-center text-sm font-bold pt-1">
-              <span className="payslip-total-label">NET SALARY PAYABLE:</span>
-              <span className="payslip-total-amount text-emerald-800 text-base">{formatCurrency(selectedSlip.netPay)}</span>
-            </div>
-
-            <div className="payslip-modal-actions flex justify-end gap-2 pt-4">
-              <button
-                onClick={() => window.print()}
-                className="payslip-action-print px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl flex items-center gap-1.5 cursor-pointer"
-              >
-                <Printer className="w-3.5 h-3.5" />
-                <span>Print Slip</span>
-              </button>
               <button
                 onClick={() => setSelectedSlip(null)}
-                className="payslip-action-close px-5 py-2 bg-[#00593B] hover:bg-[#004a31] text-white font-semibold rounded-xl cursor-pointer"
+                className="payslip-close-button form-close"
+                aria-label="Close dialog"
               >
-                Close
+                <X size={18} />
+              </button>
+            </header>
+
+            {/* Content */}
+            <div className="payslip-body form-body">
+              {/* Note / Metadata */}
+              <div className="form-note">
+                Official employee salary distribution voucher for <strong>{selectedSlip.month}</strong>. Payout status is currently recorded as <strong style={{ textTransform: 'uppercase' }}>{selectedSlip.payoutStatus}</strong>.
+              </div>
+
+              {/* Financial Breakdown Table / Card */}
+              <div style={{ background: '#ffffff', border: '1px solid #e2eae4', borderRadius: '10px', overflow: 'hidden', boxShadow: '0 1px 2px rgba(18,58,34,0.03)' }}>
+                <div style={{ padding: '12px 16px', background: '#f8fbf9', borderBottom: '1px solid #e7eeea', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ fontSize: '12px', fontWeight: 700, color: '#173b28', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Earnings &amp; Deductions Breakdown</span>
+                  <span style={{ fontSize: '11px', color: '#7a8e82', fontFamily: 'monospace' }}>VOUCHER #{selectedSlip.id}</span>
+                </div>
+
+                <div style={{ padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '13px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ color: '#4a6355' }}>Basic Salary</span>
+                    <strong style={{ color: '#173b28' }}>{formatCurrency(selectedSlip.basicSalary)}</strong>
+                  </div>
+
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#15803d' }}>
+                    <span>Overtime &amp; Special Pay</span>
+                    <strong>+{formatCurrency(selectedSlip.overtimeEarnings)}</strong>
+                  </div>
+
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#15803d' }}>
+                    <span>Allowances &amp; Benefits</span>
+                    <strong>+{formatCurrency(selectedSlip.benefits)}</strong>
+                  </div>
+
+                  <div style={{ height: '1px', background: '#edf2ee', margin: '4px 0' }} />
+
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#dc2626' }}>
+                    <span>Cash Advance Deduction</span>
+                    <strong>-{formatCurrency(selectedSlip.cashAdvanceDeduction)}</strong>
+                  </div>
+
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#dc2626' }}>
+                    <span>Other Deductions (CA/Egg/Rice/Merienda)</span>
+                    <strong>-{formatCurrency(selectedSlip.otherDeductions)}</strong>
+                  </div>
+                </div>
+
+                {/* Net Salary Payable Banner */}
+                <div style={{ padding: '14px 16px', background: '#eaf4ee', borderTop: '1px solid #d4e5d9', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div>
+                    <span style={{ fontSize: '11px', fontWeight: 700, color: '#1a5e3f', textTransform: 'uppercase', letterSpacing: '0.06em', display: 'block' }}>Net Take-Home Pay</span>
+                    <span style={{ fontSize: '11px', color: '#527b65' }}>Calculated after statutory &amp; ledger deductions</span>
+                  </div>
+                  <strong style={{ fontSize: '20px', fontWeight: 700, color: '#11634d', fontVariantNumeric: 'tabular-nums' }}>
+                    {formatCurrency(selectedSlip.netPay)}
+                  </strong>
+                </div>
+              </div>
+            </div>
+
+            {/* Actions Footer */}
+            <div className="payslip-modal-actions form-actions">
+              <button
+                type="button"
+                onClick={() => window.print()}
+                className="secondary-button"
+              >
+                <Printer size={15} />
+                <span>Print Payslip</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setSelectedSlip(null)}
+                className="primary-button"
+              >
+                Done
               </button>
             </div>
           </div>

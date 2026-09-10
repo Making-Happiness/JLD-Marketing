@@ -8,13 +8,11 @@ import {
   Plus, 
   Edit3, 
   Search, 
-  X, 
-  Calendar, 
-  User, 
-  Filter 
+  X,
+  User,
+  Calendar
 } from 'lucide-react';
 import { AuditLogEntry, AuditAction, EntityTypeName } from '../../types';
-import { formatDate } from '../../utils/calculations';
 
 interface ActivityHistoryModalProps {
   isOpen: boolean;
@@ -133,62 +131,72 @@ export const ActivityHistoryModal: React.FC<ActivityHistoryModalProps> = ({
   };
 
   return (
-    <ModalFrame onClose={onClose} title='ActivityHistory'>
-      <div className="audit-history-modal-card bg-white rounded-2xl shadow-2xl border border-slate-200 max-w-3xl w-full flex flex-col max-h-[90vh] overflow-hidden animate-in zoom-in-95 duration-150">
+    <ModalFrame onClose={onClose} title="Activity History">
+      <div className="audit-history-modal-shell form-shell form-shell-wide">
         {/* Header */}
-        <div className="audit-history-modal-header px-6 py-4.5 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
-          <div className="audit-history-header-brand flex items-center gap-3">
-            <div className="audit-history-icon-badge w-10 h-10 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200 flex items-center justify-center shadow-2xs">
-              <History className="w-5 h-5" />
+        <header className="audit-history-modal-header form-header">
+          <div className="audit-history-icon-badge form-heading-icon">
+            <History size={22} />
+          </div>
+          <div className="audit-history-title-group">
+            <span className="audit-history-eyebrow form-eyebrow">AUDIT LEDGER</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+              <h2 className="audit-history-title">ERP Audit Trail &amp; Activity History</h2>
+              {selectedRecord && scope === 'RECORD' && (
+                <span style={{ fontSize: '11px', fontWeight: 600, padding: '2px 8px', borderRadius: '9999px', background: '#e8f2ec', color: '#175f46', border: '1px solid #c8dfd0' }}>
+                  {selectedRecord.entityType}: {selectedRecord.recordLabel}
+                </span>
+              )}
             </div>
-            <div className="audit-history-title-group">
-              <div className="audit-history-title-row flex items-center gap-2">
-                <h3 className="audit-history-title text-sm font-bold text-slate-900">
-                  ERP Audit Trail &amp; Activity History
-                </h3>
-                {selectedRecord && scope === 'RECORD' && (
-                  <span className="audit-history-target-badge px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-900 border border-emerald-200">
-                    {selectedRecord.entityType}: {selectedRecord.recordLabel}
-                  </span>
-                )}
-              </div>
-              <p className="audit-history-subtitle text-xs text-slate-500 mt-0.5">
-                Immutable audit ledger recording all creations, edits, soft-deletions, and restorations.
-              </p>
-            </div>
+            <p className="audit-history-subtitle">
+              Immutable audit ledger recording all creations, edits, soft-deletions, and restorations.
+            </p>
           </div>
           <button
             onClick={onClose}
-            className="audit-history-close-button p-1.5 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-white transition-colors cursor-pointer"
+            className="audit-history-close-button form-close"
+            aria-label="Close dialog"
           >
-            <X className="w-5 h-5" />
+            <X size={18} />
           </button>
-        </div>
+        </header>
 
         {/* Filter Controls Bar */}
-        <div className="audit-filter-bar px-6 py-3 border-b border-slate-100 bg-white flex flex-wrap items-center justify-between gap-3 text-xs">
+        <div style={{ padding: '14px 28px', borderBottom: '1px solid #e7eeea', background: '#ffffff', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
           {/* Scope Toggle if record selected */}
           {selectedRecord && (
-            <div className="audit-scope-toggle inline-flex p-0.5 bg-slate-100 rounded-lg border border-slate-200">
+            <div style={{ display: 'inline-flex', padding: '3px', background: '#f0f5f2', borderRadius: '8px', border: '1px solid #d5e0d8', gap: '4px' }}>
               <button
                 type="button"
                 onClick={() => setScope('RECORD')}
-                className={`audit-scope-button px-3 py-1 rounded-md font-semibold transition-all cursor-pointer ${
-                  scope === 'RECORD'
-                    ? 'bg-white text-slate-900 shadow-2xs'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
+                style={{
+                  padding: '5px 12px',
+                  borderRadius: '6px',
+                  fontSize: '12px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  border: 0,
+                  background: scope === 'RECORD' ? '#ffffff' : 'transparent',
+                  color: scope === 'RECORD' ? '#173b28' : '#5f7568',
+                  boxShadow: scope === 'RECORD' ? '0 1px 3px rgba(0,0,0,0.08)' : 'none'
+                }}
               >
                 This Record Only
               </button>
               <button
                 type="button"
                 onClick={() => setScope('ALL')}
-                className={`audit-scope-button px-3 py-1 rounded-md font-semibold transition-all cursor-pointer ${
-                  scope === 'ALL'
-                    ? 'bg-white text-slate-900 shadow-2xs'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
+                style={{
+                  padding: '5px 12px',
+                  borderRadius: '6px',
+                  fontSize: '12px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  border: 0,
+                  background: scope === 'ALL' ? '#ffffff' : 'transparent',
+                  color: scope === 'ALL' ? '#173b28' : '#5f7568',
+                  boxShadow: scope === 'ALL' ? '0 1px 3px rgba(0,0,0,0.08)' : 'none'
+                }}
               >
                 All ERP Events
               </button>
@@ -196,80 +204,109 @@ export const ActivityHistoryModal: React.FC<ActivityHistoryModalProps> = ({
           )}
 
           {/* Action Filter Pills */}
-          <div className="audit-action-pills-bar flex items-center gap-1 overflow-x-auto">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
             {(['ALL', 'ARCHIVE', 'RESTORE', 'PERMANENT_DELETE', 'CREATE', 'EDIT'] as const).map(
-              (act) => (
-                <button
-                  key={act}
-                  type="button"
-                  onClick={() => setFilterAction(act)}
-                  className={`audit-action-pill-button px-2.5 py-1 rounded-lg font-semibold text-[11px] transition-all cursor-pointer ${
-                    filterAction === act
-                      ? 'bg-[#00593B] text-white shadow-2xs'
-                      : 'text-slate-600 hover:bg-slate-100'
-                  }`}
-                >
-                  {act === 'ALL' ? 'All Actions' : act}
-                </button>
-              )
+              (act) => {
+                const isSelected = filterAction === act;
+                return (
+                  <button
+                    key={act}
+                    type="button"
+                    onClick={() => setFilterAction(act)}
+                    style={{
+                      padding: '5px 11px',
+                      borderRadius: '6px',
+                      fontSize: '11.5px',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      transition: 'all 0.15s',
+                      background: isSelected ? '#145f49' : '#ffffff',
+                      color: isSelected ? '#ffffff' : '#5f7568',
+                      border: isSelected ? '1px solid #145f49' : '1px solid #d5e0d8',
+                      boxShadow: isSelected ? '0 1px 2px rgba(20,95,73,0.2)' : 'none'
+                    }}
+                  >
+                    {act === 'ALL' ? 'All Actions' : act.replace('_', ' ')}
+                  </button>
+                );
+              }
             )}
           </div>
 
           {/* Search bar */}
-          <div className="audit-search-container relative min-w-[200px]">
-            <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
+          <div style={{ position: 'relative', minWidth: '220px', flex: 1, maxWidth: '320px' }}>
+            <Search size={14} style={{ color: '#7a8e82', position: 'absolute', left: '11px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }} />
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search audit trail..."
-              className="audit-search-input w-full pl-8 pr-3 py-1 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 focus:bg-white focus:outline-none focus:ring-1 focus:ring-emerald-500"
+              style={{
+                width: '100%',
+                padding: '8px 12px 8px 32px',
+                background: '#ffffff',
+                border: '1px solid #d5e0d8',
+                borderRadius: '8px',
+                fontSize: '12.5px',
+                color: '#1e3628',
+                outline: 'none',
+                boxSizing: 'border-box'
+              }}
             />
           </div>
         </div>
 
         {/* Logs Table / List */}
-        <div className="audit-log-feed flex-1 overflow-y-auto p-6 space-y-3">
+        <div className="form-body" style={{ maxHeight: '55vh', overflowY: 'auto', padding: '20px 28px' }}>
           {relevantLogs.length === 0 ? (
-            <div className="audit-empty-state py-16 text-center text-slate-400 text-xs">
-              <History className="w-8 h-8 mx-auto text-slate-300 mb-2" />
-              <p>No audit log events found matching the selected filter criteria.</p>
+            <div style={{ padding: '48px 0', textAlign: 'center', color: '#7a8e82', fontSize: '13px' }}>
+              <History size={36} style={{ margin: '0 auto 12px', color: '#a4b8ad' }} />
+              <p style={{ margin: 0, fontWeight: 500 }}>No audit log events found matching the selected filter criteria.</p>
             </div>
           ) : (
-            <div className="audit-log-list space-y-3">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {relevantLogs.map((log) => (
                 <div
                   key={log.id}
-                  className="audit-log-card p-4 bg-white border border-slate-200/80 rounded-xl hover:border-slate-300 transition-colors shadow-2xs text-xs space-y-2"
+                  style={{
+                    padding: '16px 18px',
+                    background: '#ffffff',
+                    border: '1px solid #e2eae4',
+                    borderRadius: '10px',
+                    boxShadow: '0 1px 2px rgba(18,58,34,0.03)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '10px'
+                  }}
                 >
-                  <div className="audit-log-header flex flex-wrap items-center justify-between gap-2">
-                    <div className="audit-log-title-wrap flex items-center gap-2">
+                  <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
                       {getActionBadge(log.action)}
-                      <span className="audit-log-label font-bold text-slate-900">{log.recordLabel}</span>
-                      <span className="audit-log-meta text-[11px] text-slate-400 font-mono">
+                      <span style={{ fontWeight: 700, color: '#173b28', fontSize: '13.5px' }}>{log.recordLabel}</span>
+                      <span style={{ fontSize: '11.5px', color: '#7a8e82', fontFamily: 'monospace' }}>
                         ({log.entityType} #{log.recordId})
                       </span>
                     </div>
-                    <div className="audit-log-author-date flex items-center gap-3 text-slate-500 text-[11px]">
-                      <span className="audit-log-performed-by flex items-center gap-1">
-                        <User className="w-3 h-3 text-slate-400" />
-                        <strong>{log.performedBy}</strong>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '14px', fontSize: '11.5px', color: '#66816f' }}>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        <User size={13} style={{ color: '#7a8e82' }} />
+                        <strong style={{ color: '#274233' }}>{log.performedBy}</strong>
                       </span>
-                      <span className="audit-log-timestamp flex items-center gap-1 font-mono">
-                        <Calendar className="w-3 h-3 text-slate-400" />
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '4px', fontFamily: 'monospace' }}>
+                        <Calendar size={13} style={{ color: '#7a8e82' }} />
                         {formatLogDate(log.timestamp)}
                       </span>
                     </div>
                   </div>
 
                   {log.reason && (
-                    <div className="audit-log-reason text-slate-700 bg-slate-50 p-2.5 rounded-lg border border-slate-100 text-[11px]">
-                      <strong className="text-slate-900">Reason:</strong> {log.reason}
+                    <div style={{ padding: '8px 12px', background: '#f5f8f6', borderRadius: '6px', border: '1px solid #e5ede7', fontSize: '12px', color: '#3f604d' }}>
+                      <strong style={{ color: '#173b28' }}>Reason:</strong> {log.reason}
                     </div>
                   )}
 
                   {log.details && (
-                    <div className="audit-log-details text-slate-500 text-[11px]">
+                    <div style={{ fontSize: '12px', color: '#5f7568', lineHeight: 1.5 }}>
                       {log.details}
                     </div>
                   )}
@@ -280,13 +317,14 @@ export const ActivityHistoryModal: React.FC<ActivityHistoryModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="audit-modal-footer px-6 py-3.5 border-t border-slate-100 bg-slate-50/70 flex items-center justify-between text-xs text-slate-500">
-          <span className="audit-log-count-text">
-            Total: <strong>{relevantLogs.length}</strong> logged event(s)
+        <div className="audit-modal-footer form-actions" style={{ justifyContent: 'space-between' }}>
+          <span style={{ fontSize: '12.5px', color: '#5f7568' }}>
+            Total: <strong style={{ color: '#173b28' }}>{relevantLogs.length}</strong> logged event(s)
           </span>
           <button
+            type="button"
             onClick={onClose}
-            className="audit-close-button px-4 py-1.5 bg-white hover:bg-slate-100 text-slate-700 font-semibold border border-slate-200 rounded-lg cursor-pointer"
+            className="audit-close-button secondary-button"
           >
             Close
           </button>
