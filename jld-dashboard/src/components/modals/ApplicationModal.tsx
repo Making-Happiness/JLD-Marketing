@@ -30,7 +30,9 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
   const [agentId, setAgentId] = useState<number>(agents[0]?.id || 1);
   
   const [blockNo, setBlockNo] = useState<number>(1);
-  const [lotNo, setLotNo] = useState<number>(1);
+  // Keep the field blank until the user enters a lot number. A numeric-only
+  // state would coerce an empty input to 0 and make it difficult to clear.
+  const [lotNo, setLotNo] = useState<number | ''>('');
   const [area, setArea] = useState<number>(150);
   const [lotPrice, setLotPrice] = useState<number>(108000);
   const [terms, setTerms] = useState<number>(2);
@@ -92,6 +94,11 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (lotNo === '' || !Number.isInteger(lotNo) || lotNo < 1) {
+      setError('Enter a whole-number Lot No. greater than 0.');
+      return;
+    }
 
     const selectedClient = clients.find(c => c.idclients === Number(clientId)) || clients[0];
     const selectedProduct = products.find(p => p.idproduct === Number(productId)) || products[0];
@@ -220,9 +227,11 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
                   <input
                     type="number"
                     min="1"
-                    max={currentProduct?.totallotno || 150}
+                    step="1"
+                    inputMode="numeric"
+                    required
                     value={lotNo}
-                    onChange={(e) => setLotNo(Number(e.target.value))}
+                    onChange={(e) => setLotNo(e.target.value === '' ? '' : Number(e.target.value))}
                     className="application-field-input"
                   />
                 </label>

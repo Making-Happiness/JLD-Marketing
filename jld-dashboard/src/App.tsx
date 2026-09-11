@@ -437,7 +437,7 @@ export function App() {
     const product=products.find(p=>p.idproduct===newApp.idproducts&&p.status==='active');
     if(!product||!clients.some(c=>c.idclients===newApp.idclients&&c.status==='active')||!agents.some(a=>a.id===newApp.idagent&&a.status==='active'))return 'Select an active property, buyer and agent.';
     if(leads.some(l=>l.id!==newApp.id&&l.status==='active'&&l.idproducts===newApp.idproducts&&l.blockno===newApp.blockno&&l.lotno===newApp.lotno))return 'This lot already has an active contract. Select an available lot.';
-    if(!Number.isInteger(newApp.blockno)||!Number.isInteger(newApp.lotno)||newApp.blockno<1||newApp.lotno<1||newApp.blockno>product.totalblockno||newApp.lotno>product.totallotno)return 'Block or lot number is outside this property inventory.';
+    if(!Number.isInteger(newApp.blockno)||!Number.isInteger(newApp.lotno)||newApp.blockno<1||newApp.lotno<1||newApp.blockno>product.totalblockno)return 'Block No. must be within the selected property inventory, and Lot No. must be a whole number greater than 0.';
     if(newApp.lotprice<=0||newApp.area<=0||newApp.downpayment<0||newApp.downpayment>newApp.lotprice||newApp.agentpercentage<0||newApp.agentpercentage>100)return 'Review the price, area, downpayment and commission rate.';
     if(editingLead&&payments.some(p=>p.items.some(i=>i.idpurchasedetails===newApp.id))&&(editingLead.idclients!==newApp.idclients||editingLead.idproducts!==newApp.idproducts||editingLead.idagent!==newApp.idagent||editingLead.agentpercentage!==newApp.agentpercentage||editingLead.blockno!==newApp.blockno||editingLead.lotno!==newApp.lotno))return 'A contract with receipts cannot change buyer, property, lot or commission assignment.';
     if (editingLead) {
