@@ -37,7 +37,8 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
   const [lotPrice, setLotPrice] = useState<number>(108000);
   const [terms, setTerms] = useState<number>(2);
   const [downpayment, setDownpayment] = useState<number>(20000);
-  const [monthlyAmortization, setMonthlyAmortization] = useState<number>(0);
+  const [monthlyAmortization, setMonthlyAmortization] = useState<number | ''>('');
+  const [isManualAmortization, setIsManualAmortization] = useState(false);
   const [agentPercentage, setAgentPercentage] = useState<number>(7);
   const [otherFees, setOtherFees] = useState<number>(1500);
   const [penalty, setPenalty] = useState<number>(0);
@@ -59,6 +60,9 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
       setTerms(initialData.terms);
       setDownpayment(initialData.downpayment || 0);
       setMonthlyAmortization(initialData.amortization);
+      // Preserve the amount saved on an existing contract instead of replacing
+      // it with a newly calculated estimate when the form is opened to edit.
+      setIsManualAmortization(true);
       setAgentPercentage(initialData.agentpercentage);
       setOtherFees(initialData.otherfees || 0);
       setPenalty(initialData.penalty || 0);
@@ -66,6 +70,8 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
       setRemarks(initialData.remarks || '');
       setStatus(initialData.leadStatus || 'Active');
     } else {
+      setMonthlyAmortization('');
+      setIsManualAmortization(false);
       if (defaultClientId) {
         setClientId(defaultClientId);
       }
@@ -77,11 +83,10 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
     }
   }, [initialData, products, defaultClientId]);
 
-  // Recalculate amortization whenever lotPrice, downpayment, or terms change
-  useEffect(() => {
-    const amort = calculateAmortization(lotPrice, downpayment, terms);
-    setMonthlyAmortization(amort);
-  }, [lotPrice, downpayment, terms]);
+  const calculatedAmortization = calculateAmortization(lotPrice, downpayment, terms);
+  const effectiveAmortization = isManualAmortization
+    ? Number(monthlyAmortization)
+    : calculatedAmortization;
 
   // Update default price when selecting another product
   const handleProductChange = (prodId: number) => {
@@ -99,6 +104,10 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
       setError('Enter a whole-number Lot No. greater than 0.');
       return;
     }
+    if (!Number.isFinite(effectiveAmortization) || effectiveAmortization < 0) {
+      setError('Enter a valid monthly amortization amount of zero or more.');
+      return;
+    }
 
     const selectedClient = clients.find(c => c.idclients === Number(clientId)) || clients[0];
     const selectedProduct = products.find(p => p.idproduct === Number(productId)) || products[0];
@@ -110,7 +119,7 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
       lotno: Number(lotNo),
       area: Number(area),
       lotprice: Number(lotPrice),
-      amortization: monthlyAmortization,
+      amortization: effectiveAmortization,
       terms: Number(terms),
       downpayment: Number(downpayment),
       agentpercentage: Number(agentPercentage),
@@ -292,15 +301,43 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
                   />
                 </label>
 
-                <div className="application-amortization-card p-3 rounded-lg border border-[#cbe1d5] bg-[#f1f7f3] flex flex-col justify-center">
+                <label className="application-amortization-card p-3 rounded-lg border border-[#cbe1d5] bg-[#f1f7f3] flex flex-col justify-center">
                   <span className="text-[10px] uppercase font-bold text-[#1e583c] tracking-wider flex items-center gap-1.5">
                     <Calculator size={13} className="text-[#1a5e3f]"/>
-                    Monthly Amortization (15% APR)
+                    Monthly Amortization (₱)
                   </span>
-                  <span className="text-base font-bold text-[#14472f] mt-1">
-                    {formatCurrency(monthlyAmortization)} <span className="text-xs font-normal text-[#4d725f]">/ mo</span>
+                  <input
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    inputMode="decimal"
+                    required
+                    value={isManualAmortization ? monthlyAmortization : calculatedAmortization}
+                    onChange={(e) => {
+                      setIsManualAmortization(true);
+                      setMonthlyAmortization(e.target.value === '' ? '' : Number(e.target.value));
+                    }}
+                    className="application-field-input mt-1"
+                    aria-describedby="monthly-amortization-help"
+                  />
+                  <span id="monthly-amortization-help" className="text-xs font-normal text-[#4d725f] mt-1">
+                    {isManualAmortization
+                      ? 'Saved monthly amount. Use the control below to restore the calculated estimate.'
+                      : `Calculated estimate: ${formatCurrency(calculatedAmortization)} at 15% APR.`}
                   </span>
-                </div>
+                  {isManualAmortization && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsManualAmortization(false);
+                        setMonthlyAmortization('');
+                      }}
+                      className="text-xs font-semibold text-[#1a5e3f] text-left mt-1 hover:underline"
+                    >
+                      Use calculated estimate
+                    </button>
+                  )}
+                </label>
               </div>
             </fieldset>
 
