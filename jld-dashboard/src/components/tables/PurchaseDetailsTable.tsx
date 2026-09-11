@@ -18,7 +18,7 @@ export function PurchaseDetailsTable(p:PurchaseDetailsTableProps){
           {label:'Property / lot',render:r=><span className="contract-lot-wrapper">{r.productCode}<small className="contract-lot-spec cell-secondary">Block {r.blockno} · Lot {r.lotno}</small></span>},
           {label:'Agent',render:r=><span className="contract-agent-name">{r.agentName}</span>},
           {label:'Contract price',numeric:true,render:r=><span className="contract-price-value">{formatCurrency(r.lotprice)}</span>},
-          {label:'Monthly payment',numeric:true,render:r=><span className="contract-amortization-value">{formatCurrency(r.amortization)}</span>},
+          {label:'Monthly payment',numeric:true,render:r=><span className="contract-amortization-value">{r.amortization == null ? '—' : formatCurrency(r.amortization)}</span>},
           {label:'Term',render:r=><span className="contract-term-badge">{`${r.terms} years`}</span>},
           {label:'Due date',render:r=><span className="contract-due-date">{formatDate(r.duedate)}</span>}
         ]}

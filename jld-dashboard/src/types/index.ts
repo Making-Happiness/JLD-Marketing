@@ -40,7 +40,8 @@ export interface PurchaseDetail {
   lotno: number;
   area: number;
   lotprice: number;
-  amortization: number;
+  /** Optional accountant-entered monthly amount for this contract. */
+  amortization: number | null;
   terms: number; // in years
   downpayment: number;
   agentpercentage: number;

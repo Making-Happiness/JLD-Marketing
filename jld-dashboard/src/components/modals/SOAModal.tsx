@@ -121,7 +121,7 @@ export const SOAModal: React.FC<SOAModalProps> = ({
                 Block {application.blockno}, Lot {application.lotno} • {application.area} sq.m
               </div>
               <div className="soa-property-terms text-slate-500 text-[11px] mt-1">
-                Terms: {application.terms} Year{application.terms > 1 ? 's' : ''} • Monthly Amortization: {formatCurrency(application.amortization)}
+                Terms: {application.terms} Year{application.terms > 1 ? 's' : ''} • Monthly Amortization: {application.amortization == null ? '—' : formatCurrency(application.amortization)}
               </div>
             </div>
           </div>

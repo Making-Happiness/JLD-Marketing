@@ -29,8 +29,8 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
 
   // New item line
   const [paymentFor, setPaymentFor] = useState<PaymentForType>('INSTALLMENT');
-  const [itemAmount, setItemAmount] = useState<number>(6582);
-  const [itemDesc, setItemDesc] = useState<string>('Month 2 Amortization Payment');
+  const [itemAmount, setItemAmount] = useState<number | ''>('');
+  const [itemDesc, setItemDesc] = useState<string>('');
 
   // Items cart list
   const [items, setItems] = useState<PaymentDetailItem[]>([]);
@@ -40,7 +40,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
   useEffect(() => {
     if (selectedApplication) {
       setAppId(selectedApplication.id);
-      setItemAmount(selectedApplication.amortization || 5000);
+      setItemAmount(selectedApplication.amortization ?? '');
       setItemDesc(`Amortization for ${selectedApplication.location} Blk ${selectedApplication.blockno} Lot ${selectedApplication.lotno}`);
     }
   }, [selectedApplication]);
@@ -50,14 +50,15 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
   const currentApp = applications.find(a => a.id === Number(appId)) || applications[0];
 
   const handleAddItem = () => {
-    if (!currentApp || !Number.isFinite(itemAmount) || itemAmount <= 0) {setError('Select a contract and enter a valid amount.');return;}
+    const paymentAmount = Number(itemAmount);
+    if (!currentApp || !Number.isFinite(paymentAmount) || paymentAmount <= 0) {setError('Select a contract and enter a valid amount.');return;}
 
     const newItem: PaymentDetailItem = {
       id: Date.now(),
       idpurchasedetails: Number(appId),
       idpayment: 0,
       paymentfor: paymentFor,
-      amount: Number(itemAmount),
+      amount: paymentAmount,
       description: itemDesc || `${paymentFor} Payment`
     };
 
@@ -173,7 +174,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
                     setAppId(id); setItems([]); setError('');
                     const selected = applications.find(a => a.id === id);
                     if (selected) {
-                      setItemAmount(selected.amortization || 5000);
+                      setItemAmount(selected.amortization ?? '');
                       setItemDesc(`Amortization for ${selected.location} Blk ${selected.blockno} Lot ${selected.lotno}`);
                     }
                   }}
@@ -181,7 +182,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
                 >
                   {applications.map(a => (
                     <option key={a.id} value={a.id}>
-                      {a.clientName} — {a.location} (Blk {a.blockno}, Lot {a.lotno}) — Amort: {formatCurrency(a.amortization)}/mo
+                      {a.clientName} — {a.location} (Blk {a.blockno}, Lot {a.lotno}) — Amort: {a.amortization == null ? 'Not set' : `${formatCurrency(a.amortization)}/mo`}
                     </option>
                   ))}
                 </select>
@@ -272,7 +273,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
                       step="100"
                       placeholder="Amount (PHP)"
                       value={itemAmount}
-                      onChange={(e) => setItemAmount(Number(e.target.value))}
+                      onChange={(e) => setItemAmount(e.target.value === '' ? '' : Number(e.target.value))}
                       className="payment-amount-input"
                       style={{ fontWeight: 600 }}
                     />
