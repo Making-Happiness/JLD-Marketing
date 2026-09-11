@@ -126,6 +126,7 @@ export function App() {
   const [isStakeholderModalOpen, setIsStakeholderModalOpen] = useState<boolean>(false);
   const [editingClient, setEditingClient] = useState<Client | null>(null);
   const [applyClientId, setApplyClientId] = useState<number | null>(null);
+  const [resumeApplicationAfterBuyerRegistration, setResumeApplicationAfterBuyerRegistration] = useState(false);
 
   // Stakeholder row click -> Purchase Details Modal
   const [modalStakeholder, setModalStakeholder] = useState<Client | null>(null);
@@ -418,7 +419,22 @@ export function App() {
       setClients(prev => [newClient, ...prev]);
       logActivity('Stakeholder', nextId, `${newClient.firstname} ${newClient.lastname}`, 'CREATE', `Registered new stakeholder ${newClient.firstname} ${newClient.lastname}`);
       showToast(`Stakeholder ${newClient.firstname} ${newClient.lastname} registered!`);
+      if (resumeApplicationAfterBuyerRegistration) {
+        setApplyClientId(nextId);
+        setEditingLead(null);
+        setIsAppModalOpen(true);
+        setResumeApplicationAfterBuyerRegistration(false);
+      }
     }
+  };
+
+  const handleRegisterBuyerFromApplication = () => {
+    setIsAppModalOpen(false);
+    setEditingLead(null);
+    setApplyClientId(null);
+    setResumeApplicationAfterBuyerRegistration(true);
+    setEditingClient(null);
+    setIsStakeholderModalOpen(true);
   };
 
   const handleApplyForClient = (client: Client) => {
@@ -684,6 +700,7 @@ export function App() {
         agents={agents.filter(a=>a.status==='active')}
         initialData={editingLead}
         defaultClientId={applyClientId}
+        onRegisterBuyer={handleRegisterBuyerFromApplication}
       />
 
       {/* Record Payment Modal */}
@@ -736,6 +753,7 @@ export function App() {
         onClose={() => {
           setIsStakeholderModalOpen(false);
           setEditingClient(null);
+          setResumeApplicationAfterBuyerRegistration(false);
         }}
         onSave={handleSaveClient}
         clientToEdit={editingClient}

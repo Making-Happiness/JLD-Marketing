@@ -13,6 +13,7 @@ interface ApplicationModalProps {
   agents: Agent[];
   initialData?: PurchaseDetail | null;
   defaultClientId?: number | null;
+  onRegisterBuyer: () => void;
 }
 
 export const ApplicationModal: React.FC<ApplicationModalProps> = ({
@@ -23,9 +24,10 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
   products,
   agents,
   initialData,
-  defaultClientId
+  defaultClientId,
+  onRegisterBuyer
 }) => {
-  const [clientId, setClientId] = useState<number>(defaultClientId || clients[0]?.idclients || 1);
+  const [clientId, setClientId] = useState<number | ''>(defaultClientId || clients[0]?.idclients || '');
   const [productId, setProductId] = useState<number>(products[0]?.idproduct || 1);
   const [agentId, setAgentId] = useState<number>(agents[0]?.id || 1);
   
@@ -72,9 +74,7 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
     } else {
       setMonthlyAmortization('');
       setIsManualAmortization(false);
-      if (defaultClientId) {
-        setClientId(defaultClientId);
-      }
+      setClientId(defaultClientId || clients[0]?.idclients || '');
       // Default new application
       const defaultProduct = products[0];
       if (defaultProduct) {
@@ -100,6 +100,10 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (clientId === '') {
+      setError('Select an active buyer or register a new buyer before saving the application.');
+      return;
+    }
     if (lotNo === '' || !Number.isInteger(lotNo) || lotNo < 1) {
       setError('Enter a whole-number Lot No. greater than 0.');
       return;
@@ -189,13 +193,24 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
                     value={clientId}
                     onChange={(e) => setClientId(Number(e.target.value))}
                     className="application-field-select"
+                    required
                   >
+                    <option value="" disabled>
+                      {clients.length ? 'Select a buyer' : 'No active buyers available'}
+                    </option>
                     {clients.map(c => (
                       <option key={c.idclients} value={c.idclients}>
                         {c.fullname || `${c.lastname}, ${c.firstname}`} ({c.contactno})
                       </option>
                     ))}
                   </select>
+                  <button
+                    type="button"
+                    onClick={onRegisterBuyer}
+                    className="text-xs font-semibold text-[#1a5e3f] text-left mt-1 hover:underline"
+                  >
+                    + Register new buyer
+                  </button>
                 </label>
 
                 <label className="form-field-label">
