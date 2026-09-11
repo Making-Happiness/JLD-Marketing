@@ -535,8 +535,12 @@ export function App() {
   };
 
   const handleSaveApplication = (newApp: PurchaseDetail):string|void => {
-    const product=products.find(p=>p.idproduct===newApp.idproducts&&p.status==='active');
-    if(!product||!clients.some(c=>c.idclients===newApp.idclients&&c.status==='active')||!agents.some(a=>a.id===newApp.idagent&&a.status==='active'))return 'Select an active property, buyer and agent.';
+    const product=products.find(p=>String(p.idproduct)===String(newApp.idproducts)&&p.status==='active');
+    const buyer=clients.find(c=>String(c.idclients)===String(newApp.idclients)&&c.status==='active');
+    const agent=agents.find(a=>String(a.id)===String(newApp.idagent)&&a.status==='active');
+    if(!product)return 'The selected property is not active. Choose an active property and try again.';
+    if(!buyer)return 'The selected buyer is not active. Choose an active buyer and try again.';
+    if(!agent)return 'The selected agent is not active. Choose an active agent and try again.';
     if(leads.some(l=>l.id!==newApp.id&&l.status==='active'&&l.idproducts===newApp.idproducts&&l.blockno===newApp.blockno&&l.lotno===newApp.lotno))return 'This lot already has an active contract. Select an available lot.';
     if(!Number.isInteger(newApp.blockno)||!Number.isInteger(newApp.lotno)||newApp.blockno<1||newApp.lotno<1||newApp.blockno>product.totalblockno)return 'Block No. must be within the selected property inventory, and Lot No. must be a whole number greater than 0.';
     if(newApp.lotprice<=0||newApp.area<=0||newApp.downpayment<0||newApp.downpayment>newApp.lotprice||newApp.agentpercentage<0||newApp.agentpercentage>100)return 'Review the price, area, downpayment and commission rate.';

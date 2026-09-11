@@ -88,9 +88,22 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
     ? Number(monthlyAmortization)
     : calculatedAmortization;
 
+  // A missing-buyer error may have been shown before the user registered a
+  // buyer. Remove only that stale message once all current selections are valid.
+  useEffect(() => {
+    const hasActiveBuyer = clientId !== '' && clients.some(client => String(client.idclients) === String(clientId));
+    const hasActiveProperty = products.some(product => String(product.idproduct) === String(productId));
+    const hasActiveAgent = agents.some(agent => String(agent.id) === String(agentId));
+
+    if (hasActiveBuyer && hasActiveProperty && hasActiveAgent) {
+      setError(current => current === 'Select an active property, buyer and agent.' ? '' : current);
+    }
+  }, [agentId, agents, clientId, clients, productId, products]);
+
   // Update default price when selecting another product
   const handleProductChange = (prodId: number) => {
     setProductId(prodId);
+    setError('');
     const selected = products.find(p => p.idproduct === prodId);
     if (selected && !initialData) {
       setLotPrice(selected.cashprice);
@@ -191,7 +204,10 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
                   <span>Stakeholder / Buyer Full Name <span className="req">*</span></span>
                   <select
                     value={clientId}
-                    onChange={(e) => setClientId(Number(e.target.value))}
+                    onChange={(e) => {
+                      setClientId(Number(e.target.value));
+                      setError('');
+                    }}
                     className="application-field-select"
                     required
                   >
@@ -366,6 +382,7 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({
                     onChange={(e) => {
                       const id = Number(e.target.value);
                       setAgentId(id);
+                      setError('');
                       const a = agents.find(ag => ag.id === id);
                       if (a) setAgentPercentage(a.commissionRate);
                     }}
