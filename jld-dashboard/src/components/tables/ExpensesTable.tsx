@@ -21,7 +21,6 @@ export function ExpensesTable(p:ExpensesTableProps){
           {label:'Released by',render:r=><span className="expense-released-by">{r.releasebyName}</span>},
           {label:'Amount',numeric:true,render:r=><span className="expense-amount-value">{formatCurrency(r.amount)}</span>}
         ]}
-        summary={rows=><span className="expense-summary-total">Total <strong>{formatCurrency(rows.reduce((s,r)=>s+r.amount,0))}</strong></span>}
       />
     </div>
   );

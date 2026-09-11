@@ -23,7 +23,6 @@ export function LoansTable(p:LoansTableProps){
           {label:'Amount',numeric:true,render:r=><span className="loan-amount-value">{formatCurrency(r.amount)}</span>},
           ...(mode==='loans'?[{label:'Per-cutoff deduction',numeric:true,render:(r:LoanRecord)=><span className="loan-amortization-value">{formatCurrency(r.amortization)}</span>}]:[])
         ]}
-        summary={rows=><span className="loans-summary-total">Total <strong>{formatCurrency(rows.reduce((s,r)=>s+r.amount,0))}</strong></span>}
       >
         <div className="loans-tabs-container workspace-tabs">
           <button className="loans-tab-button" aria-pressed={mode==='loans'} onClick={()=>setMode('loans')}>Loans & cash advances</button>

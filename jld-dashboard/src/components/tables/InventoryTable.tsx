@@ -34,7 +34,6 @@ export function InventoryTable(p:InventoryTableProps){
             return <span className={`inventory-phase-tag source-pill ${pillClass}`}>{phase}</span>;
           }}
         ]}
-        summary={rows=><span className="inventory-summary-text">{rows.reduce((s,r)=>s+r.totallotno,0)} total lots</span>}
       />
     </div>
   );
