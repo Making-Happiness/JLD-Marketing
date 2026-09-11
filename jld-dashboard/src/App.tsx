@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { EntryDialog, EntryKind, EntryValues } from './components/EntryDialog';
 import { preparePayroll, payslipFromPayroll } from './utils/workflows';
 import { AccountantWorkspace } from './components/AccountantWorkspace';
@@ -67,27 +67,112 @@ import {
 import { formatCurrency } from './utils/calculations';
 import { CheckCircle2 } from 'lucide-react';
 
+const WORKSPACE_STORAGE_KEY = 'jld_workspace_data_v1';
+
+type WorkspaceSnapshot = {
+  leads: PurchaseDetail[];
+  products: Product[];
+  agents: Agent[];
+  clients: Client[];
+  payments: PaymentTransaction[];
+  expenses: Expense[];
+  employees: Employee[];
+  loans: LoanRecord[];
+  benefits: LoanRecord[];
+  payslips: PayslipRecord[];
+  payrollRecords: PayrollRecord[];
+  auditLogs: AuditLogEntry[];
+};
+
+const defaultWorkspaceSnapshot = (): WorkspaceSnapshot => ({
+  leads: INITIAL_PURCHASE_DETAILS,
+  products: INITIAL_PRODUCTS,
+  agents: INITIAL_AGENTS,
+  clients: INITIAL_CLIENTS,
+  payments: INITIAL_PAYMENTS,
+  expenses: INITIAL_EXPENSES,
+  employees: INITIAL_EMPLOYEES,
+  loans: INITIAL_LOANS,
+  benefits: INITIAL_BENEFITS,
+  payslips: INITIAL_PAYSLIPS,
+  payrollRecords: INITIAL_PAYROLL,
+  auditLogs: INITIAL_AUDIT_LOGS
+});
+
+const loadWorkspaceSnapshot = (): WorkspaceSnapshot => {
+  const defaults = defaultWorkspaceSnapshot();
+  if (typeof window === 'undefined') return defaults;
+
+  try {
+    const stored = JSON.parse(window.localStorage.getItem(WORKSPACE_STORAGE_KEY) || 'null') as Partial<WorkspaceSnapshot> | null;
+    if (!stored) return defaults;
+
+    return {
+      leads: Array.isArray(stored.leads) ? stored.leads : defaults.leads,
+      products: Array.isArray(stored.products) ? stored.products : defaults.products,
+      agents: Array.isArray(stored.agents) ? stored.agents : defaults.agents,
+      clients: Array.isArray(stored.clients) ? stored.clients : defaults.clients,
+      payments: Array.isArray(stored.payments) ? stored.payments : defaults.payments,
+      expenses: Array.isArray(stored.expenses) ? stored.expenses : defaults.expenses,
+      employees: Array.isArray(stored.employees) ? stored.employees : defaults.employees,
+      loans: Array.isArray(stored.loans) ? stored.loans : defaults.loans,
+      benefits: Array.isArray(stored.benefits) ? stored.benefits : defaults.benefits,
+      payslips: Array.isArray(stored.payslips) ? stored.payslips : defaults.payslips,
+      payrollRecords: Array.isArray(stored.payrollRecords) ? stored.payrollRecords : defaults.payrollRecords,
+      auditLogs: Array.isArray(stored.auditLogs) ? stored.auditLogs : defaults.auditLogs
+    };
+  } catch {
+    return defaults;
+  }
+};
+
+const saveWorkspaceSnapshot = (snapshot: WorkspaceSnapshot) => {
+  try {
+    window.localStorage.setItem(WORKSPACE_STORAGE_KEY, JSON.stringify(snapshot));
+  } catch {
+    // Keep the app usable when storage is blocked or the browser quota is full.
+  }
+};
+
 export function App() {
   // Current active workspace navigation tab
   const [currentTab, setCurrentTab] = useState<NavigationTab>('overview');
 
   const [entryKind,setEntryKind]=useState<EntryKind|null>(null);
   const [claimAgent,setClaimAgent]=useState<Agent|null>(null);
+  const [initialWorkspace] = useState<WorkspaceSnapshot>(() => loadWorkspaceSnapshot());
   // Data state
-  const [leads, setLeads] = useState<PurchaseDetail[]>(INITIAL_PURCHASE_DETAILS);
-  const [products, setProducts] = useState<Product[]>(INITIAL_PRODUCTS);
-  const [agents, setAgents] = useState<Agent[]>(INITIAL_AGENTS);
-  const [clients, setClients] = useState<Client[]>(INITIAL_CLIENTS);
-  const [payments, setPayments] = useState<PaymentTransaction[]>(INITIAL_PAYMENTS);
-  const [expenses, setExpenses] = useState<Expense[]>(INITIAL_EXPENSES);
-  const [employees, setEmployees] = useState<Employee[]>(INITIAL_EMPLOYEES);
-  const [loans, setLoans] = useState<LoanRecord[]>(INITIAL_LOANS);
-  const [benefits, setBenefits] = useState<LoanRecord[]>(INITIAL_BENEFITS);
-  const [payslips, setPayslips] = useState<PayslipRecord[]>(INITIAL_PAYSLIPS);
-  const [payrollRecords, setPayrollRecords] = useState<PayrollRecord[]>(INITIAL_PAYROLL);
+  const [leads, setLeads] = useState<PurchaseDetail[]>(initialWorkspace.leads);
+  const [products, setProducts] = useState<Product[]>(initialWorkspace.products);
+  const [agents, setAgents] = useState<Agent[]>(initialWorkspace.agents);
+  const [clients, setClients] = useState<Client[]>(initialWorkspace.clients);
+  const [payments, setPayments] = useState<PaymentTransaction[]>(initialWorkspace.payments);
+  const [expenses, setExpenses] = useState<Expense[]>(initialWorkspace.expenses);
+  const [employees, setEmployees] = useState<Employee[]>(initialWorkspace.employees);
+  const [loans, setLoans] = useState<LoanRecord[]>(initialWorkspace.loans);
+  const [benefits, setBenefits] = useState<LoanRecord[]>(initialWorkspace.benefits);
+  const [payslips, setPayslips] = useState<PayslipRecord[]>(initialWorkspace.payslips);
+  const [payrollRecords, setPayrollRecords] = useState<PayrollRecord[]>(initialWorkspace.payrollRecords);
 
   // Audit Logs State
-  const [auditLogs, setAuditLogs] = useState<AuditLogEntry[]>(INITIAL_AUDIT_LOGS);
+  const [auditLogs, setAuditLogs] = useState<AuditLogEntry[]>(initialWorkspace.auditLogs);
+
+  useEffect(() => {
+    saveWorkspaceSnapshot({
+      leads,
+      products,
+      agents,
+      clients,
+      payments,
+      expenses,
+      employees,
+      loans,
+      benefits,
+      payslips,
+      payrollRecords,
+      auditLogs
+    });
+  }, [leads, products, agents, clients, payments, expenses, employees, loans, benefits, payslips, payrollRecords, auditLogs]);
 
   // Enterprise Modals State
   const [archiveTarget, setArchiveTarget] = useState<{
