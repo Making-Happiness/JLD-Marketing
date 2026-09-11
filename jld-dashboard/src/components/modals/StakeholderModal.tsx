@@ -1,7 +1,7 @@
 import { ModalFrame } from './ModalFrame';
 import React, { useState, useEffect } from 'react';
 import { Client } from '../../types';
-import { X, User, CheckCircle2, Calendar, Phone, MapPin, Heart } from 'lucide-react';
+import { X, User, CheckCircle2 } from 'lucide-react';
 
 interface StakeholderModalProps {
   isOpen: boolean;
@@ -26,6 +26,7 @@ export const StakeholderModal: React.FC<StakeholderModalProps> = ({
   const [placeOfBirth, setPlaceOfBirth] = useState('');
   const [spouseName, setSpouseName] = useState('');
   const [contactNo, setContactNo] = useState('');
+  const [email, setEmail] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
 
@@ -40,6 +41,7 @@ export const StakeholderModal: React.FC<StakeholderModalProps> = ({
         setPlaceOfBirth(clientToEdit.placeofbirth || '');
         setSpouseName(clientToEdit.spousename || '');
         setContactNo(clientToEdit.contactno || '');
+        setEmail(clientToEdit.email || '');
       } else {
         setFirstName('');
         setLastName('');
@@ -49,6 +51,7 @@ export const StakeholderModal: React.FC<StakeholderModalProps> = ({
         setPlaceOfBirth('');
         setSpouseName('');
         setContactNo('');
+        setEmail('');
       }
       setErrorMsg('');
       setSuccessMsg('');
@@ -200,17 +203,26 @@ export const StakeholderModal: React.FC<StakeholderModalProps> = ({
                   />
                 </label>
 
-                <label className="form-field-label">
-                  <span>Contact Number <span className="req">*</span></span>
-                  <input
-                    type="text"
-                    value={contactNo}
-                    onChange={(e) => setContactNo(e.target.value)}
-                    placeholder="e.g. 0917-123-4567"
-                    className="stakeholder-form-input"
-                    required
-                  />
-                </label>
+                                  <label className="form-field-label">
+                    <span>Contact Number <span className="req">*</span></span>
+                    <input
+                      type="text"
+                      value={contactNo}
+                      onChange={e => setContactNo(e.target.value)}
+                      placeholder="e.g. 0917-123-4567"
+                      required
+                    />
+                  </label>
+                  
+                  <label className="form-field-label">
+                    <span>Email Address</span>
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={e => setEmail(e.target.value)}
+                      placeholder="e.g. buyer@example.com"
+                    />
+                  </label>
               </div>
             </fieldset>
 

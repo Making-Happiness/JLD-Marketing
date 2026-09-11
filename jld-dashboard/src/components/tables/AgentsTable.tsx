@@ -23,7 +23,6 @@ export function AgentsTable(p:AgentsTableProps){
           {label:'Balance',numeric:true,render:r=><strong className="agent-balance-amount positive">{formatCurrency(r.balance)}</strong>}
         ]}
         primaryAction={r=><button className="agent-release-voucher-btn table-action" disabled={r.balance<=0} onClick={()=>p.onReleaseClaim?.(r)}>Release claim</button>}
-        summary={rows=><span className="agent-summary-total">Balance <strong>{formatCurrency(rows.reduce((s,r)=>s+r.balance,0))}</strong></span>}
       />
     </div>
   );

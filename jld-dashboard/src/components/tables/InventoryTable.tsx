@@ -14,15 +14,26 @@ export function InventoryTable(p:InventoryTableProps){
         actions={{onArchive:p.onArchiveProduct,onRestore:p.onRestoreProduct,onDelete:p.onPermanentDeleteProduct,onHistory:p.onViewHistory}}
         primaryAction={r=><button className="inventory-edit-action-btn table-action" onClick={()=>p.onEditProduct(r)}>Edit property</button>}
         columns={[
-          {label:'Property code',render:r=><strong className="inventory-code-cell">{r.code}</strong>},
-          {label:'Location / project',render:r=><span className="inventory-location-cell">{r.location}</span>},
+          
+          {label:'Location',render:r=><span className="inventory-location-cell">{r.location}</span>},
           {label:'Blocks',numeric:true,render:r=><span className="inventory-blocks-cell">{r.totalblockno}</span>},
-          {label:'Lots',numeric:true,render:r=><span className="inventory-lots-cell">{r.totallotno}</span>},
+          {label:'Lots',numeric:true,render:r=>{
+            const avail = r.availableLots ?? r.totallotno;
+            return (
+              <span className="inventory-lots-cell" title={`${avail} available out of ${r.totallotno} total`}>
+                {r.totallotno}
+                {avail < r.totallotno && <small style={{display:'block',fontSize:'10px',color:'#718679'}}>{avail} avail</small>}
+              </span>
+            );
+          }},
           {label:'Land area (m²)',numeric:true,render:r=><span className="inventory-area-cell">{r.totalarea.toLocaleString()}</span>},
           {label:'Cash price / 100 m²',numeric:true,render:r=><span className="inventory-price-cell">{formatCurrency(r.cashprice)}</span>},
-          {label:'Phase',render:r=><span className="inventory-phase-tag source-pill neutral">{r.projectPhase||'Open'}</span>}
+          {label:'Phase',render:r=>{
+            const phase = r.projectPhase || 'Open';
+            const pillClass = phase === 'Nearly Sold' ? 'amber' : phase === 'Open' ? 'green' : 'neutral';
+            return <span className={`inventory-phase-tag source-pill ${pillClass}`}>{phase}</span>;
+          }}
         ]}
-        summary={rows=><span className="inventory-summary-text">{rows.reduce((s,r)=>s+r.totallotno,0)} total lots</span>}
       />
     </div>
   );

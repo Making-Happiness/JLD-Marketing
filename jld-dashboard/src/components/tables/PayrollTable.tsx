@@ -37,7 +37,6 @@ export function PayrollTable(p:PayrollTableProps){
             {label:'Status',render:r=><span className="payroll-status-badge source-pill neutral">{r.approvalStatus}</span>}
           ]}
           primaryAction={r=><button className="payroll-view-slip-btn table-action" onClick={()=>setSelectedSlip(slips.find(s=>s.idemployee===r.idemployee&&s.month===r.period)||payslipFromPayroll(r))}>View slip</button>}
-          summary={rows=><span className="payroll-summary-total">Net pay <strong>{formatCurrency(rows.reduce((s,r)=>s+r.netPay,0))}</strong></span>}
         >
           {tabs}
         </RecordTable>

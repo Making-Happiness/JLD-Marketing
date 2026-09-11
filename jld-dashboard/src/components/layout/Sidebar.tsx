@@ -12,7 +12,8 @@ import {
   LayoutDashboard, 
   FileText, 
   PanelLeftClose, 
-  PanelLeftOpen 
+  PanelLeftOpen,
+  Files
 } from 'lucide-react';
 
 export type NavigationTab = 
@@ -26,17 +27,18 @@ export type NavigationTab =
   | 'loans-benefits' 
   | 'payroll' 
   | 'expenses' 
-  | 'reports';
+  | 'reports'
+  | 'printable-accounts';
 
 export const NAV_SECTIONS = [
   {
     id: 'sales',
     title: 'PROPERTY & SALES',
     items: [
-      { id: 'products', label: 'Properties & lots', icon: Building2 },
-      { id: 'stakeholder', label: 'Buyers', icon: Users },
+      { id: 'products', label: 'Properties', icon: Building2 },
+      { id: 'stakeholder', label: 'Stakeholders', icon: Users },
       { id: 'contracts', label: 'Sales contracts', icon: FileText },
-      { id: 'payment', label: 'Collections', icon: Receipt },
+      { id: 'payment', label: 'Payments', icon: Receipt },
     ],
   },
   {
@@ -63,6 +65,7 @@ export const NAV_SECTIONS = [
       { id: 'reports', label: 'Cash flow & reports', icon: FileSpreadsheet },
     ],
   },
+
 ];
 
 export function Sidebar({

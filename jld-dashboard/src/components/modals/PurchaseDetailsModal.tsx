@@ -1,8 +1,8 @@
-import type { Client,PurchaseDetail } from '../../types';
+import type { Client,PurchaseDetail,PaymentTransaction } from '../../types';
 import { X,FileText } from 'lucide-react';
 import { ModalFrame } from './ModalFrame';
 import { PurchaseDetailsTable } from '../tables/PurchaseDetailsTable';
-interface PurchaseDetailsModalProps{isOpen:boolean;onClose:()=>void;client:Client|null;purchases:PurchaseDetail[];onEditPurchase:(p:PurchaseDetail)=>void;onViewHistory:(p:PurchaseDetail)=>void;onAddNewPurchase:(c:Client)=>void;onArchivePurchase?:(p:PurchaseDetail)=>void;}
+interface PurchaseDetailsModalProps{isOpen:boolean;onClose:()=>void;client:Client|null;purchases:PurchaseDetail[];payments:PaymentTransaction[];onEditPurchase:(p:PurchaseDetail)=>void;onViewHistory:(p:PurchaseDetail)=>void;onAddNewPurchase:(c:Client)=>void;onArchivePurchase?:(p:PurchaseDetail)=>void;}
 export function PurchaseDetailsModal(p:PurchaseDetailsModalProps){
   if(!p.isOpen||!p.client) return null;
   const client=p.client;
@@ -25,7 +25,7 @@ export function PurchaseDetailsModal(p:PurchaseDetailsModalProps){
           </button>
         </header>
         <div className="contract-details-body form-body" style={{ padding: '20px 24px' }}>
-          <PurchaseDetailsTable
+          <PurchaseDetailsTable payments={p.payments}
             purchases={p.purchases}
             onNewPurchase={() => p.onAddNewPurchase(client)}
             onEditPurchase={p.onEditPurchase}

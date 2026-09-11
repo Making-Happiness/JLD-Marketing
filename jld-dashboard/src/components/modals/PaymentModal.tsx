@@ -1,3 +1,4 @@
+import { useSession } from '../../utils/session';
 import { ModalFrame } from './ModalFrame';
 import React, { useState, useEffect } from 'react';
 import { PurchaseDetail, PaymentTransaction, PaymentDetailItem, PaymentForType, PaymentMethodType } from '../../types';
@@ -25,12 +26,13 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
   const [paymentType, setPaymentType] = useState<PaymentMethodType>('CASH');
   const [referenceNo, setReferenceNo] = useState<string>('');
   const [paymentRef, setPaymentRef] = useState<string>(() => generatePaymentRef());
-  const inchargeByName = 'Ralph Edwards (Cashier)';
+  const user=useSession();
+  const inchargeByName = user?.email || 'Accounting';
 
   // New item line
   const [paymentFor, setPaymentFor] = useState<PaymentForType>('INSTALLMENT');
-  const [itemAmount, setItemAmount] = useState<number>(6582);
-  const [itemDesc, setItemDesc] = useState<string>('Month 2 Amortization Payment');
+  const [itemAmount, setItemAmount] = useState<number>(0);
+  const [itemDesc, setItemDesc] = useState<string>('');
 
   // Items cart list
   const [items, setItems] = useState<PaymentDetailItem[]>([]);
@@ -90,7 +92,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
       paymenttype: paymentType,
       paidby: currentApp?.idclients || 1,
       paidbyName: currentApp?.clientName || 'Client',
-      inchargeby: 1,
+      inchargeby: 1, // Fallback since user id is string UUID now
       inchargebyName: inchargeByName,
       recordedby: 1,
       totalamount: totalAmount,

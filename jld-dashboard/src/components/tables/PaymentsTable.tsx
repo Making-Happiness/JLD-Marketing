@@ -21,7 +21,6 @@ export function PaymentsTable(p:PaymentsTableProps){
           {label:'Cashier',render:r=><span className="payment-cashier-name">{r.inchargebyName}</span>},
           {label:'Amount',numeric:true,render:r=><strong className="payment-total-amount">{formatCurrency(r.totalamount)}</strong>}
         ]}
-        summary={rows=><span className="payment-summary-total">Total <strong>{formatCurrency(rows.reduce((s,r)=>s+r.totalamount,0))}</strong></span>}
       />
     </div>
   );
