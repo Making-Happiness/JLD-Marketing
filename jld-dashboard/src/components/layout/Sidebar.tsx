@@ -65,13 +65,7 @@ export const NAV_SECTIONS = [
       { id: 'reports', label: 'Cash flow & reports', icon: FileSpreadsheet },
     ],
   },
-  {
-    id: 'printables',
-    title: 'DATA & PRINTABLES',
-    items: [
-      { id: 'printable-accounts', label: 'Printable accounts', icon: Files },
-    ],
-  },
+
 ];
 
 export function Sidebar({

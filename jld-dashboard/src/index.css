@@ -59,3 +59,17 @@ body {
 .workspace-save-error p { margin:16px 0; }
 .workspace-save-error button { margin:4px; }
 @media print { .workspace-save-status { display:none!important; } }
+.erp-sidebar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.erp-sidebar::-webkit-scrollbar {
+  display: none;
+}
+.sidebar-nav-menu {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.sidebar-nav-menu::-webkit-scrollbar {
+  display: none;
+}
