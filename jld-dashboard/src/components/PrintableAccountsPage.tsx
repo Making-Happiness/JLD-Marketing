@@ -3,298 +3,65 @@ import Papa from 'papaparse';
 import { jsPDF } from 'jspdf';
 import { Download, FileText, Search, UserRound } from 'lucide-react';
 
-type Account = {
-  account_id: string;
-  sheet_name: string;
-  account_category: string;
-  reservation_date?: string;
-  location_or_origin?: string;
-  primary_client_name: string;
-  secondary_client_or_note?: string;
-  sqm?: string;
-  sqm_raw?: string;
-  block?: string;
-  lot?: string;
-  list_price?: string;
-  monthly_amortization?: string;
-  payment_terms?: string;
-  due_date?: string;
+/** Rows written by the workbook processor to public/data/dim_accounts.csv. */
+export type PrintableAccount = {
+  account_id: string; sheet_name: string; account_category: string; reservation_date?: string;
+  location_or_origin?: string; primary_client_name: string; secondary_client_or_note?: string;
+  sqm?: string; sqm_raw?: string; block?: string; lot?: string; list_price?: string;
+  down_payment?: string; monthly_amortization?: string; payment_terms?: string; due_date?: string;
+  dicer_agent?: string;
 };
-
-type Payment = {
-  account_id: string;
-  payment_date?: string;
-  amount?: string;
-  payment_type?: string;
-  or_ar_number?: string;
-  raw_remark?: string;
-};
-
-type Balance = {
-  account_id: string;
-  calculated_balance?: string;
-  stated_balance?: string;
-  installment_total?: string;
-  status?: string;
-};
+/** Rows written by the workbook processor to public/data/fact_payments.csv. */
+export type PrintablePayment = { payment_id?: string; account_id: string; payment_date?: string; amount?: string; payment_type?: string; or_ar_number?: string; raw_remark?: string; };
+type BalanceCheck = { account_id: string; calculated_balance?: string; stated_balance?: string; installment_total?: string; status?: string; };
+export type ReceiptLedgerRow = PrintablePayment & { paymentRelease: number; runningBalance: number; };
 
 const CSV_BASE = `${import.meta.env.BASE_URL}data/`;
-
-function readCsv<T>(filename: string): Promise<T[]> {
-  return new Promise((resolve, reject) => {
-    Papa.parse<T>(CSV_BASE + filename, {
-      download: true,
-      header: true,
-      skipEmptyLines: true,
-      complete: (result) => {
-        if (result.errors.length) {
-          reject(new Error(`Unable to read ${filename}: ${result.errors[0].message}`));
-          return;
-        }
-        resolve(result.data);
-      },
-      error: (error) => reject(error),
-    });
-  });
-}
-
-function compact(value?: string | number | null): string {
-  return String(value ?? '').trim();
-}
-
-function display(value?: string | number | null): string {
-  const result = compact(value);
-  return result && result.toLowerCase() !== 'nan' ? result : '—';
-}
-
-function asCurrency(value?: string | number | null): string {
-  const parsed = Number(String(value ?? '').replace(/,/g, ''));
-  return Number.isFinite(parsed) ? parsed.toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '—';
-}
-
-function readableDate(value?: string): string {
-  const text = compact(value);
-  if (!text) return '—';
-  const date = new Date(`${text}T00:00:00`);
-  return Number.isNaN(date.getTime()) ? text : date.toLocaleDateString('en-PH', { year: 'numeric', month: 'long', day: 'numeric' });
-}
-
+const currencyFormatter = new Intl.NumberFormat('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+function readCsv<T>(filename: string): Promise<T[]> { return new Promise((resolve, reject) => Papa.parse<T>(CSV_BASE + filename, { download: true, header: true, skipEmptyLines: true, complete: result => result.errors.length ? reject(new Error(`Unable to read ${filename}: ${result.errors[0].message}`)) : resolve(result.data), error: reject })); }
+function compact(value?: string | number | null): string { return String(value ?? '').trim(); }
+function display(value?: string | number | null): string { const result = compact(value); return result && result.toLowerCase() !== 'nan' ? result : '—'; }
+function asNumber(value?: string | number | null): number { const parsed = Number(String(value ?? '').replace(/[^0-9.-]/g, '')); return Number.isFinite(parsed) ? parsed : 0; }
+function asCurrency(value?: string | number | null): string { const raw = compact(value); return raw && Number.isFinite(asNumber(raw)) ? currencyFormatter.format(asNumber(raw)) : '—'; }
+function readableDate(value?: string): string { const text = compact(value); if (!text) return '—'; const date = new Date(`${text}T00:00:00`); return Number.isNaN(date.getTime()) ? text : date.toLocaleDateString('en-PH', { year: 'numeric', month: 'long', day: 'numeric' }); }
+function printableDate(value: Date): string { return value.toLocaleDateString('en-PH', { year: 'numeric', month: 'long', day: 'numeric' }); }
 /** Supports First Last, Last, First, punctuation, and partial token searches. */
-function matchesName(name: string, query: string): boolean {
-  const tokens = query.toLocaleLowerCase().match(/[\p{L}\p{N}]+/gu) ?? [];
-  if (!tokens.length) return true;
-  const target = (name.toLocaleLowerCase().match(/[\p{L}\p{N}]+/gu) ?? []).join(' ');
-  return tokens.every((token) => target.includes(token));
+function matchesName(name: string, query: string): boolean { const tokens = query.toLocaleLowerCase().match(/[\p{L}\p{N}]+/gu) ?? []; if (!tokens.length) return true; const target = (name.toLocaleLowerCase().match(/[\p{L}\p{N}]+/gu) ?? []).join(' '); return tokens.every(token => target.includes(token)); }
+function accountLocation(account: PrintableAccount): string { return compact(account.location_or_origin) || account.sheet_name; }
+function accountArea(account: PrintableAccount): string { return compact(account.sqm) ? `${asCurrency(account.sqm)} sq.m.` : display(account.sqm_raw); }
+function sortableDate(value?: string): number { const timestamp = Date.parse(compact(value)); return Number.isFinite(timestamp) ? timestamp : Number.MAX_SAFE_INTEGER; }
+
+/**
+ * Receipt logic mirrors the physical ledger: start at lot price and subtract
+ * each positive payment release in chronological ledger order. This differs
+ * from account_balance_verification.csv, which only sums Installment rows.
+ */
+export function buildReceiptLedger(account: PrintableAccount, payments: PrintablePayment[]): ReceiptLedgerRow[] {
+  let runningBalance = asNumber(account.list_price);
+  return payments.map((payment, index) => ({ payment, index })).filter(({ payment }) => asNumber(payment.amount) > 0)
+    .sort((left, right) => sortableDate(left.payment.payment_date) - sortableDate(right.payment.payment_date) || left.index - right.index)
+    .map(({ payment }) => { const paymentRelease = asNumber(payment.amount); runningBalance = Math.max(0, runningBalance - paymentRelease); return { ...payment, paymentRelease, runningBalance }; });
 }
+function receiptTotal(ledger: ReceiptLedgerRow[]): number { return ledger.reduce((sum, row) => sum + row.paymentRelease, 0); }
+function drawTextCell(document: jsPDF, value: string, x: number, y: number, width: number, align: 'left' | 'center' | 'right' = 'left'): void { document.text(value, align === 'left' ? x + 4 : x + width / 2, y + 12, { align }); }
 
-function accountLocation(account: Account): string {
-  return compact(account.location_or_origin) || account.sheet_name;
-}
-
-function pdfLine(document: jsPDF, label: string, value: string, x: number, y: number): number {
-  document.setFont('helvetica', 'bold');
-  document.text(`${label}:`, x, y);
-  document.setFont('helvetica', 'normal');
-  const lines = document.splitTextToSize(value, 265);
-  document.text(lines, x + 100, y);
-  return y + Math.max(18, lines.length * 14);
-}
-
-function downloadStatement(account: Account, payments: Payment[], balance?: Balance): void {
-  const document = new jsPDF({ unit: 'pt', format: 'a4' });
-  const pageWidth = document.internal.pageSize.getWidth();
-  const pageHeight = document.internal.pageSize.getHeight();
-  let y = 54;
-
-  document.setFillColor(20, 95, 73);
-  document.rect(0, 0, pageWidth, 86, 'F');
-  document.setTextColor(255, 255, 255);
-  document.setFont('helvetica', 'bold');
-  document.setFontSize(20);
-  document.text('STATEMENT OF ACCOUNT', pageWidth / 2, 38, { align: 'center' });
-  document.setFont('helvetica', 'normal');
-  document.setFontSize(9);
-  document.text(`Date Issued: ${new Date().toLocaleDateString('en-PH', { year: 'numeric', month: 'long', day: 'numeric' })}`, pageWidth / 2, 59, { align: 'center' });
-  document.setTextColor(31, 41, 55);
-  document.setFontSize(10);
-  y = 112;
-
-  const fields: [string, string][] = [
-    ['Vendee Name', display(account.primary_client_name)],
-    ['Area Location', display(accountLocation(account))],
-    ['Area Size', compact(account.sqm) ? `${asCurrency(account.sqm)} sq.m.` : display(account.sqm_raw)],
-    ['Lot Price', asCurrency(account.list_price)],
-    ['Monthly Payment', asCurrency(account.monthly_amortization)],
-    ['Terms', display(account.payment_terms)],
-    ['Due Date', readableDate(account.due_date)],
-    ['Balance', asCurrency(balance?.calculated_balance ?? balance?.stated_balance)],
-  ];
-  fields.forEach(([label, value]) => { y = pdfLine(document, label, value, 48, y); });
-
-  y += 12;
-  document.setFont('helvetica', 'bold');
-  document.setFontSize(12);
-  document.text('Payment History', 48, y);
-  y += 20;
-  document.setFontSize(8);
-  document.setFillColor(237, 246, 241);
-  document.rect(48, y - 13, pageWidth - 96, 20, 'F');
-  document.setFont('helvetica', 'bold');
-  document.text('Date paid', 54, y);
-  document.text('OR/AR #', 148, y);
-  document.text('Payment release', 224, y);
-  document.text('Type / note', 340, y);
-  y += 18;
-  document.setFont('helvetica', 'normal');
-
-  const rows = payments.length ? payments : [{} as Payment];
-  rows.forEach((payment, index) => {
-    if (y > pageHeight - 50) {
-      document.addPage();
-      y = 52;
-    }
-    const note = payment.raw_remark || payment.payment_type || (index === 0 ? 'No ledger payments recorded' : '');
-    document.text(readableDate(payment.payment_date), 54, y);
-    document.text(display(payment.or_ar_number), 148, y);
-    document.text(asCurrency(payment.amount), 224, y);
-    document.text(document.splitTextToSize(display(note), 190), 340, y);
-    y += Math.max(17, document.splitTextToSize(display(note), 190).length * 11 + 4);
-  });
-  document.setFontSize(9);
-  document.setFont('helvetica', 'bold');
-  document.text(`Total installment payments: ${asCurrency(balance?.installment_total)}`, pageWidth - 48, y + 15, { align: 'right' });
-  document.text(`Balance: ${asCurrency(balance?.calculated_balance ?? balance?.stated_balance)}`, pageWidth - 48, y + 31, { align: 'right' });
-  document.save(`statement-${account.account_id}.pdf`);
+function drawReceiptPdf(account: PrintableAccount, ledger: ReceiptLedgerRow[], balanceCheck?: BalanceCheck): void {
+  const document = new jsPDF({ unit: 'pt', format: 'a4' }); const pageWidth = document.internal.pageSize.getWidth(); const pageHeight = document.internal.pageSize.getHeight(); const left = 42; const right = pageWidth - 42; const labelWidth = 96; const fieldHeight = 17; const issueDate = printableDate(new Date()); const personInCharge = compact(account.dicer_agent);
+  const headerRows: [string, string][] = [['VENDEE', display(account.primary_client_name)], ['AREA LOCATION', display(accountLocation(account))], ['AREA SIZE', accountArea(account)], ['LOT PRICE', asCurrency(account.list_price)], ['MONTHLY', asCurrency(account.monthly_amortization)], ['TERMS', display(account.payment_terms)], ['DUE DATE', readableDate(account.due_date)]];
+  const drawDocumentHeader = () => { document.setDrawColor(110, 125, 101); document.setTextColor(49, 71, 56); document.setFont('helvetica', 'bold'); document.setFontSize(21); document.text('JLD', left, 46); document.setFontSize(8); document.setFont('helvetica', 'normal'); document.text('JLD Private - Markets', left + 48, 34); document.text('Prk. Pagkakaisa, Brgy. New Carmen, Tac. City', left + 48, 46); document.line(left, 60, right, 60); };
+  drawDocumentHeader(); let y = 78; document.setFontSize(8); headerRows.forEach(([label, value]) => { document.rect(left, y, labelWidth, fieldHeight); document.rect(left + labelWidth, y, right - left - labelWidth, fieldHeight); document.setFont('helvetica', 'bold'); drawTextCell(document, `${label}:`, left, y, labelWidth); document.setFont('helvetica', 'normal'); drawTextCell(document, value, left + labelWidth, y, right - left - labelWidth); y += fieldHeight; }); y += 8;
+  const columns = [left, left + 142, left + 228, left + 408, right]; const headings = ['DATE OF PAYMENT', 'OR/AR #', 'PAYMENT RELEASE', 'BALANCE'];
+  const drawTableHeader = () => { document.setFont('helvetica', 'bold'); document.setFillColor(240, 245, 227); document.rect(left, y, right - left, 18, 'FD'); headings.forEach((heading, index) => { const width = columns[index + 1] - columns[index]; if (index) document.line(columns[index], y, columns[index], y + 18); drawTextCell(document, heading, columns[index], y, width, 'center'); }); document.setFont('helvetica', 'normal'); y += 18; };
+  drawTableHeader(); const rows = ledger.length ? ledger : [{ payment_date: '', or_ar_number: '', paymentRelease: 0, runningBalance: asNumber(account.list_price) }];
+  rows.forEach(row => { if (y > pageHeight - 112) { document.addPage(); drawDocumentHeader(); y = 78; drawTableHeader(); } const rowHeight = 18; document.rect(left, y, right - left, rowHeight); for (let index = 1; index < columns.length - 1; index += 1) document.line(columns[index], y, columns[index], y + rowHeight); drawTextCell(document, readableDate(row.payment_date), columns[0], y, columns[1] - columns[0]); drawTextCell(document, display(row.or_ar_number), columns[1], y, columns[2] - columns[1], 'center'); drawTextCell(document, row.paymentRelease ? asCurrency(row.paymentRelease) : '—', columns[2], y, columns[3] - columns[2], 'right'); drawTextCell(document, asCurrency(row.runningBalance), columns[3], y, columns[4] - columns[3], 'right'); y += rowHeight; });
+  const totalPayment = receiptTotal(ledger); const finalBalance = ledger.at(-1)?.runningBalance ?? asNumber(account.list_price); document.setFillColor(222, 231, 80); document.rect(left + 180, y + 8, right - left - 180, 22, 'F'); document.setFont('helvetica', 'bold'); document.setFontSize(9); document.text(`Date issued: ${issueDate}`, left, y + 22); document.text('Total Payment:', left + 192, y + 22); document.text(asCurrency(totalPayment), left + 295, y + 22); document.text('Balance:', left + 408, y + 22); document.text(asCurrency(finalBalance), right - 8, y + 22, { align: 'right' }); document.setFont('helvetica', 'normal'); document.setFontSize(8); document.text(`Verification balance: ${asCurrency(balanceCheck?.calculated_balance ?? balanceCheck?.stated_balance)}`, left, y + 48); document.line(right - 168, y + 78, right, y + 78); document.text(personInCharge || 'Person In-Charge', right - 84, y + 92, { align: 'center' }); document.save(`statement-${account.account_id}.pdf`);
 }
 
 export function PrintableAccountsPage() {
-  const [accounts, setAccounts] = useState<Account[]>([]);
-  const [payments, setPayments] = useState<Payment[]>([]);
-  const [balances, setBalances] = useState<Balance[]>([]);
-  const [query, setQuery] = useState('');
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    Promise.all([
-      readCsv<Account>('dim_accounts.csv'),
-      readCsv<Payment>('fact_payments.csv'),
-      readCsv<Balance>('account_balance_verification.csv'),
-    ])
-      .then(([loadedAccounts, loadedPayments, loadedBalances]) => {
-        setAccounts(loadedAccounts.filter((account) => compact(account.primary_client_name)));
-        setPayments(loadedPayments);
-        setBalances(loadedBalances);
-        setSelectedId(loadedAccounts.find((account) => compact(account.primary_client_name))?.account_id ?? null);
-      })
-      .catch((loadError: Error) => setError(loadError.message))
-      .finally(() => setLoading(false));
-  }, []);
-
-  const matchingAccounts = useMemo(
-    () => accounts.filter((account) => matchesName(account.primary_client_name, query)),
-    [accounts, query],
-  );
-  const suggestions = useMemo(() => matchingAccounts.slice(0, 8), [matchingAccounts]);
-  const visibleAccounts = matchingAccounts.slice(0, 50);
-  const selected = accounts.find((account) => account.account_id === selectedId) ?? matchingAccounts[0] ?? null;
-  const selectedPayments = useMemo(
-    () => selected ? payments.filter((payment) => payment.account_id === selected.account_id) : [],
-    [payments, selected],
-  );
-  const selectedBalance = selected ? balances.find((balance) => balance.account_id === selected.account_id) : undefined;
-
-  const choose = (account: Account) => {
-    setSelectedId(account.account_id);
-    setQuery(account.primary_client_name);
-  };
-
-  return (
-    <main className="printables-page accounting-page">
-      <section className="page-heading">
-        <div>
-          <div className="eyebrow">RECOVERED WORKBOOK DATA</div>
-          <h1>Printable account statements</h1>
-          <p>Search a vendee, inspect the final document, then download the statement as a PDF.</p>
-        </div>
-        {selected && (
-          <button className="primary-button" onClick={() => downloadStatement(selected, selectedPayments, selectedBalance)}>
-            <Download size={16} /> Convert to PDF
-          </button>
-        )}
-      </section>
-
-      {error && <div className="printables-error" role="alert">{error}</div>}
-      {loading && <div className="printables-loading">Loading normalized CSV data…</div>}
-
-      {!loading && !error && <>
-        <section className="printables-browser surface" aria-label="Search recovered accounts">
-          <div className="printables-search-wrap">
-            <Search size={18} aria-hidden="true" />
-            <input
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder="Search: Firstname Lastname or Lastname, Firstname"
-              aria-label="Search vendee name"
-              autoComplete="off"
-            />
-          </div>
-          {query && <div className="printables-suggestions" role="listbox" aria-label="Matching vendee names">
-            {suggestions.length ? suggestions.map((account) => (
-              <button key={account.account_id} role="option" aria-selected={selectedId === account.account_id} onClick={() => choose(account)}>
-                <UserRound size={15} /><span><strong>{account.primary_client_name}</strong><small>{accountLocation(account)} · Block {display(account.block)} · Lot {display(account.lot)}</small></span>
-              </button>
-            )) : <p>No vendee matches that name.</p>}
-          </div>}
-          <div className="printables-table-scroll">
-            <table className="record-table">
-              <thead><tr><th>Vendee</th><th>Location</th><th>Block / lot</th><th>Terms</th><th className="numeric">Balance</th><th /></tr></thead>
-              <tbody>
-                {visibleAccounts.map((account) => {
-                  const balance = balances.find((item) => item.account_id === account.account_id);
-                  return <tr key={account.account_id} className={selectedId === account.account_id ? 'printables-selected-row' : ''}>
-                    <td><strong>{account.primary_client_name}</strong><small>{account.account_category}</small></td>
-                    <td>{accountLocation(account)}</td>
-                    <td>{display(account.block)} / {display(account.lot)}</td>
-                    <td>{display(account.payment_terms)}</td>
-                    <td className="numeric">{asCurrency(balance?.calculated_balance ?? balance?.stated_balance)}</td>
-                    <td className="row-actions"><button className="table-action" onClick={() => choose(account)}>Preview</button></td>
-                  </tr>;
-                })}
-                {!visibleAccounts.length && <tr><td colSpan={6} className="record-empty">No account records match this search.</td></tr>}
-              </tbody>
-            </table>
-          </div>
-          <footer className="records-footer"><span>Showing {visibleAccounts.length} of {matchingAccounts.length} matching account{matchingAccounts.length === 1 ? '' : 's'}.</span><span>CSV source: normalized exports</span></footer>
-        </section>
-
-        {selected && <section className="statement-preview" aria-label="Printable preview">
-          <header className="statement-preview-header">
-            <FileText size={22} /><div><span>PRINTABLE PREVIEW</span><h2>Statement of Account</h2></div><p>Date issued: {new Date().toLocaleDateString('en-PH', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
-          </header>
-          <div className="statement-preview-body">
-            <dl className="statement-details">
-              <div><dt>Vendee Name</dt><dd>{display(selected.primary_client_name)}</dd></div>
-              <div><dt>Area Location</dt><dd>{display(accountLocation(selected))}</dd></div>
-              <div><dt>Area Size</dt><dd>{compact(selected.sqm) ? `${asCurrency(selected.sqm)} sq.m.` : display(selected.sqm_raw)}</dd></div>
-              <div><dt>Lot Price</dt><dd>{asCurrency(selected.list_price)}</dd></div>
-              <div><dt>Monthly Payment</dt><dd>{asCurrency(selected.monthly_amortization)}</dd></div>
-              <div><dt>Terms</dt><dd>{display(selected.payment_terms)}</dd></div>
-              <div><dt>Due Date</dt><dd>{readableDate(selected.due_date)}</dd></div>
-              <div><dt>Balance</dt><dd>{asCurrency(selectedBalance?.calculated_balance ?? selectedBalance?.stated_balance)}</dd></div>
-            </dl>
-            <div className="statement-payments">
-              <h3>Payment history</h3>
-              <div className="printables-table-scroll"><table>
-                <thead><tr><th>Date of Payment</th><th>OR/AR #</th><th>Payment Release</th><th>Type / Note</th></tr></thead>
-                <tbody>{selectedPayments.length ? selectedPayments.map((payment, index) => <tr key={`${payment.account_id}-${index}`}><td>{readableDate(payment.payment_date)}</td><td>{display(payment.or_ar_number)}</td><td className="numeric">{asCurrency(payment.amount)}</td><td>{display(payment.raw_remark || payment.payment_type)}</td></tr>) : <tr><td colSpan={4}>No ledger payments recorded.</td></tr>}</tbody>
-              </table></div>
-            </div>
-            <div className="statement-totals"><span>Payment Release Total <strong>{asCurrency(selectedBalance?.installment_total)}</strong></span><span>Calculated Balance <strong>{asCurrency(selectedBalance?.calculated_balance)}</strong></span><span>Stated Balance <strong>{asCurrency(selectedBalance?.stated_balance)}</strong></span></div>
-          </div>
-        </section>}
-      </>}
-    </main>
-  );
+  const [accounts, setAccounts] = useState<PrintableAccount[]>([]); const [payments, setPayments] = useState<PrintablePayment[]>([]); const [balances, setBalances] = useState<BalanceCheck[]>([]); const [query, setQuery] = useState(''); const [selectedId, setSelectedId] = useState<string | null>(null); const [loading, setLoading] = useState(true); const [error, setError] = useState('');
+  useEffect(() => { Promise.all([readCsv<PrintableAccount>('dim_accounts.csv'), readCsv<PrintablePayment>('fact_payments.csv'), readCsv<BalanceCheck>('account_balance_verification.csv')]).then(([loadedAccounts, loadedPayments, loadedBalances]) => { const usableAccounts = loadedAccounts.filter(account => compact(account.primary_client_name)); setAccounts(usableAccounts); setPayments(loadedPayments); setBalances(loadedBalances); setSelectedId(usableAccounts[0]?.account_id ?? null); }).catch((loadError: Error) => setError(loadError.message)).finally(() => setLoading(false)); }, []);
+  const matchingAccounts = useMemo(() => accounts.filter(account => matchesName(account.primary_client_name, query)), [accounts, query]); const selected = accounts.find(account => account.account_id === selectedId) ?? matchingAccounts[0] ?? null; const selectedPayments = useMemo(() => selected ? payments.filter(payment => payment.account_id === selected.account_id) : [], [payments, selected]); const ledger = useMemo(() => selected ? buildReceiptLedger(selected, selectedPayments) : [], [selected, selectedPayments]); const balanceCheck = selected ? balances.find(balance => balance.account_id === selected.account_id) : undefined; const totalPayment = receiptTotal(ledger); const finalBalance = ledger.at(-1)?.runningBalance ?? asNumber(selected?.list_price); const issuedOn = printableDate(new Date()); const choose = (account: PrintableAccount) => { setSelectedId(account.account_id); setQuery(account.primary_client_name); };
+  return <main className="printables-page accounting-page"><section className="page-heading printable-page-heading"><div><div className="eyebrow">RECOVERED WORKBOOK DATA</div><h1>Printable account statements</h1><p>Search a vendee, check the receipt-style ledger, then download a PDF.</p></div>{selected && <button className="primary-button" onClick={() => drawReceiptPdf(selected, ledger, balanceCheck)}><Download size={16} /> Convert to PDF</button>}</section>{error && <div className="printables-error" role="alert">{error}</div>}{loading && <div className="printables-loading" aria-live="polite">Loading normalized CSV data…</div>}
+  {!loading && !error && <><section className="printables-browser surface" aria-label="Search recovered accounts"><div className="printables-search-wrap"><Search size={18} aria-hidden="true" /><label className="sr-only" htmlFor="printable-account-search">Search vendee name</label><input id="printable-account-search" value={query} onChange={event => setQuery(event.target.value)} placeholder="Search: Firstname Lastname or Lastname, Firstname" autoComplete="off" /></div>{query && <div className="printables-suggestions" role="listbox" aria-label="Matching vendee names">{matchingAccounts.slice(0, 8).length ? matchingAccounts.slice(0, 8).map(account => <button key={account.account_id} role="option" aria-selected={selectedId === account.account_id} onClick={() => choose(account)}><UserRound size={15} /><span><strong>{account.primary_client_name}</strong><small>{accountLocation(account)} · Block {display(account.block)} · Lot {display(account.lot)}</small></span></button>) : <p>No vendee matches that name.</p>}</div>}<div className="printables-table-scroll"><table className="record-table"><thead><tr><th>Vendee</th><th>Location</th><th>Block / lot</th><th>Terms</th><th className="numeric">Ledger balance</th><th /></tr></thead><tbody>{matchingAccounts.slice(0, 50).map(account => { const accountLedger = buildReceiptLedger(account, payments.filter(payment => payment.account_id === account.account_id)); const accountBalance = accountLedger.at(-1)?.runningBalance ?? asNumber(account.list_price); return <tr key={account.account_id} className={selectedId === account.account_id ? 'printables-selected-row' : ''}><td><strong>{account.primary_client_name}</strong><small>{account.account_category}</small></td><td>{accountLocation(account)}</td><td>{display(account.block)} / {display(account.lot)}</td><td>{display(account.payment_terms)}</td><td className="numeric">{asCurrency(accountBalance)}</td><td className="row-actions"><button className="table-action" onClick={() => choose(account)}>Preview</button></td></tr>; })}{!matchingAccounts.length && <tr><td colSpan={6} className="record-empty">No account records match this search.</td></tr>}</tbody></table></div><footer className="records-footer"><span>Showing {Math.min(50, matchingAccounts.length)} of {matchingAccounts.length} matching accounts.</span><span>CSV source: normalized exports</span></footer></section>
+  {selected && <section className="ledger-preview" aria-label="Receipt-style printable preview"><header className="ledger-preview-brand"><div className="ledger-mark" aria-hidden="true">JLD</div><div><strong>JLD Private - Markets</strong><small>Prk. Pagkakaisa, Brgy. New Carmen, Tac. City</small></div><span><FileText size={17} /> Printable preview</span></header><div className="ledger-preview-body"><dl className="ledger-account-fields"><div><dt>Vendee:</dt><dd>{display(selected.primary_client_name)}</dd></div><div><dt>Area location:</dt><dd>{display(accountLocation(selected))}</dd></div><div><dt>Area size:</dt><dd>{accountArea(selected)}</dd></div><div><dt>Lot price:</dt><dd>{asCurrency(selected.list_price)}</dd></div><div><dt>Monthly:</dt><dd>{asCurrency(selected.monthly_amortization)}</dd></div><div><dt>Terms:</dt><dd>{display(selected.payment_terms)}</dd></div><div><dt>Due date:</dt><dd>{readableDate(selected.due_date)}</dd></div></dl><div className="ledger-table-wrap"><table className="ledger-document-table"><thead><tr><th>Date of payment</th><th>OR/AR #</th><th>Payment release</th><th>Balance</th></tr></thead><tbody>{ledger.length ? ledger.map((row, index) => <tr key={`${row.account_id}-${row.payment_id ?? index}`}><td>{readableDate(row.payment_date)}</td><td>{display(row.or_ar_number)}</td><td>{asCurrency(row.paymentRelease)}</td><td>{asCurrency(row.runningBalance)}</td></tr>) : <tr><td>—</td><td>—</td><td>—</td><td>{asCurrency(selected.list_price)}</td></tr>}</tbody></table></div><footer className="ledger-document-footer"><span>Date issued: <strong>{issuedOn}</strong></span><span>Total payment: <strong>{asCurrency(totalPayment)}</strong></span><span>Balance: <strong>{asCurrency(finalBalance)}</strong></span></footer><div className="ledger-signature"><span>{compact(selected.dicer_agent) || ' '}</span><small>Person In-Charge</small></div><p className="ledger-note">Ledger balance starts with the lot price and subtracts each payment release. Verification balance from the normalized export: {asCurrency(balanceCheck?.calculated_balance ?? balanceCheck?.stated_balance)}.</p></div></section>}</>}</main>;
 }
