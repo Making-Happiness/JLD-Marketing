@@ -54,10 +54,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!code.trim()) {
-      setErrorMsg('Product Code is required.');
-      return;
-    }
+    const finalCode = code.trim() || ("PRJ-" + Math.floor(10000 + Math.random() * 90000));
     if (!location.trim()) {
       setErrorMsg('Location / Address is required.');
       return;
@@ -119,19 +116,9 @@ export const ProductModal: React.FC<ProductModalProps> = ({
 
             <fieldset className="product-fieldset">
               <legend className="product-legend">Property details</legend>
-              <p className="product-fieldset-help fieldset-help">Use a short code to identify this project in contracts and reports.</p>
+              
               <div className="product-form-grid form-grid">
-                <label className="form-field-label">
-                  <span>Property code <span className="req">*</span></span>
-                  <input
-                    className="product-form-input"
-                    autoFocus
-                    required
-                    value={code}
-                    onChange={e => setCode(e.target.value)}
-                    placeholder="e.g. JLD-STN"
-                  />
-                </label>
+                
 
                 <label className="form-field-label">
                   <span>Location / project name <span className="req">*</span></span>
